@@ -1,0 +1,56 @@
+# Runų Būrimas - Projekto Taisyklės
+
+## Tech Stack
+- **Frontend:** React 19, TypeScript
+- **Build Tool:** Vite 7
+- **Styling:** Tailwind CSS 4
+- **Backend:** Supabase (PostgreSQL + Auth)
+- **Animacijos:** Framer Motion
+- **Icons:** Lucide React
+
+## Kodo Stilius
+
+### 1. Kalba
+- Visada naudok **lietuvių kalbą** komentaruose
+- UI tekstai lietuvių kalba
+- Kintamųjų ir funkcijų pavadinimai anglų kalba
+
+### 2. Failų Struktūra
+- **Komponentai:** PascalCase (pvz., `RuneCard.tsx`, `LoginForm.tsx`)
+- **Hooks:** camelCase su `use` prefiksu (pvz., `useAuth.ts`, `useRunes.ts`)
+- **Utilities:** camelCase (pvz., `runeConverter.ts`)
+- **Puslapiai:** PascalCase (pvz., `DailyRune.tsx`, `Profile.tsx`)
+
+### 3. Failo Ilgis
+- Maksimalus failo ilgis: **300 eilučių**
+- Jei failas viršija 300 eilučių, išskaidyk į mažesnius komponentus
+
+### 4. Tailwind CSS 4
+- Naudok naują sintaksę: `bg-linear-to-r` vietoj `bg-gradient-to-r`
+- Naudok `w-150` vietoj `w-[600px]` kai įmanoma
+
+### 5. React Patterns
+- Functional components su hooks
+- Naudok `useCallback` ir `useMemo` optimizacijai
+- Vengti `useEffect` su setState - naudok inline async funkcijas
+
+### 6. Supabase
+- Row Level Security (RLS) visoms lentelėms
+- Tipai `src/types/database.ts` faile
+- Klientas `src/lib/supabase.ts` faile
+
+## Projekto Struktūra
+
+```
+src/
+├── components/
+│   ├── auth/          # Autentifikacijos komponentai
+│   ├── common/        # Bendri komponentai
+│   ├── layout/        # Header, Footer
+│   └── runes/         # Runų komponentai
+├── hooks/             # Custom React hooks
+├── lib/               # Supabase klientas
+├── pages/             # Puslapių komponentai
+├── types/             # TypeScript tipai
+└── utils/             # Pagalbinės funkcijos
+```

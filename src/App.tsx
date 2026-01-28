@@ -1,0 +1,105 @@
+import { lazy, Suspense } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { Header } from './components/layout/Header'
+import { Footer } from './components/layout/Footer'
+import { AnimatedBackground } from './components/common/AnimatedBackground'
+import { useAuth } from './hooks/useAuth'
+
+// Lazy load pages for better performance
+const Home = lazy(() => import('./pages/Home').then(m => ({ default: m.Home })))
+const DailyRune = lazy(() => import('./pages/DailyRune').then(m => ({ default: m.DailyRune })))
+const ThreeRune = lazy(() => import('./pages/ThreeRune').then(m => ({ default: m.ThreeRune })))
+const FiveRuneCross = lazy(() => import('./pages/FiveRuneCross').then(m => ({ default: m.FiveRuneCross })))
+const SevenRuneMap = lazy(() => import('./pages/SevenRuneMap').then(m => ({ default: m.SevenRuneMap })))
+const RuneLibrary = lazy(() => import('./pages/RuneLibrary').then(m => ({ default: m.RuneLibrary })))
+const RuneConverter = lazy(() => import('./pages/RuneConverter').then(m => ({ default: m.RuneConverter })))
+const Profile = lazy(() => import('./pages/Profile').then(m => ({ default: m.Profile })))
+const Auth = lazy(() => import('./pages/Auth').then(m => ({ default: m.Auth })))
+
+// Magical loading fallback component
+function PageLoader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="flex flex-col items-center gap-6">
+        {/* Animated rune circle */}
+        <div className="relative w-24 h-24">
+          <motion.div
+            className="absolute inset-0 rounded-full border-2 border-purple-500/30"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+          />
+          <motion.div
+            className="absolute inset-2 rounded-full border-2 border-amber-500/40"
+            animate={{ rotate: -360 }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+          />
+          <motion.div
+            className="absolute inset-4 rounded-full border border-purple-400/50"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+          />
+          <motion.span
+            className="absolute inset-0 flex items-center justify-center text-4xl text-amber-400"
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.7, 1, 0.7],
+            }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            ᚱ
+          </motion.span>
+        </div>
+        <motion.p
+          className="text-purple-300 text-lg font-cinzel"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          Kraunamos runos...
+        </motion.p>
+      </div>
+    </div>
+  )
+}
+
+function AppContent() {
+  const { user, signOut } = useAuth()
+
+  return (
+    <div className="min-h-screen bg-gray-950 text-white flex flex-col relative">
+      {/* Animated mystical background */}
+      <AnimatedBackground />
+
+      {/* Main content */}
+      <div className="relative z-10 flex flex-col min-h-screen w-full">
+        <Header user={user} onSignOut={signOut} />
+        <main className="flex-1 pt-16 w-full">
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/daily" element={<DailyRune />} />
+              <Route path="/three-rune" element={<ThreeRune />} />
+              <Route path="/five-rune-cross" element={<FiveRuneCross />} />
+              <Route path="/seven-rune-map" element={<SevenRuneMap />} />
+              <Route path="/library" element={<RuneLibrary />} />
+              <Route path="/converter" element={<RuneConverter />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/auth" element={<Auth />} />
+            </Routes>
+          </Suspense>
+        </main>
+        <Footer />
+      </div>
+    </div>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  )
+}
+
+export default App

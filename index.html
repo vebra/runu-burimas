@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="lt">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
+    
+    <!-- Apple Mobile Web App -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Runų Būrimas" />
+    
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileColor" content="#8B5CF6" />
+    <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    
+    <!-- Primary Meta Tags -->
+    <title>Runų Būrimas 🔮 | Elder Futhark Runų Aplikacija</title>
+    <meta name="title" content="Runų Būrimas 🔮 | Elder Futhark Runų Aplikacija" />
+    <meta name="description" content="Atraskite senovės išmintį per Elder Futhark runas. Kasdienės runos, būrimai, runų biblioteka ir dienoraštis. Pradėkite savo dvasinį kelią šiandien!" />
+    <meta name="keywords" content="runos, būrimas, Elder Futhark, kasdienė runa, runų biblioteka, dvasinis kelias, runų konverteris, runų reikšmės" />
+    <meta name="author" content="Runų Būrimas" />
+    <meta name="theme-color" content="#8B5CF6" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://runu-burimas.vercel.app/" />
+    <meta property="og:title" content="Runų Būrimas 🔮 | Elder Futhark Runų Aplikacija" />
+    <meta property="og:description" content="Atraskite senovės išmintį per Elder Futhark runas. Kasdienės runos, būrimai ir daugiau!" />
+    <meta property="og:image" content="https://runu-burimas.vercel.app/og-image.png" />
+    <meta property="og:locale" content="lt_LT" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://runu-burimas.vercel.app/" />
+    <meta property="twitter:title" content="Runų Būrimas 🔮 | Elder Futhark Runų Aplikacija" />
+    <meta property="twitter:description" content="Atraskite senovės išmintį per Elder Futhark runas. Kasdienės runos, būrimai ir daugiau!" />
+    <meta property="twitter:image" content="https://runu-burimas.vercel.app/og-image.png" />
+    
+    <!-- Additional SEO -->
+    <link rel="canonical" href="https://runu-burimas.vercel.app/" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Lithuanian" />
+    <meta name="revisit-after" content="7 days" />
+    
+    <!-- Google Analytics GA4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX', {
+        page_path: window.location.pathname,
+      });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
