@@ -19,7 +19,7 @@ export function Footer() {
       <div className="bg-gray-900/80 backdrop-blur-sm" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
         <div style={{ width: '100%', maxWidth: '1600px', padding: '1.5rem 1.5rem' }} className="md:px-12">
           {/* Main footer content */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
             {/* Brand */}
             <div className="flex flex-col items-center text-center md:text-left md:items-start">
               <Link to="/" className="flex items-center gap-3 group mb-4">

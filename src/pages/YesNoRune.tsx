@@ -121,7 +121,7 @@ export function YesNoRune() {
   const answerConfig = result ? getAnswerConfig(result.answer) : null
 
   return (
-    <div className="min-h-screen py-12 px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+    <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '4rem', paddingBottom: '6rem' }}>
       <div style={{ width: '100%', maxWidth: '600px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

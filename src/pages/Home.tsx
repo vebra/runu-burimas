@@ -313,11 +313,10 @@ export function Home() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-9 gap-y-6 mx-auto"
-            style={{ gridAutoRows: '1fr' }}
+            className="flex flex-wrap justify-center gap-x-9 gap-y-6 mx-auto"
           >
             {features.map((feature) => (
-              <motion.div key={feature.path} variants={itemVariants} className="w-full">
+              <motion.div key={feature.path} variants={itemVariants} className="w-full sm:w-[calc(50%-1.125rem)] lg:w-[calc(33.333%-1.5rem)]">
                 <Link
                   to={feature.path}
                   className="group relative block h-full"

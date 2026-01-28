@@ -132,7 +132,7 @@ export function Profile() {
   }
 
   return (
-    <div className="min-h-screen py-12 px-4" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '4rem', paddingBottom: '6rem' }}>
       <div style={{ width: '100%', maxWidth: '672px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
