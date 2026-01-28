@@ -16,6 +16,7 @@ const RuneLibrary = lazy(() => import('./pages/RuneLibrary').then(m => ({ defaul
 const RuneConverter = lazy(() => import('./pages/RuneConverter').then(m => ({ default: m.RuneConverter })))
 const Profile = lazy(() => import('./pages/Profile').then(m => ({ default: m.Profile })))
 const Auth = lazy(() => import('./pages/Auth').then(m => ({ default: m.Auth })))
+const YesNoRune = lazy(() => import('./pages/YesNoRune').then(m => ({ default: m.YesNoRune })))
 
 // Magical loading fallback component
 function PageLoader() {
@@ -85,6 +86,7 @@ function AppContent() {
               <Route path="/converter" element={<RuneConverter />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/yes-no" element={<YesNoRune />} />
             </Routes>
           </Suspense>
         </main>

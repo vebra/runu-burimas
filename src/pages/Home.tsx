@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { Sparkles, Calendar, BookOpen, Type, ArrowRight, Crown, Compass, Users, TrendingUp, Zap, Star, Moon } from 'lucide-react'
+import { Sparkles, Calendar, BookOpen, Type, ArrowRight, Crown, Compass, Users, TrendingUp, Zap, Star, Moon, HelpCircle } from 'lucide-react'
 import { useRef } from 'react'
 
 const features = [
@@ -11,6 +11,15 @@ const features = [
     path: '/daily',
     color: 'from-purple-700 to-violet-600',
     glowColor: 'rgba(147, 51, 234, 0.4)',
+    premium: false,
+  },
+  {
+    icon: HelpCircle,
+    title: 'Taip ar Ne?',
+    description: 'Greitas atsakymas į taip/ne klausimą su viena runa',
+    path: '/yes-no',
+    color: 'from-emerald-600 to-green-500',
+    glowColor: 'rgba(16, 185, 129, 0.4)',
     premium: false,
   },
   {
