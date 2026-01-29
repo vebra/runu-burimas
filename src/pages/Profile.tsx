@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { User, LogOut, Calendar, Sparkles, Heart, Trophy } from 'lucide-react'
+import { User, LogOut, Calendar, Sparkles, Heart, Trophy, Trash2, AlertTriangle } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useFavorites, useDivinations } from '../hooks/useRunes'
@@ -27,6 +27,9 @@ export function Profile() {
     currentStreak: 0,
   })
   const [loading, setLoading] = useState(true)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [deleteConfirmText, setDeleteConfirmText] = useState('')
+  const [deleting, setDeleting] = useState(false)
 
   useEffect(() => {
     if (!user || hasFetched.current) return
@@ -95,6 +98,31 @@ export function Profile() {
     } catch (error) {
       console.error('Error signing out:', error)
       toast.error('Klaida atsijungiant')
+    }
+  }
+
+  const handleDeleteAccount = async () => {
+    if (deleteConfirmText !== 'IŠTRINTI') return
+    if (!user) return
+
+    setDeleting(true)
+    try {
+      // Delete all user data from tables
+      await supabase.from('daily_runes').delete().eq('user_id', user.id)
+      await supabase.from('divinations').delete().eq('user_id', user.id)
+      await supabase.from('favorite_runes').delete().eq('user_id', user.id)
+
+      // Sign out the user
+      await signOut()
+
+      toast.success('Paskyra ir visi duomenys ištrinti')
+      navigate('/')
+    } catch (error) {
+      console.error('Error deleting account:', error)
+      toast.error('Klaida ištrinant paskyrą')
+    } finally {
+      setDeleting(false)
+      setShowDeleteModal(false)
     }
   }
 
@@ -314,6 +342,7 @@ export function Profile() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
+          className="space-y-4"
         >
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Button onClick={handleSignOut} variant="secondary" size="lg" className="w-full rounded-xl">
@@ -321,7 +350,120 @@ export function Profile() {
               Atsijungti
             </Button>
           </motion.div>
+
+          {/* Danger Zone */}
+          <div className="pt-8 border-t border-gray-800">
+            <h3 className="text-red-400 font-semibold mb-4 flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5" />
+              Pavojinga zona
+            </h3>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <button
+                onClick={() => setShowDeleteModal(true)}
+                className="w-full py-3 px-4 bg-red-900/20 hover:bg-red-900/40 border border-red-500/30 hover:border-red-500/50 rounded-xl text-red-400 font-medium transition-all flex items-center justify-center gap-2"
+              >
+                <Trash2 className="w-5 h-5" />
+                Ištrinti paskyrą
+              </button>
+            </motion.div>
+          </div>
         </motion.div>
+
+        {/* Delete Confirmation Modal */}
+        {showDeleteModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+            onClick={() => setShowDeleteModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="bg-gray-900 border border-red-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <AlertTriangle className="w-8 h-8 text-red-400" />
+                </div>
+                <h2 className="text-2xl font-cinzel font-bold text-white mb-2">
+                  Ištrinti paskyrą?
+                </h2>
+                <p className="text-gray-400">
+                  Šis veiksmas yra <strong className="text-red-400">negrįžtamas</strong>.
+                  Bus ištrinta:
+                </p>
+              </div>
+
+              <ul className="text-gray-400 text-sm space-y-2 mb-6">
+                <li className="flex items-center gap-2">
+                  <span className="text-red-400">•</span>
+                  Visos kasdienės runos ({stats.totalDailyRunes})
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-red-400">•</span>
+                  Visi būrimai ({stats.totalDivinations})
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-red-400">•</span>
+                  Mėgstamos runos ({favorites.length})
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-red-400">•</span>
+                  Jūsų paskyra ir el. paštas
+                </li>
+              </ul>
+
+              <div className="mb-6">
+                <label className="block text-sm text-gray-400 mb-2">
+                  Įveskite <strong className="text-red-400">IŠTRINTI</strong> kad patvirtintumėte:
+                </label>
+                <input
+                  type="text"
+                  value={deleteConfirmText}
+                  onChange={(e) => setDeleteConfirmText(e.target.value)}
+                  className="w-full bg-gray-800/50 border border-gray-700 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500"
+                  placeholder="IŠTRINTI"
+                />
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={() => {
+                    setShowDeleteModal(false)
+                    setDeleteConfirmText('')
+                  }}
+                  className="flex-1 py-3 px-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl text-white font-medium transition-colors"
+                >
+                  Atšaukti
+                </button>
+                <button
+                  onClick={handleDeleteAccount}
+                  disabled={deleteConfirmText !== 'IŠTRINTI' || deleting}
+                  className="flex-1 py-3 px-4 bg-red-600 hover:bg-red-700 disabled:bg-red-900/50 disabled:cursor-not-allowed border border-red-500 rounded-xl text-white font-medium transition-colors flex items-center justify-center gap-2"
+                >
+                  {deleting ? (
+                    <>
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                      >
+                        <Trash2 className="w-5 h-5" />
+                      </motion.div>
+                      Trinama...
+                    </>
+                  ) : (
+                    <>
+                      <Trash2 className="w-5 h-5" />
+                      Ištrinti viską
+                    </>
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
       </div>
     </div>
   )
