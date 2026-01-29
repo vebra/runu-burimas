@@ -105,7 +105,7 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/runu-burimas">
       <ToastProvider>
         <AppContent />
       </ToastProvider>
