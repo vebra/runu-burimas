@@ -5,6 +5,7 @@ import { Header } from './components/layout/Header'
 import { Footer } from './components/layout/Footer'
 import { AnimatedBackground } from './components/common/AnimatedBackground'
 import { ToastProvider } from './components/common/Toast'
+import { ErrorBoundary } from './components/common/ErrorBoundary'
 import { useAuth } from './hooks/useAuth'
 
 // Lazy load pages for better performance
@@ -105,11 +106,13 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter basename="/runu-burimas">
-      <ToastProvider>
-        <AppContent />
-      </ToastProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter basename="/runu-burimas">
+        <ToastProvider>
+          <AppContent />
+        </ToastProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   )
 }
 
