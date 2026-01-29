@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Loader2 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
+import { EmptySearchResults } from '../components/common/EmptyState'
 import { useRunes, useFavorites } from '../hooks/useRunes'
 import type { Rune } from '../types/database'
 
@@ -104,10 +105,7 @@ export function RuneLibrary() {
         </div>
 
         {filteredRunes.length === 0 ? (
-          <div className="text-center py-12">
-            <span className="text-4xl mb-4 block">🔍</span>
-            <p className="text-gray-400">Nerasta runų</p>
-          </div>
+          <EmptySearchResults />
         ) : (
           /* Runų grid */
           <motion.div

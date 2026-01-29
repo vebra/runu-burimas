@@ -7,6 +7,8 @@ import { useFavorites, useDivinations } from '../hooks/useRunes'
 import { supabase } from '../lib/supabase'
 import { Button } from '../components/common/Button'
 import { useToast } from '../components/common/Toast'
+import { ProfileStatsSkeleton, DivinationHistorySkeleton } from '../components/common/Skeleton'
+import { EmptyDivinations } from '../components/common/EmptyState'
 
 interface Stats {
   totalDailyRunes: number
@@ -150,16 +152,39 @@ export function Profile() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="text-6xl text-purple-400"
-          >
-            ᚾ
-          </motion.div>
-          <p className="text-purple-300 text-lg">Kraunamas profilis...</p>
+      <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '4rem', paddingBottom: '6rem' }}>
+        <div style={{ width: '100%', maxWidth: '672px' }}>
+          {/* Profile header skeleton */}
+          <div className="text-center mb-10 mt-8">
+            <div className="w-20 h-20 bg-gray-800/50 rounded-full mx-auto mb-4 animate-pulse" />
+            <div className="h-8 w-40 bg-gray-800/50 rounded mx-auto mb-2 animate-pulse" />
+            <div className="h-4 w-48 bg-gray-800/50 rounded mx-auto animate-pulse" />
+          </div>
+
+          {/* Stats skeleton */}
+          <div className="mb-10">
+            <ProfileStatsSkeleton />
+          </div>
+
+          {/* Achievements skeleton */}
+          <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-6 mb-10">
+            <div className="h-6 w-32 bg-gray-700/50 rounded mb-4 animate-pulse" />
+            <div className="grid grid-cols-2 gap-3">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="bg-gray-900/30 border border-gray-700 rounded-lg p-3">
+                  <div className="h-8 w-8 bg-gray-700/50 rounded mx-auto mb-2 animate-pulse" />
+                  <div className="h-4 w-20 bg-gray-700/50 rounded mx-auto mb-1 animate-pulse" />
+                  <div className="h-3 w-24 bg-gray-700/50 rounded mx-auto animate-pulse" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* History skeleton */}
+          <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
+            <div className="h-6 w-40 bg-gray-700/50 rounded mb-4 animate-pulse" />
+            <DivinationHistorySkeleton />
+          </div>
         </div>
       </div>
     )
@@ -302,7 +327,7 @@ export function Profile() {
           </div>
         </motion.div>
 
-        {divinations.length > 0 && (
+        {divinations.length > 0 ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -335,6 +360,16 @@ export function Profile() {
                 </div>
               ))}
             </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="bg-gray-800/50 border border-gray-700 rounded-xl"
+            style={{ marginBottom: '2.5rem' }}
+          >
+            <EmptyDivinations />
           </motion.div>
         )}
 
