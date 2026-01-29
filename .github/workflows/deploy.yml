@@ -32,6 +32,9 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_SUPABASE_URL: https://yunouuqnafcfejoiivon.supabase.co
+          VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1bm91dXFuYWZjZmVqb2lpdm9uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkyNDMwNTEsImV4cCI6MjA4NDgxOTA1MX0.SlojX9JsjdsRQPnVmAKP-h6C14JHFPq3rJ65kS4iW2E
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
