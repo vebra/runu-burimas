@@ -47,9 +47,9 @@ const generateStars = (): Star[] => {
   }))
 }
 
-// Pre-generate data once on module load
-const initialStars = generateStars()
-const initialFloatingRunes = generateFloatingRunes()
+// Pre-generate data once on module load - reduced for performance
+const initialStars = generateStars().slice(0, 30) // Only 30 stars instead of 100
+const initialFloatingRunes = generateFloatingRunes().slice(0, 4) // Only 4 runes instead of 8
 
 export function AnimatedBackground() {
   const stars = initialStars
@@ -57,8 +57,8 @@ export function AnimatedBackground() {
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
-      {/* Gradient orbs */}
-      <motion.div
+      {/* Gradient orbs - static, no animation for better performance */}
+      <div
         className="absolute w-[600px] h-[600px] rounded-full"
         style={{
           background: 'radial-gradient(circle, rgba(147, 51, 234, 0.15) 0%, transparent 70%)',
@@ -66,19 +66,9 @@ export function AnimatedBackground() {
           left: '20%',
           filter: 'blur(60px)',
         }}
-        animate={{
-          x: [0, 50, 0],
-          y: [0, 30, 0],
-          scale: [1, 1.1, 1],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
       />
 
-      <motion.div
+      <div
         className="absolute w-[500px] h-[500px] rounded-full"
         style={{
           background: 'radial-gradient(circle, rgba(217, 119, 6, 0.1) 0%, transparent 70%)',
@@ -86,19 +76,9 @@ export function AnimatedBackground() {
           right: '10%',
           filter: 'blur(60px)',
         }}
-        animate={{
-          x: [0, -40, 0],
-          y: [0, -40, 0],
-          scale: [1, 1.15, 1],
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
       />
 
-      <motion.div
+      <div
         className="absolute w-[400px] h-[400px] rounded-full"
         style={{
           background: 'radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%)',
@@ -106,18 +86,9 @@ export function AnimatedBackground() {
           left: '60%',
           filter: 'blur(50px)',
         }}
-        animate={{
-          x: [0, 30, -20, 0],
-          y: [0, -30, 20, 0],
-        }}
-        transition={{
-          duration: 30,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
       />
 
-      {/* Stars */}
+      {/* Stars - reduced count and simpler animation */}
       {stars.map((star) => (
         <motion.div
           key={star.id}
@@ -127,10 +98,10 @@ export function AnimatedBackground() {
             top: `${star.y}%`,
             width: star.size,
             height: star.size,
+            opacity: star.opacity,
           }}
           animate={{
-            opacity: [star.opacity * 0.3, star.opacity, star.opacity * 0.3],
-            scale: [1, 1.2, 1],
+            opacity: [star.opacity * 0.5, star.opacity, star.opacity * 0.5],
           }}
           transition={{
             duration: star.duration,
@@ -141,7 +112,7 @@ export function AnimatedBackground() {
         />
       ))}
 
-      {/* Floating runes */}
+      {/* Floating runes - reduced count */}
       {floatingRunes.map((rune) => (
         <motion.span
           key={rune.id}
@@ -152,10 +123,7 @@ export function AnimatedBackground() {
             fontSize: rune.size,
           }}
           animate={{
-            y: [0, -30, 0],
-            x: [0, 10, -10, 0],
-            rotate: [0, 10, -10, 0],
-            opacity: [0.05, 0.12, 0.05],
+            opacity: [0.05, 0.1, 0.05],
           }}
           transition={{
             duration: rune.duration,

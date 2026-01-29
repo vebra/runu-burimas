@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 import type { Rune } from '../types/database'
 import { Button } from '../components/common/Button'
 import { useToast } from '../components/common/Toast'
+import { AIInterpretation } from '../components/common/AIInterpretation'
+import { useAIInterpretation } from '../hooks/useAIInterpretation'
 
 type Position = 'center' | 'top' | 'bottom' | 'left' | 'right'
 
@@ -42,6 +44,26 @@ export function FiveRuneCross() {
   // Check if user has premium access (placeholder - will be replaced with real check)
   const hasPremium = true // TODO: Replace with actual premium check
   const toast = useToast()
+
+  const {
+    interpretation,
+    loading: aiLoading,
+    error: aiError,
+    getInterpretation,
+    clearInterpretation
+  } = useAIInterpretation()
+
+  const handleRequestAIInterpretation = () => {
+    const runeData = drawnRunes.map(r => ({
+      name: r.rune.name,
+      symbol: r.rune.symbol,
+      meaning: r.rune.interpretation,
+      reversed_meaning: r.rune.reversed_interpretation || undefined,
+      orientation: r.orientation,
+      position: positionLabels[r.position].label
+    }))
+    getInterpretation(runeData, 'five_rune', question || undefined)
+  }
 
   useEffect(() => {
     if (drawnRunes.length === 5 && revealedPositions.size === 5) {
@@ -135,6 +157,7 @@ export function FiveRuneCross() {
     setSpreadComplete(false)
     setNotes('')
     setDivinationId(null)
+    clearInterpretation()
   }
 
   if (!user) {
@@ -490,6 +513,15 @@ export function FiveRuneCross() {
                     </p>
                   </div>
                 </div>
+
+                {/* AI Interpretacija */}
+                <AIInterpretation
+                  interpretation={interpretation}
+                  loading={aiLoading}
+                  error={aiError}
+                  onRequestInterpretation={handleRequestAIInterpretation}
+                  onRetry={handleRequestAIInterpretation}
+                />
 
                 {/* Dienoraštis */}
                 <div className="bg-gray-800/50 border-2 border-amber-600/30 rounded-xl shadow-lg" style={{ padding: '2rem', boxShadow: '0 0 30px rgba(217, 119, 6, 0.2)' }}>
