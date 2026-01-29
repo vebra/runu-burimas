@@ -1,0 +1,8 @@
+# Robots.txt for Runų Būrimas
+# https://vebra.github.io/runu-burimas/
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://vebra.github.io/runu-burimas/sitemap.xml
