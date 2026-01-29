@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, RotateCcw, Loader2, BookOpen, Save } from 'lucide-react'
+import { Sparkles, RotateCcw, BookOpen, Save, Loader2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useRunes, useDivinations } from '../hooks/useRunes'
 import type { Rune, RuneSpread } from '../types/database'
+import { Button } from '../components/common/Button'
+import { Textarea } from '../components/common/Input'
+import { useToast } from '../components/common/Toast'
 
 interface DrawnRune {
   rune: Rune
@@ -69,6 +72,8 @@ export function ThreeRune() {
     }
   }
 
+  const toast = useToast()
+
   const saveSpread = async () => {
     if (!user) return
 
@@ -83,9 +88,11 @@ export function ThreeRune() {
       const result = await saveThreeRuneSpread(user.id, runeSpread, question || undefined)
       if (result?.id) {
         setDivinationId(result.id)
+        toast.success('Būrimas išsaugotas!')
       }
     } catch (error) {
       console.error('Error saving spread:', error)
+      toast.error('Nepavyko išsaugoti būrimo')
     }
     setSaving(false)
   }
@@ -96,8 +103,10 @@ export function ThreeRune() {
     setSavingNotes(true)
     try {
       await updateDivinationNotes(divinationId, notes)
+      toast.success('Dienoraštis išsaugotas!')
     } catch (error) {
       console.error('Error saving notes:', error)
+      toast.error('Nepavyko išsaugoti dienoraščio')
     }
     setSavingNotes(false)
   }
@@ -156,7 +165,7 @@ export function ThreeRune() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
-          style={{ marginBottom: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}
+          style={{ marginBottom: '3rem', marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}
         >
           <h1 className="text-4xl md:text-5xl font-cinzel font-bold text-white">
             Trijų Runų Išdėstymas
@@ -172,29 +181,27 @@ export function ThreeRune() {
             animate={{ opacity: 1 }}
             style={{ maxWidth: '500px', margin: '0 auto' }}
           >
-            <div style={{ marginBottom: '2rem' }}>
-              <label className="block text-base font-medium text-gray-300" style={{ marginBottom: '1rem' }}>
-                Jūsų klausimas (neprivaloma)
-              </label>
-              <textarea
+            <div className="mb-8">
+              <Textarea
+                label="Jūsų klausimas (neprivaloma)"
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 placeholder="Apie ką norite sužinoti?"
-                className="w-full bg-gray-800/50 border-2 border-amber-600/30 rounded-xl p-6 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50 transition-colors resize-none text-xl shadow-lg"
-                style={{ height: '150px', boxShadow: '0 0 30px rgba(217, 119, 6, 0.2)' }}
+                variant="glow"
+                inputSize="lg"
+                rows={5}
               />
             </div>
 
-            <motion.button
-              onClick={drawRunes}
-              disabled={!question.trim()}
+            <motion.div
               whileHover={{ scale: question.trim() ? 1.05 : 1 }}
               whileTap={{ scale: question.trim() ? 0.95 : 1 }}
-              className="bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 hover:from-purple-700 hover:via-purple-600 hover:to-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-amber-100 font-semibold py-3 px-8 rounded-lg transition-all duration-300 flex items-center gap-2 shadow-lg shadow-purple-900/30 border border-amber-600/20"
             >
-              <Sparkles className="w-5 h-5" />
-              Traukti Runas
-            </motion.button>
+              <Button onClick={drawRunes} disabled={!question.trim()} size="lg">
+                <Sparkles className="w-5 h-5" />
+                Traukti Runas
+              </Button>
+            </motion.div>
           </motion.div>
         )}
 
@@ -404,29 +411,24 @@ export function ThreeRune() {
                     className="w-full bg-gray-900/50 border-2 border-gray-700 rounded-lg p-6 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50 transition-colors resize-none text-xl shadow-lg"
                     style={{ height: '200px', boxShadow: '0 0 20px rgba(107, 114, 128, 0.2)' }}
                   />
-                  <button
+                  <Button
                     onClick={handleSaveNotes}
-                    disabled={savingNotes || !divinationId}
-                    className="bg-amber-700 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50 border-2 border-amber-600/30 shadow-lg"
-                    style={{ marginTop: '1.5rem', padding: '0.75rem 1.5rem', fontSize: '1rem', boxShadow: '0 0 20px rgba(217, 119, 6, 0.2)' }}
+                    disabled={!divinationId}
+                    loading={savingNotes}
+                    variant="secondary"
+                    size="lg"
+                    className="mt-6"
                   >
-                    {savingNotes ? (
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                    ) : (
-                      <Save className="w-5 h-5" />
-                    )}
+                    <Save className="w-5 h-5" />
                     Išsaugoti Dienoraštį
-                  </button>
+                  </Button>
                 </div>
 
-                <div className="flex justify-center" style={{ paddingTop: '1.5rem' }}>
-                  <button
-                    onClick={reset}
-                    className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors text-base font-medium"
-                  >
+                <div className="flex justify-center pt-6">
+                  <Button onClick={reset} variant="ghost" size="md">
                     <RotateCcw className="w-5 h-5" />
                     Naujas būrimas
-                  </button>
+                  </Button>
                 </div>
 
                 {saving && (

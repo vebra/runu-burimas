@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useRunes } from '../hooks/useRunes'
 import type { Rune } from '../types/database'
+import { Button } from '../components/common/Button'
 
 type Answer = 'yes' | 'no' | 'maybe'
 
@@ -127,7 +128,7 @@ export function YesNoRune() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
-          style={{ marginBottom: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
+          style={{ marginBottom: '3rem', marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
         >
           <motion.span
             className="text-6xl"
@@ -166,17 +167,16 @@ export function YesNoRune() {
                 style={{ padding: '1rem' }}
               />
 
-              <motion.button
-                onClick={handleDrawRune}
-                disabled={!question.trim()}
+              <motion.div
                 whileHover={{ scale: question.trim() ? 1.03 : 1 }}
                 whileTap={{ scale: question.trim() ? 0.97 : 1 }}
-                className="w-full bg-linear-to-r from-purple-700 to-violet-600 hover:from-purple-600 hover:to-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-lg shadow-purple-900/30 border border-purple-400/20"
-                style={{ marginTop: '1.5rem' }}
+                className="mt-6"
               >
-                <Sparkles className="w-5 h-5" />
-                Traukti Runą
-              </motion.button>
+                <Button onClick={handleDrawRune} disabled={!question.trim()} size="lg" className="w-full rounded-xl">
+                  <Sparkles className="w-5 h-5" />
+                  Traukti Runą
+                </Button>
+              </motion.div>
             </div>
 
             {!user && (
@@ -353,14 +353,11 @@ export function YesNoRune() {
                 </div>
 
                 {/* Naujas būrimas */}
-                <div className="flex justify-center" style={{ paddingTop: '1rem' }}>
-                  <button
-                    onClick={reset}
-                    className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors text-lg font-medium"
-                  >
+                <div className="flex justify-center pt-4">
+                  <Button onClick={reset} variant="ghost" size="md">
                     <RotateCcw className="w-5 h-5" />
                     Naujas klausimas
-                  </button>
+                  </Button>
                 </div>
               </motion.div>
             )}

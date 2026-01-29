@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a0a2e"/>
+      <stop offset="50%" style="stop-color:#16082a"/>
+      <stop offset="100%" style="stop-color:#0d0518"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6"/>
+      <stop offset="100%" style="stop-color:#6D28D9"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F59E0B"/>
+      <stop offset="100%" style="stop-color:#D97706"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="url(#bg)"/>
+
+  <!-- Outer ring -->
+  <circle cx="256" cy="256" r="230" fill="none" stroke="url(#purple)" stroke-width="4" opacity="0.6"/>
+
+  <!-- Inner decorative ring -->
+  <circle cx="256" cy="256" r="200" fill="none" stroke="url(#gold)" stroke-width="2" opacity="0.4"/>
+
+  <!-- Crystal ball glow -->
+  <circle cx="256" cy="256" r="140" fill="#8B5CF6" opacity="0.15" filter="url(#glow)"/>
+
+  <!-- Crystal ball -->
+  <circle cx="256" cy="256" r="120" fill="none" stroke="url(#purple)" stroke-width="6"/>
+  <circle cx="256" cy="256" r="110" fill="none" stroke="#8B5CF6" stroke-width="1" opacity="0.5"/>
+
+  <!-- Fehu rune (ᚠ) - wealth/prosperity -->
+  <g filter="url(#glow)">
+    <path d="M220 180 L220 332" stroke="url(#gold)" stroke-width="16" stroke-linecap="round"/>
+    <path d="M220 180 L300 220" stroke="url(#gold)" stroke-width="14" stroke-linecap="round"/>
+    <path d="M220 250 L280 280" stroke="url(#gold)" stroke-width="12" stroke-linecap="round"/>
+  </g>
+
+  <!-- Decorative dots -->
+  <circle cx="340" cy="180" r="6" fill="#F59E0B" opacity="0.7"/>
+  <circle cx="360" cy="220" r="4" fill="#8B5CF6" opacity="0.6"/>
+  <circle cx="170" cy="300" r="5" fill="#F59E0B" opacity="0.5"/>
+  <circle cx="150" cy="260" r="3" fill="#8B5CF6" opacity="0.6"/>
+
+  <!-- Small rune accents -->
+  <text x="380" y="340" font-family="Arial" font-size="32" fill="#8B5CF6" opacity="0.4">ᚱ</text>
+  <text x="100" y="200" font-family="Arial" font-size="28" fill="#F59E0B" opacity="0.3">ᛗ</text>
+</svg>

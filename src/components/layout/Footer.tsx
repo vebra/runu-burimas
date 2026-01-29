@@ -19,7 +19,7 @@ export function Footer() {
       <div className="bg-gray-900/80 backdrop-blur-sm" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
         <div style={{ width: '100%', maxWidth: '1600px', padding: '1.5rem 1.5rem' }} className="md:px-12">
           {/* Main footer content */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
             {/* Brand */}
             <div className="flex flex-col items-center text-center md:text-left md:items-start">
               <Link to="/" className="flex items-center gap-3 group mb-4">
@@ -29,11 +29,11 @@ export function Footer() {
                 >
                   🔮
                 </motion.span>
-                <span className="font-cinzel font-bold text-xl text-white group-hover:text-amber-200 transition-colors">
+                <span className="font-cinzel font-bold text-2xl md:text-xl text-white group-hover:text-amber-200 transition-colors">
                   Runų Būrimas
                 </span>
               </Link>
-              <p className="text-gray-500 text-sm text-center md:text-left leading-relaxed">
+              <p className="text-gray-500 text-base md:text-sm text-center md:text-left leading-relaxed max-w-xs">
                 Atraskite senovės išmintį per Elder Futhark runas.
               </p>
 
@@ -53,13 +53,13 @@ export function Footer() {
 
             {/* Navigation */}
             <div className="flex flex-col items-center text-center">
-              <h3 className="font-cinzel font-semibold text-white mb-4">Navigacija</h3>
-              <nav className="flex flex-col gap-2 items-center">
+              <h3 className="font-cinzel font-semibold text-white mb-4 text-lg md:text-base">Navigacija</h3>
+              <nav className="flex flex-col gap-3 md:gap-2 items-center">
                 {footerLinks.map((link) => (
                   <Link
                     key={link.to}
                     to={link.to}
-                    className="text-gray-400 hover:text-amber-300 transition-colors text-sm group"
+                    className="text-gray-400 hover:text-amber-300 transition-colors text-base md:text-sm hover:underline underline-offset-4"
                   >
                     {link.label}
                   </Link>
@@ -69,7 +69,7 @@ export function Footer() {
 
             {/* Made with love */}
             <div className="flex flex-col items-center text-center md:text-right md:items-end">
-              <h3 className="font-cinzel font-semibold text-white mb-4">Kontaktai</h3>
+              <h3 className="font-cinzel font-semibold text-white mb-4 text-lg md:text-base">Kontaktai</h3>
               <div className="flex items-center gap-4 mb-4">
                 <motion.a
                   href="#"
@@ -87,7 +87,7 @@ export function Footer() {
                 </motion.a>
               </div>
 
-              <div className="flex items-center gap-2 text-sm text-gray-500">
+              <div className="flex items-center gap-2 text-base md:text-sm text-gray-500">
                 <span>Sukurta su</span>
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
@@ -101,17 +101,17 @@ export function Footer() {
           </div>
 
           {/* Bottom bar */}
-          <div className="mt-6 pt-4 border-t border-gray-800">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-600">
+          <div className="mt-8 md:mt-6 pt-6 md:pt-4 border-t border-gray-800">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm md:text-xs text-gray-500">
               <p>© {new Date().getFullYear()} Runų Būrimas. Visos teisės saugomos.</p>
               <div className="flex items-center gap-4">
-                <a href="#" className="hover:text-gray-400 transition-colors">
+                <Link to="/privacy" className="hover:text-gray-400 transition-colors hover:underline underline-offset-4">
                   Privatumo politika
-                </a>
-                <span className="text-gray-800">|</span>
-                <a href="#" className="hover:text-gray-400 transition-colors">
+                </Link>
+                <span className="text-gray-700">|</span>
+                <Link to="/terms" className="hover:text-gray-400 transition-colors hover:underline underline-offset-4">
                   Naudojimo sąlygos
-                </a>
+                </Link>
               </div>
             </div>
           </div>

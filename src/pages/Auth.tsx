@@ -1,22 +1,29 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { Mail } from 'lucide-react'
 import { LoginForm } from '../components/auth/LoginForm'
 import { SignupForm } from '../components/auth/SignupForm'
 import { useAuth } from '../hooks/useAuth'
+import { Button } from '../components/common/Button'
+import { Input } from '../components/common/Input'
+import { useToast } from '../components/common/Toast'
 
 export function Auth() {
   const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>('login')
   const { signIn, signUp, resetPassword } = useAuth()
   const navigate = useNavigate()
+  const toast = useToast()
 
   const handleLogin = async (email: string, password: string) => {
     await signIn(email, password)
+    toast.success('Sėkmingai prisijungta!')
     navigate('/')
   }
 
   const handleSignup = async (email: string, password: string) => {
     await signUp(email, password)
+    toast.success('Registracija sėkminga! Patikrinkite el. paštą.')
   }
 
   const handleForgotPassword = async (email: string) => {
@@ -72,27 +79,24 @@ export function Auth() {
                 const email = (form.elements.namedItem('email') as HTMLInputElement).value
                 try {
                   await handleForgotPassword(email)
-                  alert('Patikrinkite savo el. paštą!')
+                  toast.success('Patikrinkite savo el. paštą!')
                   setMode('login')
                 } catch {
-                  alert('Klaida siunčiant el. laišką')
+                  toast.error('Klaida siunčiant el. laišką')
                 }
               }}
               className="space-y-4"
             >
-              <input
+              <Input
                 type="email"
                 name="email"
                 placeholder="jusu@email.lt"
+                leftIcon={<Mail className="w-5 h-5" />}
                 required
-                className="w-full bg-gray-800/50 border border-gray-700 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-colors"
               />
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-purple-800 via-purple-700 to-violet-600 hover:from-purple-700 hover:via-purple-600 hover:to-violet-500 text-amber-100 font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg shadow-purple-900/30 border border-amber-600/20"
-              >
+              <Button type="submit" size="lg" className="w-full">
                 Siųsti nuorodą
-              </button>
+              </Button>
             </form>
             <button
               onClick={() => setMode('login')}

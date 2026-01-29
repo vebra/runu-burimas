@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Header } from './components/layout/Header'
 import { Footer } from './components/layout/Footer'
 import { AnimatedBackground } from './components/common/AnimatedBackground'
+import { ToastProvider } from './components/common/Toast'
 import { useAuth } from './hooks/useAuth'
 
 // Lazy load pages for better performance
@@ -17,6 +18,9 @@ const RuneConverter = lazy(() => import('./pages/RuneConverter').then(m => ({ de
 const Profile = lazy(() => import('./pages/Profile').then(m => ({ default: m.Profile })))
 const Auth = lazy(() => import('./pages/Auth').then(m => ({ default: m.Auth })))
 const YesNoRune = lazy(() => import('./pages/YesNoRune').then(m => ({ default: m.YesNoRune })))
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy').then(m => ({ default: m.PrivacyPolicy })))
+const TermsOfService = lazy(() => import('./pages/TermsOfService').then(m => ({ default: m.TermsOfService })))
+const NotFound = lazy(() => import('./pages/NotFound').then(m => ({ default: m.NotFound })))
 
 // Magical loading fallback component
 function PageLoader() {
@@ -87,6 +91,9 @@ function AppContent() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/yes-no" element={<YesNoRune />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfService />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
         </main>
@@ -99,7 +106,9 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <ToastProvider>
+        <AppContent />
+      </ToastProvider>
     </BrowserRouter>
   )
 }

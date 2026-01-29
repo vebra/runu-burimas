@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, Loader2, RotateCcw, Crown, BookOpen, Save } from 'lucide-react'
+import { Sparkles, RotateCcw, Crown, BookOpen, Save, Loader2 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { useRunes, useDivinations } from '../hooks/useRunes'
 import { Link } from 'react-router-dom'
 import type { Rune } from '../types/database'
+import { Button } from '../components/common/Button'
+import { useToast } from '../components/common/Toast'
 
 type Position = 'center' | 'top' | 'bottom' | 'left' | 'right'
 
@@ -39,6 +41,7 @@ export function FiveRuneCross() {
 
   // Check if user has premium access (placeholder - will be replaced with real check)
   const hasPremium = true // TODO: Replace with actual premium check
+  const toast = useToast()
 
   useEffect(() => {
     if (drawnRunes.length === 5 && revealedPositions.size === 5) {
@@ -67,9 +70,11 @@ export function FiveRuneCross() {
       )
       if (result?.id) {
         setDivinationId(result.id)
+        toast.success('Būrimas išsaugotas!')
       }
     } catch (error) {
       console.error('Error saving divination:', error)
+      toast.error('Nepavyko išsaugoti būrimo')
     }
     setSaving(false)
   }
@@ -80,8 +85,10 @@ export function FiveRuneCross() {
     setSavingNotes(true)
     try {
       await updateDivinationNotes(divinationId, notes)
+      toast.success('Dienoraštis išsaugotas!')
     } catch (error) {
       console.error('Error saving notes:', error)
+      toast.error('Nepavyko išsaugoti dienoraščio')
     }
     setSavingNotes(false)
   }
@@ -209,7 +216,7 @@ export function FiveRuneCross() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
-          style={{ marginBottom: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}
+          style={{ marginBottom: '3rem', marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}
         >
           <div className="flex items-center justify-center gap-4">
             <Crown className="w-10 h-10 text-amber-400" />
@@ -249,16 +256,15 @@ export function FiveRuneCross() {
                 rows={5}
                 style={{ marginBottom: '2rem', padding: '1.5rem' }}
               />
-              <motion.button
-                onClick={handleDrawRunes}
-                disabled={!question.trim()}
+              <motion.div
                 whileHover={{ scale: question.trim() ? 1.05 : 1 }}
                 whileTap={{ scale: question.trim() ? 0.95 : 1 }}
-                className="bg-linear-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 flex items-center gap-2 shadow-lg shadow-amber-900/30 border border-amber-400/20"
               >
-                <Crown className="w-5 h-5" />
-                Traukti 5 Runas
-              </motion.button>
+                <Button onClick={handleDrawRunes} disabled={!question.trim()} variant="gold" size="lg">
+                  <Crown className="w-5 h-5" />
+                  Traukti 5 Runas
+                </Button>
+              </motion.div>
             </div>
             </div>
           </motion.div>
@@ -503,29 +509,24 @@ export function FiveRuneCross() {
                     className="w-full bg-gray-900/50 border-2 border-gray-700 rounded-lg p-6 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50 transition-colors resize-none text-xl shadow-lg"
                     style={{ height: '200px', boxShadow: '0 0 20px rgba(107, 114, 128, 0.2)' }}
                   />
-                  <button
+                  <Button
                     onClick={handleSaveNotes}
-                    disabled={savingNotes || !divinationId}
-                    className="bg-amber-700 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50 border-2 border-amber-600/30 shadow-lg"
-                    style={{ marginTop: '1.5rem', padding: '0.75rem 1.5rem', fontSize: '1rem', boxShadow: '0 0 20px rgba(217, 119, 6, 0.2)' }}
+                    disabled={!divinationId}
+                    loading={savingNotes}
+                    variant="secondary"
+                    size="lg"
+                    className="mt-6"
                   >
-                    {savingNotes ? (
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                    ) : (
-                      <Save className="w-5 h-5" />
-                    )}
+                    <Save className="w-5 h-5" />
                     Išsaugoti Dienoraštį
-                  </button>
+                  </Button>
                 </div>
 
-                <div className="flex justify-center" style={{ paddingTop: '2rem' }}>
-                  <button
-                    onClick={reset}
-                    className="flex items-center gap-3 text-purple-400 hover:text-purple-300 transition-colors text-xl font-semibold"
-                  >
+                <div className="flex justify-center pt-8">
+                  <Button onClick={reset} variant="ghost" size="lg">
                     <RotateCcw className="w-6 h-6" />
                     Naujas būrimas
-                  </button>
+                  </Button>
                 </div>
 
                 {saving && (

@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useFavorites, useDivinations } from '../hooks/useRunes'
 import { supabase } from '../lib/supabase'
+import { Button } from '../components/common/Button'
+import { useToast } from '../components/common/Toast'
 
 interface Stats {
   totalDailyRunes: number
@@ -83,12 +85,16 @@ export function Profile() {
     loadData()
   }, [user, fetchFavorites, fetchDivinations])
 
+  const toast = useToast()
+
   const handleSignOut = async () => {
     try {
       await signOut()
+      toast.info('Atsijungta')
       navigate('/')
     } catch (error) {
       console.error('Error signing out:', error)
+      toast.error('Klaida atsijungiant')
     }
   }
 
@@ -138,7 +144,7 @@ export function Profile() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
-          style={{ marginBottom: '2.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
+          style={{ marginBottom: '2.5rem', marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
         >
           <div className="w-20 h-20 bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 rounded-full flex items-center justify-center shadow-lg shadow-purple-900/40 border border-amber-600/30">
             <User className="w-10 h-10 text-white" />
@@ -309,15 +315,12 @@ export function Profile() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
-          <motion.button
-            onClick={handleSignOut}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-amber-100 py-3 px-6 rounded-xl transition-colors border border-amber-600/30 hover:border-amber-500/50"
-          >
-            <LogOut className="w-5 h-5" />
-            Atsijungti
-          </motion.button>
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Button onClick={handleSignOut} variant="secondary" size="lg" className="w-full rounded-xl">
+              <LogOut className="w-5 h-5" />
+              Atsijungti
+            </Button>
+          </motion.div>
         </motion.div>
       </div>
     </div>

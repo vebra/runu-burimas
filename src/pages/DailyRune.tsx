@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, Save, Loader2, BookOpen } from 'lucide-react'
+import { Sparkles, Save, BookOpen } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { useRunes, useDailyRune } from '../hooks/useRunes'
 import { Link } from 'react-router-dom'
 import type { Rune } from '../types/database'
+import { Button } from '../components/common/Button'
+import { useToast } from '../components/common/Toast'
 
 export function DailyRune() {
   const { user } = useAuth()
@@ -56,14 +58,18 @@ export function DailyRune() {
     setIsDrawing(false)
   }
 
+  const toast = useToast()
+
   const handleSaveReflection = async () => {
     if (!todayRune) return
 
     setSaving(true)
     try {
       await updateReflection(todayRune.id, reflection)
+      toast.success('Refleksija išsaugota!')
     } catch (error) {
       console.error('Error saving reflection:', error)
+      toast.error('Nepavyko išsaugoti refleksijos')
     }
     setSaving(false)
   }
@@ -74,8 +80,10 @@ export function DailyRune() {
     setSavingNotes(true)
     try {
       await updateNotes(todayRune.id, notes)
+      toast.success('Dienoraštis išsaugotas!')
     } catch (error) {
       console.error('Error saving notes:', error)
+      toast.error('Nepavyko išsaugoti dienoraščio')
     }
     setSavingNotes(false)
   }
@@ -126,7 +134,7 @@ export function DailyRune() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
-          style={{ marginBottom: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}
+          style={{ marginBottom: '3rem', marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}
         >
           <h1 className="text-4xl md:text-5xl font-cinzel font-bold text-white">
             Kasdienė Runa
@@ -148,16 +156,17 @@ export function DailyRune() {
             animate={{ opacity: 1 }}
             className="flex flex-col items-center"
           >
-            <motion.button
-              onClick={handleDrawRune}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 hover:from-purple-700 hover:via-purple-600 hover:to-violet-500 text-amber-100 font-semibold rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-lg shadow-purple-900/30 border border-amber-600/20"
-              style={{ padding: '1.25rem 2rem', fontSize: '1.25rem', boxShadow: '0 0 30px rgba(147, 51, 234, 0.3)' }}
-            >
-              <Sparkles className="w-7 h-7" />
-              Traukti Runą
-            </motion.button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                onClick={handleDrawRune}
+                size="xl"
+                className="rounded-xl"
+                style={{ boxShadow: '0 0 30px rgba(147, 51, 234, 0.3)' }}
+              >
+                <Sparkles className="w-7 h-7" />
+                Traukti Runą
+              </Button>
+            </motion.div>
           </motion.div>
         )}
 
@@ -321,19 +330,15 @@ export function DailyRune() {
                     className="w-full bg-gray-900/50 border-2 border-gray-700 rounded-lg p-6 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50 transition-colors resize-none text-xl shadow-lg"
                     style={{ height: '150px', boxShadow: '0 0 20px rgba(107, 114, 128, 0.2)' }}
                   />
-                  <button
+                  <Button
                     onClick={handleSaveReflection}
-                    disabled={saving}
-                    className="bg-purple-700 hover:bg-purple-600 text-amber-100 font-medium rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50 border-2 border-amber-600/30 shadow-lg"
-                    style={{ marginTop: '1.5rem', padding: '0.75rem 1.5rem', fontSize: '1rem', boxShadow: '0 0 20px rgba(147, 51, 234, 0.2)' }}
+                    loading={saving}
+                    size="lg"
+                    className="mt-6"
                   >
-                    {saving ? (
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                    ) : (
-                      <Save className="w-5 h-5" />
-                    )}
+                    <Save className="w-5 h-5" />
                     Išsaugoti
-                  </button>
+                  </Button>
                 </div>
 
                 {/* Dienoraštis */}
@@ -354,19 +359,16 @@ export function DailyRune() {
                     className="w-full bg-gray-900/50 border-2 border-gray-700 rounded-lg p-6 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50 transition-colors resize-none text-xl shadow-lg"
                     style={{ height: '200px', boxShadow: '0 0 20px rgba(107, 114, 128, 0.2)' }}
                   />
-                  <button
+                  <Button
                     onClick={handleSaveNotes}
-                    disabled={savingNotes}
-                    className="bg-amber-700 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50 border-2 border-amber-600/30 shadow-lg"
-                    style={{ marginTop: '1.5rem', padding: '0.75rem 1.5rem', fontSize: '1rem', boxShadow: '0 0 20px rgba(217, 119, 6, 0.2)' }}
+                    loading={savingNotes}
+                    variant="secondary"
+                    size="lg"
+                    className="mt-6"
                   >
-                    {savingNotes ? (
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                    ) : (
-                      <Save className="w-5 h-5" />
-                    )}
+                    <Save className="w-5 h-5" />
                     Išsaugoti Dienoraštį
-                  </button>
+                  </Button>
                 </div>
               </motion.div>
             )}
