@@ -99,62 +99,145 @@ export function Home() {
     offset: ['start start', 'end start'],
   })
 
+  // Multiple parallax layers with different speeds
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
   const heroY = useTransform(scrollYProgress, [0, 0.5], [0, 100])
+
+  // Slow parallax for background elements
+  const bgLayer1Y = useTransform(scrollYProgress, [0, 1], [0, 150])
+  const bgLayer2Y = useTransform(scrollYProgress, [0, 1], [0, 100])
+  const bgLayer3Y = useTransform(scrollYProgress, [0, 1], [0, 50])
+
+  // Rune circle rotation based on scroll
+  const runeCircleRotate = useTransform(scrollYProgress, [0, 1], [0, 180])
+  const runeCircleScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
+  const runeCircleOpacity = useTransform(scrollYProgress, [0, 0.4], [0.3, 0])
+  const innerRingRotate = useTransform(scrollYProgress, [0, 1], [0, -120])
 
   return (
     <div className="min-h-screen w-full" style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
       {/* Hero Section with Parallax */}
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-linear-to-b from-purple-900/30 via-purple-800/10 to-transparent" />
+        {/* Parallax Background Layer 1 - Slowest */}
+        <motion.div
+          style={{ y: bgLayer1Y }}
+          className="absolute inset-0 bg-linear-to-b from-purple-900/40 via-purple-800/20 to-transparent"
+        />
 
-        {/* Floating decorative elements */}
+        {/* Parallax Background Layer 2 - Medium */}
         <motion.div
-          className="absolute top-20 left-10 text-6xl text-amber-500/20"
-          animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          style={{ y: bgLayer2Y }}
+          className="absolute inset-0"
         >
-          ᚠ
-        </motion.div>
-        <motion.div
-          className="absolute top-40 right-20 text-5xl text-purple-400/20"
-          animate={{ y: [0, 20, 0], rotate: [0, -5, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-        >
-          ᛟ
-        </motion.div>
-        <motion.div
-          className="absolute bottom-40 left-20 text-4xl text-amber-400/15"
-          animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-        >
-          ᚱ
-        </motion.div>
-        <motion.div
-          className="absolute bottom-20 right-10 text-5xl text-purple-300/15"
-          animate={{ y: [0, 15, 0], rotate: [0, -8, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-        >
-          ᛗ
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl" />
         </motion.div>
 
-        {/* Moon decoration */}
+        {/* Mystical Rotating Rune Circle - Scroll-based rotation */}
         <motion.div
-          className="absolute top-32 right-1/4 hidden lg:block"
-          animate={{ scale: [1, 1.05, 1], opacity: [0.6, 0.8, 0.6] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          style={{
+            rotate: runeCircleRotate,
+            scale: runeCircleScale,
+            opacity: runeCircleOpacity,
+          }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
         >
-          <Moon className="w-16 h-16 text-amber-200/30" />
+          <div className="relative w-[600px] h-[600px] md:w-[800px] md:h-[800px]">
+            {/* Outer rune ring */}
+            {['ᚠ', 'ᚢ', 'ᚦ', 'ᚨ', 'ᚱ', 'ᚲ', 'ᚷ', 'ᚹ', 'ᚺ', 'ᚾ', 'ᛁ', 'ᛃ'].map((rune, i) => (
+              <span
+                key={`outer-${i}`}
+                className="absolute text-3xl md:text-4xl text-amber-500/20"
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  transform: `rotate(${i * 30}deg) translateY(-280px) translateX(-50%)`,
+                }}
+              >
+                {rune}
+              </span>
+            ))}
+            {/* Inner rune ring - counter rotation */}
+            <motion.div
+              style={{ rotate: innerRingRotate }}
+              className="absolute inset-0"
+            >
+              {['ᛇ', 'ᛈ', 'ᛉ', 'ᛊ', 'ᛏ', 'ᛒ', 'ᛖ', 'ᛗ'].map((rune, i) => (
+                <span
+                  key={`inner-${i}`}
+                  className="absolute text-2xl md:text-3xl text-purple-400/15"
+                  style={{
+                    left: '50%',
+                    top: '50%',
+                    transform: `rotate(${i * 45}deg) translateY(-180px) translateX(-50%)`,
+                  }}
+                >
+                  {rune}
+                </span>
+              ))}
+            </motion.div>
+            {/* Center glow */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-32 h-32 bg-purple-500/10 rounded-full blur-2xl" />
+            </div>
+          </div>
         </motion.div>
 
-        {/* Stars decoration */}
-        <motion.div
-          className="absolute top-1/4 left-1/4 hidden lg:block"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <Star className="w-8 h-8 text-amber-300/40 fill-amber-300/20" />
+        {/* Parallax Floating decorative elements - Layer 3 */}
+        <motion.div style={{ y: bgLayer3Y }} className="absolute inset-0">
+          <motion.div
+            className="absolute top-20 left-10 text-6xl text-amber-500/25"
+            animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            ᚠ
+          </motion.div>
+          <motion.div
+            className="absolute top-40 right-20 text-5xl text-purple-400/25"
+            animate={{ y: [0, 20, 0], rotate: [0, -5, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          >
+            ᛟ
+          </motion.div>
+          <motion.div
+            className="absolute bottom-40 left-20 text-4xl text-amber-400/20"
+            animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+          >
+            ᚱ
+          </motion.div>
+          <motion.div
+            className="absolute bottom-20 right-10 text-5xl text-purple-300/20"
+            animate={{ y: [0, 15, 0], rotate: [0, -8, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+          >
+            ᛗ
+          </motion.div>
+
+          {/* Moon decoration with parallax */}
+          <motion.div
+            className="absolute top-32 right-1/4 hidden lg:block"
+            animate={{ scale: [1, 1.05, 1], opacity: [0.6, 0.8, 0.6] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <Moon className="w-16 h-16 text-amber-200/40" />
+          </motion.div>
+
+          {/* Stars decoration with parallax */}
+          <motion.div
+            className="absolute top-1/4 left-1/4 hidden lg:block"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <Star className="w-8 h-8 text-amber-300/50 fill-amber-300/30" />
+          </motion.div>
+          <motion.div
+            className="absolute top-1/3 right-1/3 hidden lg:block"
+            animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          >
+            <Star className="w-6 h-6 text-purple-300/40 fill-purple-300/20" />
+          </motion.div>
         </motion.div>
 
         <motion.div
