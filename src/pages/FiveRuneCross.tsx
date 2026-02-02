@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Sparkles, RotateCcw, Crown, BookOpen, Save, Loader2 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { useRunes, useDivinations } from '../hooks/useRunes'
@@ -9,6 +9,7 @@ import { Button } from '../components/common/Button'
 import { useToast } from '../components/common/Toast'
 import { AIInterpretation } from '../components/common/AIInterpretation'
 import { useAIInterpretation } from '../hooks/useAIInterpretation'
+import { RuneCard } from '../components/common/RuneCard'
 
 type Position = 'center' | 'top' | 'bottom' | 'left' | 'right'
 
@@ -347,52 +348,17 @@ export function FiveRuneCross() {
                 return (
                   <div
                     key={position}
-                    className="absolute flex flex-col items-center"
+                    className="absolute"
                     style={positionStyles[position]}
                   >
-                    <span className="text-xs sm:text-sm md:text-base text-purple-300 mb-2 sm:mb-3 font-semibold text-center max-w-20 sm:max-w-28 md:max-w-none">
-                      {positionLabels[position].label}
-                    </span>
-
-                    <AnimatePresence mode="wait">
-                      {!isRevealed ? (
-                        <motion.button
-                          key="hidden"
-                          initial={{ rotateY: 0 }}
-                          exit={{ rotateY: 90 }}
-                          onClick={() => revealRune(position)}
-                          className="w-20 h-28 sm:w-24 sm:h-36 md:w-28 md:h-40 bg-linear-to-br from-gray-800 via-purple-950/30 to-gray-900 border-2 border-amber-600/50 rounded-xl flex flex-col items-center justify-center hover:border-amber-500 transition-colors cursor-pointer shadow-lg"
-                          style={{ boxShadow: '0 0 25px rgba(217, 119, 6, 0.2)' }}
-                          whileHover={{ scale: 1.05 }}
-                        >
-                          <span className="text-3xl sm:text-4xl md:text-5xl text-amber-500/50">?</span>
-                          <span className="text-amber-300/50 text-sm mt-2">Paspausk</span>
-                        </motion.button>
-                      ) : (
-                        <motion.div
-                          key="revealed"
-                          initial={{ rotateY: -90 }}
-                          animate={{ rotateY: 0 }}
-                          className="w-20 h-28 sm:w-24 sm:h-36 md:w-28 md:h-40 bg-linear-to-br from-gray-800 via-purple-950/30 to-gray-900 border-2 border-amber-600/30 rounded-xl flex flex-col items-center justify-center shadow-lg"
-                          style={{ boxShadow: '0 0 25px rgba(217, 119, 6, 0.2)' }}
-                        >
-                          <motion.span
-                            className="text-4xl sm:text-5xl md:text-6xl text-amber-400 animate-glow"
-                            style={{
-                              transform: drawn.orientation === 'reversed' ? 'rotate(180deg)' : 'none',
-                            }}
-                          >
-                            {drawn.rune.symbol}
-                          </motion.span>
-                          <span className="text-white font-cinzel text-base mt-2 text-center px-2">
-                            {drawn.rune.name}
-                          </span>
-                          {drawn.orientation === 'reversed' && (
-                            <span className="text-sm text-red-400">(Apversta)</span>
-                          )}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    <RuneCard
+                      rune={drawn.rune}
+                      orientation={drawn.orientation}
+                      revealed={isRevealed}
+                      onReveal={() => revealRune(position)}
+                      label={positionLabels[position].label}
+                      size="sm"
+                    />
                   </div>
                 )
               })}

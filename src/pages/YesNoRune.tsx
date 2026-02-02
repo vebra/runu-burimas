@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Sparkles, RotateCcw, ThumbsUp, ThumbsDown, Minus } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
@@ -8,6 +8,7 @@ import type { Rune } from '../types/database'
 import { Button } from '../components/common/Button'
 import { AIInterpretation } from '../components/common/AIInterpretation'
 import { useAIInterpretation } from '../hooks/useAIInterpretation'
+import { RuneCard } from '../components/common/RuneCard'
 
 type Answer = 'yes' | 'no' | 'maybe'
 
@@ -271,45 +272,13 @@ export function YesNoRune() {
 
             {/* Runa */}
             <div className="flex justify-center mb-8">
-              <AnimatePresence mode="wait">
-                {!isRevealed ? (
-                  <motion.button
-                    key="hidden"
-                    initial={{ rotateY: 0 }}
-                    exit={{ rotateY: 90 }}
-                    onClick={() => setIsRevealed(true)}
-                    className="w-32 h-48 bg-linear-to-br from-gray-800 via-purple-950/30 to-gray-900 border-2 border-amber-600/50 rounded-xl flex flex-col items-center justify-center hover:border-amber-500 transition-colors cursor-pointer shadow-lg"
-                    style={{ boxShadow: '0 0 30px rgba(217, 119, 6, 0.3)' }}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <span className="text-5xl text-amber-500/50">?</span>
-                    <span className="text-amber-300/50 text-sm mt-2">Paspausk</span>
-                  </motion.button>
-                ) : (
-                  <motion.div
-                    key="revealed"
-                    initial={{ rotateY: -90 }}
-                    animate={{ rotateY: 0 }}
-                    className="w-32 h-48 bg-linear-to-br from-gray-800 via-purple-950/30 to-gray-900 border-2 border-amber-600/30 rounded-xl flex flex-col items-center justify-center shadow-lg"
-                    style={{ boxShadow: '0 0 30px rgba(217, 119, 6, 0.3)' }}
-                  >
-                    <motion.span
-                      className="text-6xl text-amber-400 animate-glow"
-                      style={{
-                        transform: result.orientation === 'reversed' ? 'rotate(180deg)' : 'none',
-                      }}
-                    >
-                      {result.rune.symbol}
-                    </motion.span>
-                    <span className="text-white font-cinzel text-base mt-2">
-                      {result.rune.name}
-                    </span>
-                    {result.orientation === 'reversed' && (
-                      <span className="text-sm text-red-400">(Apversta)</span>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <RuneCard
+                rune={result.rune}
+                orientation={result.orientation}
+                revealed={isRevealed}
+                onReveal={() => setIsRevealed(true)}
+                size="md"
+              />
             </div>
 
             {/* Atsakymas - tik kai atversta */}

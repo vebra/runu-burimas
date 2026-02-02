@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { RotateCcw, Crown, Compass, BookOpen, Save, Loader2 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { useRunes, useDivinations } from '../hooks/useRunes'
@@ -9,6 +9,7 @@ import { Button } from '../components/common/Button'
 import { useToast } from '../components/common/Toast'
 import { AIInterpretation } from '../components/common/AIInterpretation'
 import { useAIInterpretation } from '../hooks/useAIInterpretation'
+import { RuneCard } from '../components/common/RuneCard'
 
 type Position = 'self' | 'foundation' | 'past' | 'future' | 'obstacles' | 'help' | 'outcome'
 
@@ -373,52 +374,17 @@ export function SevenRuneMap() {
                 return (
                   <div
                     key={position}
-                    className="absolute flex flex-col items-center"
+                    className="absolute"
                     style={positionStyle}
                   >
-                    <span className="text-xs sm:text-sm md:text-base text-purple-300 mb-2 sm:mb-3 font-semibold text-center max-w-16 sm:max-w-24 md:max-w-36">
-                      {positionLabels[position].emoji} {positionLabels[position].label}
-                    </span>
-
-                    <AnimatePresence mode="wait">
-                      {!isRevealed ? (
-                        <motion.button
-                          key="hidden"
-                          initial={{ rotateY: 0 }}
-                          exit={{ rotateY: 90 }}
-                          onClick={() => revealRune(position)}
-                          className={`${isCenterRune ? 'w-20 h-28 sm:w-24 sm:h-36 md:w-32 md:h-44' : 'w-16 h-24 sm:w-20 sm:h-28 md:w-24 md:h-36'} bg-linear-to-br from-gray-800 via-purple-950/30 to-gray-900 border-2 ${isCenterRune ? 'border-purple-500/50' : 'border-amber-600/50'} rounded-xl flex flex-col items-center justify-center hover:border-amber-500 transition-colors cursor-pointer shadow-lg`}
-                          style={{ boxShadow: isCenterRune ? '0 0 30px rgba(147, 51, 234, 0.3)' : '0 0 25px rgba(217, 119, 6, 0.2)' }}
-                          whileHover={{ scale: 1.05 }}
-                        >
-                          <span className={`${isCenterRune ? 'text-4xl sm:text-5xl md:text-6xl' : 'text-3xl sm:text-4xl md:text-5xl'} text-amber-500/50`}>?</span>
-                          <span className="text-amber-300/50 text-sm mt-2">Paspausk</span>
-                        </motion.button>
-                      ) : (
-                        <motion.div
-                          key="revealed"
-                          initial={{ rotateY: -90 }}
-                          animate={{ rotateY: 0 }}
-                          className={`${isCenterRune ? 'w-20 h-28 sm:w-24 sm:h-36 md:w-32 md:h-44' : 'w-16 h-24 sm:w-20 sm:h-28 md:w-24 md:h-36'} bg-linear-to-br from-gray-800 via-purple-950/30 to-gray-900 border-2 ${isCenterRune ? 'border-purple-500/40' : 'border-amber-600/30'} rounded-xl flex flex-col items-center justify-center shadow-lg`}
-                          style={{ boxShadow: isCenterRune ? '0 0 30px rgba(147, 51, 234, 0.3)' : '0 0 25px rgba(217, 119, 6, 0.2)' }}
-                        >
-                          <motion.span
-                            className={`${isCenterRune ? 'text-4xl sm:text-5xl md:text-7xl' : 'text-3xl sm:text-4xl md:text-5xl'} text-amber-400 animate-glow`}
-                            style={{
-                              transform: drawn.orientation === 'reversed' ? 'rotate(180deg)' : 'none',
-                            }}
-                          >
-                            {drawn.rune.symbol}
-                          </motion.span>
-                          <span className={`text-white font-cinzel ${isCenterRune ? 'text-lg' : 'text-base'} mt-2 text-center px-2`}>
-                            {drawn.rune.name}
-                          </span>
-                          {drawn.orientation === 'reversed' && (
-                            <span className="text-sm text-red-400">(Apversta)</span>
-                          )}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    <RuneCard
+                      rune={drawn.rune}
+                      orientation={drawn.orientation}
+                      revealed={isRevealed}
+                      onReveal={() => revealRune(position)}
+                      label={`${positionLabels[position].emoji} ${positionLabels[position].label}`}
+                      size={isCenterRune ? 'md' : 'sm'}
+                    />
                   </div>
                 )
               })}

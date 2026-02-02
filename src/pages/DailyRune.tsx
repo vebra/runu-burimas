@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Sparkles, Save, BookOpen } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { useRunes, useDailyRune } from '../hooks/useRunes'
@@ -9,6 +9,7 @@ import { Button } from '../components/common/Button'
 import { useToast } from '../components/common/Toast'
 import { AIInterpretation } from '../components/common/AIInterpretation'
 import { useAIInterpretation } from '../hooks/useAIInterpretation'
+import { RuneCard } from '../components/common/RuneCard'
 
 export function DailyRune() {
   const { user } = useAuth()
@@ -240,50 +241,14 @@ export function DailyRune() {
         {displayedRune && !isDrawing && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <div className="flex justify-center mb-12">
-              <div className="flex flex-col items-center">
-                <span className="text-base text-amber-400 mb-3 font-medium">
-                  Šios dienos runa
-                </span>
-
-                <AnimatePresence mode="wait">
-                  {!isRevealed ? (
-                    <motion.button
-                      key="hidden"
-                      initial={{ rotateY: 0 }}
-                      exit={{ rotateY: 90 }}
-                      onClick={() => setIsRevealed(true)}
-                      className="w-36 h-52 bg-linear-to-br from-gray-800 via-purple-950/30 to-gray-900 border-2 border-amber-600/50 rounded-xl flex flex-col items-center justify-center hover:border-amber-500 transition-colors cursor-pointer shadow-lg"
-                      style={{ boxShadow: '0 0 25px rgba(217, 119, 6, 0.2)' }}
-                    >
-                      <span className="text-5xl text-amber-500/50">?</span>
-                      <span className="text-amber-300/50 text-sm mt-3">Paspausk</span>
-                    </motion.button>
-                  ) : (
-                    <motion.div
-                      key="revealed"
-                      initial={{ rotateY: -90 }}
-                      animate={{ rotateY: 0 }}
-                      className="w-36 h-52 bg-linear-to-br from-gray-800 via-purple-950/30 to-gray-900 border-2 border-amber-600/30 rounded-xl flex flex-col items-center justify-center shadow-lg"
-                      style={{ boxShadow: '0 0 25px rgba(217, 119, 6, 0.2)' }}
-                    >
-                      <motion.span
-                        className="text-6xl text-amber-400 animate-glow"
-                        style={{
-                          transform: displayedOrientation === 'reversed' ? 'rotate(180deg)' : 'none',
-                        }}
-                      >
-                        {displayedRune.symbol}
-                      </motion.span>
-                      <span className="text-white font-cinzel text-base mt-3">
-                        {displayedRune.name}
-                      </span>
-                      {displayedOrientation === 'reversed' && (
-                        <span className="text-sm text-red-400">(Apversta)</span>
-                      )}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+              <RuneCard
+                rune={displayedRune}
+                orientation={displayedOrientation}
+                revealed={isRevealed}
+                onReveal={() => setIsRevealed(true)}
+                label="Šios dienos runa"
+                size="lg"
+              />
             </div>
 
             {/* Interpretacija - tik kai atversta */}

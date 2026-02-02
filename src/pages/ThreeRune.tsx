@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Sparkles, RotateCcw, BookOpen, Save, Loader2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
@@ -10,6 +10,7 @@ import { Textarea } from '../components/common/Input'
 import { useToast } from '../components/common/Toast'
 import { AIInterpretation } from '../components/common/AIInterpretation'
 import { useAIInterpretation } from '../hooks/useAIInterpretation'
+import { RuneCard } from '../components/common/RuneCard'
 
 interface DrawnRune {
   rune: Rune
@@ -271,51 +272,17 @@ export function ThreeRune() {
 
         {drawnRunes.length > 0 && !isDrawing && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <div className="grid grid-cols-3 gap-8 md:gap-16 mb-12 justify-items-center">
+            <div className="grid grid-cols-3 gap-4 md:gap-12 mb-12 justify-items-center">
               {drawnRunes.map((drawn, index) => (
-                <div key={index} className="flex flex-col items-center">
-                  <span className="text-sm text-amber-400 mb-2 font-medium">
-                    {positionLabels[drawn.position].label}
-                  </span>
-
-                  <AnimatePresence mode="wait">
-                    {!drawn.revealed ? (
-                      <motion.button
-                        key="hidden"
-                        initial={{ rotateY: 0 }}
-                        exit={{ rotateY: 90 }}
-                        onClick={() => revealRune(index)}
-                        className="w-28 h-44 md:w-36 md:h-52 bg-linear-to-br from-gray-800 to-gray-900 border-2 border-purple-500/50 rounded-xl flex items-center justify-center hover:border-purple-400 transition-colors cursor-pointer shadow-lg"
-                        style={{ boxShadow: '0 0 25px rgba(147, 51, 234, 0.3)' }}
-                      >
-                        <span className="text-5xl text-purple-500/50">?</span>
-                      </motion.button>
-                    ) : (
-                      <motion.div
-                        key="revealed"
-                        initial={{ rotateY: -90 }}
-                        animate={{ rotateY: 0 }}
-                        className="w-28 h-44 md:w-36 md:h-52 bg-linear-to-br from-gray-800 to-gray-900 border-2 border-amber-600/30 rounded-xl flex flex-col items-center justify-center shadow-lg"
-                        style={{ boxShadow: '0 0 25px rgba(217, 119, 6, 0.2)' }}
-                      >
-                        <motion.span
-                          className="text-5xl md:text-6xl text-amber-400 animate-glow"
-                          style={{
-                            transform: drawn.orientation === 'reversed' ? 'rotate(180deg)' : 'none',
-                          }}
-                        >
-                          {drawn.rune.symbol}
-                        </motion.span>
-                        <span className="text-white font-cinzel text-sm md:text-base mt-3">
-                          {drawn.rune.name}
-                        </span>
-                        {drawn.orientation === 'reversed' && (
-                          <span className="text-sm text-red-400">(Apversta)</span>
-                        )}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                <RuneCard
+                  key={index}
+                  rune={drawn.rune}
+                  orientation={drawn.orientation}
+                  revealed={drawn.revealed}
+                  onReveal={() => revealRune(index)}
+                  label={positionLabels[drawn.position].label}
+                  size="md"
+                />
               ))}
             </div>
 
