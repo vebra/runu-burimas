@@ -325,6 +325,130 @@ export function Home() {
     <div className="min-h-screen w-full" style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
       {/* Hero Section with Parallax */}
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Aurora Background Effect */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Aurora Layer 1 - Primary wave */}
+          <motion.div
+            className="absolute w-[200%] h-[200%] -top-1/2 -left-1/2"
+            style={{
+              background: `
+                radial-gradient(ellipse 80% 50% at 50% 20%, rgba(120, 0, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 70% 50%, rgba(0, 255, 200, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 70% 50% at 30% 70%, rgba(255, 0, 150, 0.2) 0%, transparent 50%)
+              `,
+            }}
+            animate={{
+              rotate: [0, 360],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              rotate: { duration: 120, repeat: Infinity, ease: 'linear' },
+              scale: { duration: 20, repeat: Infinity, ease: 'easeInOut' },
+            }}
+          />
+
+          {/* Aurora Layer 2 - Secondary flowing wave */}
+          <motion.div
+            className="absolute w-[150%] h-[150%] top-0 left-0"
+            style={{
+              background: `
+                radial-gradient(ellipse 100% 60% at 20% 30%, rgba(147, 51, 234, 0.25) 0%, transparent 60%),
+                radial-gradient(ellipse 80% 50% at 80% 60%, rgba(59, 130, 246, 0.2) 0%, transparent 50%)
+              `,
+              filter: 'blur(40px)',
+            }}
+            animate={{
+              x: [0, 100, 0, -100, 0],
+              y: [0, -50, 0, 50, 0],
+            }}
+            transition={{
+              duration: 30,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+
+          {/* Aurora Layer 3 - Vertical ribbons */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: `
+                linear-gradient(180deg,
+                  transparent 0%,
+                  rgba(147, 51, 234, 0.1) 20%,
+                  rgba(59, 130, 246, 0.15) 35%,
+                  rgba(16, 185, 129, 0.1) 50%,
+                  rgba(147, 51, 234, 0.12) 65%,
+                  rgba(236, 72, 153, 0.08) 80%,
+                  transparent 100%
+                )
+              `,
+              filter: 'blur(60px)',
+            }}
+            animate={{
+              opacity: [0.5, 0.8, 0.5],
+              scaleY: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+
+          {/* Aurora Layer 4 - Dancing curtain effect */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(5)].map((_, i) => (
+              <motion.div
+                key={`aurora-ribbon-${i}`}
+                className="absolute h-full"
+                style={{
+                  left: `${i * 20}%`,
+                  width: '30%',
+                  background: `linear-gradient(180deg,
+                    transparent 0%,
+                    ${i % 2 === 0 ? 'rgba(147, 51, 234, 0.15)' : 'rgba(16, 185, 129, 0.12)'} 30%,
+                    ${i % 2 === 0 ? 'rgba(59, 130, 246, 0.1)' : 'rgba(236, 72, 153, 0.1)'} 60%,
+                    transparent 100%
+                  )`,
+                  filter: 'blur(30px)',
+                }}
+                animate={{
+                  x: [0, 30, -20, 10, 0],
+                  scaleX: [1, 1.3, 0.8, 1.1, 1],
+                  opacity: [0.3, 0.6, 0.4, 0.7, 0.3],
+                }}
+                transition={{
+                  duration: 10 + i * 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: i * 0.5,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Aurora Layer 5 - Top glow horizon */}
+          <motion.div
+            className="absolute top-0 left-0 right-0 h-1/2"
+            style={{
+              background: `
+                radial-gradient(ellipse 100% 80% at 50% 0%, rgba(147, 51, 234, 0.3) 0%, transparent 70%),
+                radial-gradient(ellipse 80% 60% at 30% 10%, rgba(59, 130, 246, 0.2) 0%, transparent 60%),
+                radial-gradient(ellipse 80% 60% at 70% 10%, rgba(16, 185, 129, 0.15) 0%, transparent 60%)
+              `,
+            }}
+            animate={{
+              opacity: [0.6, 1, 0.6],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+        </div>
+
         {/* Parallax Background Layer 1 - Slowest */}
         <motion.div
           style={{ y: bgLayer1Y }}
