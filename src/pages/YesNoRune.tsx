@@ -271,7 +271,7 @@ export function YesNoRune() {
             </div>
 
             {/* Runa */}
-            <div className="flex justify-center mb-8">
+            <div className="flex justify-center" style={{ marginBottom: '5rem' }}>
               <RuneCard
                 rune={result.rune}
                 orientation={result.orientation}

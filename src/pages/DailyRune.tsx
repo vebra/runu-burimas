@@ -240,7 +240,7 @@ export function DailyRune() {
         {/* Ištraukta runa */}
         {displayedRune && !isDrawing && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <div className="flex justify-center mb-12">
+            <div className="flex justify-center" style={{ marginBottom: '5rem' }}>
               <RuneCard
                 rune={displayedRune}
                 orientation={displayedOrientation}

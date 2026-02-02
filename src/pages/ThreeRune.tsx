@@ -272,7 +272,7 @@ export function ThreeRune() {
 
         {drawnRunes.length > 0 && !isDrawing && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <div className="grid grid-cols-3 gap-4 md:gap-12 mb-12 justify-items-center">
+            <div className="grid grid-cols-3 gap-4 md:gap-12 justify-items-center" style={{ marginBottom: '5rem' }}>
               {drawnRunes.map((drawn, index) => (
                 <RuneCard
                   key={index}

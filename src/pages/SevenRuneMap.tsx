@@ -343,7 +343,7 @@ export function SevenRuneMap() {
         {drawnRunes.length > 0 && !isDrawing && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             {/* Circular layout */}
-            <div className="flex justify-center mb-12 px-4">
+            <div className="flex justify-center px-4" style={{ marginBottom: '5rem' }}>
             <div className="relative w-full max-w-[700px] aspect-square md:w-[700px] md:h-[700px]">
               {drawnRunes.map((drawn) => {
                 const isRevealed = revealedPositions.has(drawn.position)
