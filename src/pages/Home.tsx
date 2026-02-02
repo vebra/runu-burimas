@@ -340,6 +340,98 @@ export function Home() {
           <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl" />
         </motion.div>
 
+        {/* 1. Particle System - floating magical particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={`particle-${i}`}
+              className="absolute w-1 h-1 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                background: i % 2 === 0 ? 'rgba(251, 191, 36, 0.6)' : 'rgba(167, 139, 250, 0.6)',
+                boxShadow: i % 2 === 0
+                  ? '0 0 6px rgba(251, 191, 36, 0.8)'
+                  : '0 0 6px rgba(167, 139, 250, 0.8)',
+              }}
+              animate={{
+                y: [0, -100, 0],
+                x: [0, Math.random() * 50 - 25, 0],
+                opacity: [0, 1, 0],
+                scale: [0, 1.5, 0],
+              }}
+              transition={{
+                duration: 4 + Math.random() * 4,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+                ease: 'easeInOut',
+              }}
+            />
+          ))}
+        </div>
+
+        {/* 2. Glow Pulses - ambient pulsing orbs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full"
+            style={{
+              background: 'radial-gradient(circle, rgba(147, 51, 234, 0.15) 0%, transparent 70%)',
+            }}
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="absolute bottom-1/3 right-1/4 w-48 h-48 rounded-full"
+            style={{
+              background: 'radial-gradient(circle, rgba(251, 191, 36, 0.12) 0%, transparent 70%)',
+            }}
+            animate={{
+              scale: [1, 1.4, 1],
+              opacity: [0.2, 0.5, 0.2],
+            }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          />
+          <motion.div
+            className="absolute top-1/2 right-1/3 w-32 h-32 rounded-full"
+            style={{
+              background: 'radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%)',
+            }}
+            animate={{
+              scale: [1, 1.5, 1],
+              opacity: [0.2, 0.4, 0.2],
+            }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+          />
+        </div>
+
+        {/* 3. Shimmer Effect - diagonal light sweep */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none overflow-hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+        >
+          <motion.div
+            className="absolute w-[200%] h-full"
+            style={{
+              background: 'linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.03) 55%, transparent 60%)',
+              left: '-100%',
+            }}
+            animate={{
+              left: ['−100%', '100%'],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              repeatDelay: 4,
+              ease: 'easeInOut',
+            }}
+          />
+        </motion.div>
+
         {/* Mystical Rotating Rune Circle - Scroll-based rotation */}
         <motion.div
           style={{
