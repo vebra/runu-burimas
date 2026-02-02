@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react'
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { useState, useRef, useEffect } from 'react'
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion'
 import type { Rune } from '../../types/database'
 
 interface RuneCardProps {
@@ -11,6 +11,30 @@ interface RuneCardProps {
   label?: string
   showName?: boolean
   disabled?: boolean
+}
+
+// Generate particles for burst effect
+const generateParticles = (count: number) => {
+  return Array.from({ length: count }, (_, i) => ({
+    id: i,
+    angle: (i / count) * 360,
+    distance: 80 + Math.random() * 60,
+    size: 3 + Math.random() * 4,
+    delay: Math.random() * 0.1,
+    duration: 0.6 + Math.random() * 0.4,
+  }))
+}
+
+// Generate sparkles for ambient effect
+const generateSparkles = (count: number) => {
+  return Array.from({ length: count }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: 2 + Math.random() * 3,
+    delay: Math.random() * 2,
+    duration: 1 + Math.random() * 1,
+  }))
 }
 
 const sizes = {
@@ -32,6 +56,23 @@ export function RuneCard({
   const cardRef = useRef<HTMLDivElement>(null)
   const [isHovered, setIsHovered] = useState(false)
   const [isFlipping, setIsFlipping] = useState(false)
+  const [showRevealEffects, setShowRevealEffects] = useState(false)
+  const [particles] = useState(() => generateParticles(16))
+  const [sparkles] = useState(() => generateSparkles(8))
+  const [wasRevealed, setWasRevealed] = useState(revealed)
+
+  // Track when card gets revealed to trigger effects
+  useEffect(() => {
+    if (revealed && !wasRevealed) {
+      setShowRevealEffects(true)
+      // Keep effects visible for duration of animation
+      const timer = setTimeout(() => {
+        setShowRevealEffects(false)
+      }, 1500)
+      return () => clearTimeout(timer)
+    }
+    setWasRevealed(revealed)
+  }, [revealed, wasRevealed])
 
   // Mouse position for 3D tilt
   const mouseX = useMotionValue(0)
@@ -80,7 +121,151 @@ export function RuneCard({
         </motion.span>
       )}
 
-      <div style={{ perspective: 1000 }}>
+      <div style={{ perspective: 1000 }} className="relative">
+        {/* Reveal Effects Container */}
+        <AnimatePresence>
+          {showRevealEffects && (
+            <>
+              {/* Energy Wave Rings */}
+              {[0, 1, 2].map((i) => (
+                <motion.div
+                  key={`wave-${i}`}
+                  className="absolute left-1/2 top-1/2 rounded-full pointer-events-none"
+                  style={{
+                    width: 20,
+                    height: 20,
+                    marginLeft: -10,
+                    marginTop: -10,
+                    border: `2px solid ${orientation === 'reversed' ? 'rgba(239, 68, 68, 0.8)' : 'rgba(251, 191, 36, 0.8)'}`,
+                    boxShadow: orientation === 'reversed'
+                      ? '0 0 20px rgba(239, 68, 68, 0.5), inset 0 0 20px rgba(239, 68, 68, 0.3)'
+                      : '0 0 20px rgba(251, 191, 36, 0.5), inset 0 0 20px rgba(251, 191, 36, 0.3)',
+                  }}
+                  initial={{ scale: 0, opacity: 1 }}
+                  animate={{ scale: 15, opacity: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{
+                    duration: 1,
+                    delay: i * 0.15,
+                    ease: 'easeOut',
+                  }}
+                />
+              ))}
+
+              {/* Particle Burst */}
+              {particles.map((particle) => (
+                <motion.div
+                  key={`particle-${particle.id}`}
+                  className="absolute left-1/2 top-1/2 rounded-full pointer-events-none"
+                  style={{
+                    width: particle.size,
+                    height: particle.size,
+                    marginLeft: -particle.size / 2,
+                    marginTop: -particle.size / 2,
+                    background: orientation === 'reversed'
+                      ? `radial-gradient(circle, rgba(239, 68, 68, 1) 0%, rgba(239, 68, 68, 0) 70%)`
+                      : `radial-gradient(circle, rgba(251, 191, 36, 1) 0%, rgba(251, 191, 36, 0) 70%)`,
+                    boxShadow: orientation === 'reversed'
+                      ? '0 0 6px rgba(239, 68, 68, 0.8)'
+                      : '0 0 6px rgba(251, 191, 36, 0.8)',
+                  }}
+                  initial={{ x: 0, y: 0, opacity: 1, scale: 0 }}
+                  animate={{
+                    x: Math.cos((particle.angle * Math.PI) / 180) * particle.distance,
+                    y: Math.sin((particle.angle * Math.PI) / 180) * particle.distance,
+                    opacity: 0,
+                    scale: [0, 1.5, 0],
+                  }}
+                  transition={{
+                    duration: particle.duration,
+                    delay: particle.delay,
+                    ease: 'easeOut',
+                  }}
+                />
+              ))}
+
+              {/* Central Flash */}
+              <motion.div
+                className="absolute left-1/2 top-1/2 rounded-full pointer-events-none"
+                style={{
+                  width: 100,
+                  height: 100,
+                  marginLeft: -50,
+                  marginTop: -50,
+                  background: orientation === 'reversed'
+                    ? 'radial-gradient(circle, rgba(239, 68, 68, 0.8) 0%, rgba(239, 68, 68, 0) 70%)'
+                    : 'radial-gradient(circle, rgba(251, 191, 36, 0.8) 0%, rgba(251, 191, 36, 0) 70%)',
+                }}
+                initial={{ scale: 0, opacity: 1 }}
+                animate={{ scale: 3, opacity: 0 }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+              />
+
+              {/* Mystical Runes Circle */}
+              <motion.div
+                className="absolute left-1/2 top-1/2 pointer-events-none"
+                style={{
+                  width: 200,
+                  height: 200,
+                  marginLeft: -100,
+                  marginTop: -100,
+                }}
+                initial={{ rotate: 0, scale: 0, opacity: 0 }}
+                animate={{ rotate: 180, scale: 1, opacity: [0, 0.6, 0] }}
+                transition={{ duration: 1.2, ease: 'easeOut' }}
+              >
+                <svg viewBox="0 0 200 200" className="w-full h-full">
+                  <circle
+                    cx="100"
+                    cy="100"
+                    r="90"
+                    fill="none"
+                    stroke={orientation === 'reversed' ? 'rgba(239, 68, 68, 0.5)' : 'rgba(251, 191, 36, 0.5)'}
+                    strokeWidth="1"
+                    strokeDasharray="10 5"
+                  />
+                  <text
+                    x="100"
+                    y="20"
+                    textAnchor="middle"
+                    fill={orientation === 'reversed' ? 'rgba(239, 68, 68, 0.6)' : 'rgba(251, 191, 36, 0.6)'}
+                    fontSize="14"
+                  >
+                    ᚠ
+                  </text>
+                  <text
+                    x="180"
+                    y="105"
+                    textAnchor="middle"
+                    fill={orientation === 'reversed' ? 'rgba(239, 68, 68, 0.6)' : 'rgba(251, 191, 36, 0.6)'}
+                    fontSize="14"
+                  >
+                    ᚢ
+                  </text>
+                  <text
+                    x="100"
+                    y="190"
+                    textAnchor="middle"
+                    fill={orientation === 'reversed' ? 'rgba(239, 68, 68, 0.6)' : 'rgba(251, 191, 36, 0.6)'}
+                    fontSize="14"
+                  >
+                    ᚦ
+                  </text>
+                  <text
+                    x="20"
+                    y="105"
+                    textAnchor="middle"
+                    fill={orientation === 'reversed' ? 'rgba(239, 68, 68, 0.6)' : 'rgba(251, 191, 36, 0.6)'}
+                    fontSize="14"
+                  >
+                    ᚨ
+                  </text>
+                </svg>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+
         <motion.div
           ref={cardRef}
           onMouseMove={handleMouseMove}
@@ -110,8 +295,8 @@ export function RuneCard({
                 : 'linear-gradient(135deg, rgba(147, 51, 234, 0.3), rgba(88, 28, 135, 0.3))',
             }}
             animate={{
-              opacity: isHovered ? 1 : 0.6,
-              scale: isHovered ? 1.02 : 1,
+              opacity: showRevealEffects ? 1 : (isHovered ? 1 : 0.6),
+              scale: showRevealEffects ? 1.1 : (isHovered ? 1.02 : 1),
             }}
             transition={{ duration: 0.3 }}
           />
@@ -210,66 +395,154 @@ export function RuneCard({
                   : '0 0 30px rgba(217, 119, 6, 0.3), inset 0 0 20px rgba(217, 119, 6, 0.05)',
               }}
             >
-              {/* Inner glow */}
-              <div
+              {/* Inner glow - intensified on reveal */}
+              <motion.div
                 className="absolute inset-0"
-                style={{
+                initial={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
                   background: orientation === 'reversed'
-                    ? 'radial-gradient(circle at 50% 30%, rgba(239, 68, 68, 0.15) 0%, transparent 60%)'
-                    : 'radial-gradient(circle at 50% 30%, rgba(217, 119, 6, 0.15) 0%, transparent 60%)',
+                    ? 'radial-gradient(circle at 50% 30%, rgba(239, 68, 68, 0.2) 0%, transparent 60%)'
+                    : 'radial-gradient(circle at 50% 30%, rgba(217, 119, 6, 0.2) 0%, transparent 60%)',
+                }}
+                transition={{ duration: 0.5 }}
+              />
+
+              {/* Ambient sparkles on revealed card */}
+              {sparkles.map((sparkle) => (
+                <motion.div
+                  key={`sparkle-${sparkle.id}`}
+                  className="absolute rounded-full pointer-events-none"
+                  style={{
+                    left: `${sparkle.x}%`,
+                    top: `${sparkle.y}%`,
+                    width: sparkle.size,
+                    height: sparkle.size,
+                    background: orientation === 'reversed'
+                      ? 'rgba(239, 68, 68, 0.8)'
+                      : 'rgba(251, 191, 36, 0.8)',
+                    boxShadow: orientation === 'reversed'
+                      ? '0 0 4px rgba(239, 68, 68, 0.6)'
+                      : '0 0 4px rgba(251, 191, 36, 0.6)',
+                  }}
+                  animate={{
+                    opacity: [0, 1, 0],
+                    scale: [0.5, 1, 0.5],
+                  }}
+                  transition={{
+                    duration: sparkle.duration,
+                    delay: sparkle.delay,
+                    repeat: Infinity,
+                    repeatDelay: 1,
+                  }}
+                />
+              ))}
+
+              {/* Energy aura behind rune */}
+              <motion.div
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  width: '70%',
+                  height: '50%',
+                  background: orientation === 'reversed'
+                    ? 'radial-gradient(ellipse, rgba(239, 68, 68, 0.2) 0%, transparent 70%)'
+                    : 'radial-gradient(ellipse, rgba(251, 191, 36, 0.2) 0%, transparent 70%)',
+                  filter: 'blur(10px)',
+                }}
+                animate={{
+                  scale: [1, 1.1, 1],
+                  opacity: [0.5, 0.8, 0.5],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
                 }}
               />
 
-              {/* Rune symbol */}
+              {/* Rune symbol with dramatic entrance */}
               <motion.span
                 className={`${sizeClasses.symbol} relative z-10`}
                 style={{
                   color: orientation === 'reversed' ? '#f87171' : '#fbbf24',
                   transform: orientation === 'reversed' ? 'rotate(180deg)' : 'none',
-                  textShadow: orientation === 'reversed'
-                    ? '0 0 20px rgba(239, 68, 68, 0.6), 0 0 40px rgba(239, 68, 68, 0.3)'
-                    : '0 0 20px rgba(251, 191, 36, 0.6), 0 0 40px rgba(251, 191, 36, 0.3)',
                 }}
-                animate={isHovered ? {
-                  scale: [1, 1.05, 1],
-                  textShadow: orientation === 'reversed'
-                    ? ['0 0 20px rgba(239, 68, 68, 0.6)', '0 0 40px rgba(239, 68, 68, 0.8)', '0 0 20px rgba(239, 68, 68, 0.6)']
-                    : ['0 0 20px rgba(251, 191, 36, 0.6)', '0 0 40px rgba(251, 191, 36, 0.8)', '0 0 20px rgba(251, 191, 36, 0.6)'],
-                } : {}}
-                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                initial={{ scale: 0, opacity: 0, filter: 'blur(10px)' }}
+                animate={{
+                  scale: 1,
+                  opacity: 1,
+                  filter: 'blur(0px)',
+                  textShadow: isHovered
+                    ? (orientation === 'reversed'
+                      ? '0 0 30px rgba(239, 68, 68, 0.9), 0 0 60px rgba(239, 68, 68, 0.5)'
+                      : '0 0 30px rgba(251, 191, 36, 0.9), 0 0 60px rgba(251, 191, 36, 0.5)')
+                    : (orientation === 'reversed'
+                      ? '0 0 20px rgba(239, 68, 68, 0.6), 0 0 40px rgba(239, 68, 68, 0.3)'
+                      : '0 0 20px rgba(251, 191, 36, 0.6), 0 0 40px rgba(251, 191, 36, 0.3)'),
+                }}
+                transition={{
+                  scale: { duration: 0.5, ease: 'backOut' },
+                  opacity: { duration: 0.3 },
+                  filter: { duration: 0.4 },
+                  textShadow: { duration: 0.3 },
+                }}
               >
                 {rune.symbol}
               </motion.span>
 
-              {/* Rune name */}
+              {/* Rune name with slide up animation */}
               {showName && (
                 <motion.span
                   className={`${sizeClasses.name} font-cinzel text-white mt-2 relative z-10`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.3 }}
                 >
                   {rune.name}
                 </motion.span>
               )}
 
-              {/* Reversed indicator */}
+              {/* Reversed indicator with special effect */}
               {orientation === 'reversed' && (
                 <motion.span
                   className="text-xs text-red-400 mt-1 relative z-10"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5, duration: 0.3 }}
                 >
                   (Apversta)
                 </motion.span>
               )}
 
-              {/* Corner decorations */}
-              <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-amber-500/30 rounded-tl" />
-              <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-amber-500/30 rounded-tr" />
-              <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-amber-500/30 rounded-bl" />
-              <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-amber-500/30 rounded-br" />
+              {/* Corner decorations with staggered animation */}
+              <motion.div
+                className="absolute top-2 left-2 w-3 h-3 border-t border-l rounded-tl"
+                style={{ borderColor: orientation === 'reversed' ? 'rgba(239, 68, 68, 0.4)' : 'rgba(217, 119, 6, 0.4)' }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+              />
+              <motion.div
+                className="absolute top-2 right-2 w-3 h-3 border-t border-r rounded-tr"
+                style={{ borderColor: orientation === 'reversed' ? 'rgba(239, 68, 68, 0.4)' : 'rgba(217, 119, 6, 0.4)' }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.25 }}
+              />
+              <motion.div
+                className="absolute bottom-2 left-2 w-3 h-3 border-b border-l rounded-bl"
+                style={{ borderColor: orientation === 'reversed' ? 'rgba(239, 68, 68, 0.4)' : 'rgba(217, 119, 6, 0.4)' }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 }}
+              />
+              <motion.div
+                className="absolute bottom-2 right-2 w-3 h-3 border-b border-r rounded-br"
+                style={{ borderColor: orientation === 'reversed' ? 'rgba(239, 68, 68, 0.4)' : 'rgba(217, 119, 6, 0.4)' }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.35 }}
+              />
             </motion.div>
           )}
         </motion.div>
