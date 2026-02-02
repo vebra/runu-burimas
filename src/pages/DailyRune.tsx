@@ -123,7 +123,7 @@ export function DailyRune() {
           </p>
           <Link
             to="/auth"
-            className="bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 hover:from-purple-700 hover:via-purple-600 hover:to-violet-500 text-amber-100 font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg shadow-purple-900/30 border border-amber-600/20"
+            className="bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 hover:from-purple-700 hover:via-purple-600 hover:to-violet-500 text-amber-100 font-semibold py-4 px-8 text-lg rounded-lg transition-all duration-300 shadow-lg shadow-purple-900/30 border border-amber-600/20"
           >
             Prisijungti
           </Link>
@@ -185,7 +185,7 @@ export function DailyRune() {
                 className="rounded-xl"
                 style={{ boxShadow: '0 0 30px rgba(147, 51, 234, 0.3)' }}
               >
-                <Sparkles className="w-7 h-7" />
+                <Sparkles className="w-6 h-6 md:w-7 md:h-7" />
                 Traukti Runą
               </Button>
             </motion.div>
@@ -367,7 +367,7 @@ export function DailyRune() {
                     size="lg"
                     className="mt-6"
                   >
-                    <Save className="w-5 h-5" />
+                    <Save className="w-5 h-5 md:w-6 md:h-6" />
                     Išsaugoti
                   </Button>
                 </div>
@@ -397,7 +397,7 @@ export function DailyRune() {
                     size="lg"
                     className="mt-6"
                   >
-                    <Save className="w-5 h-5" />
+                    <Save className="w-5 h-5 md:w-6 md:h-6" />
                     Išsaugoti Dienoraštį
                   </Button>
                 </div>

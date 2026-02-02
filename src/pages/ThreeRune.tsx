@@ -156,7 +156,7 @@ export function ThreeRune() {
           </p>
           <Link
             to="/auth"
-            className="bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 hover:from-purple-700 hover:via-purple-600 hover:to-violet-500 text-amber-100 font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg shadow-purple-900/30 border border-amber-600/20"
+            className="bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 hover:from-purple-700 hover:via-purple-600 hover:to-violet-500 text-amber-100 font-semibold py-4 px-8 text-lg rounded-lg transition-all duration-300 shadow-lg shadow-purple-900/30 border border-amber-600/20"
           >
             Prisijungti
           </Link>
@@ -221,8 +221,8 @@ export function ThreeRune() {
               whileHover={{ scale: question.trim() ? 1.05 : 1 }}
               whileTap={{ scale: question.trim() ? 0.95 : 1 }}
             >
-              <Button onClick={drawRunes} disabled={!question.trim()} size="lg">
-                <Sparkles className="w-5 h-5" />
+              <Button onClick={drawRunes} disabled={!question.trim()} size="xl">
+                <Sparkles className="w-6 h-6 md:w-7 md:h-7" />
                 Traukti Runas
               </Button>
             </motion.div>
@@ -452,14 +452,14 @@ export function ThreeRune() {
                     size="lg"
                     className="mt-6"
                   >
-                    <Save className="w-5 h-5" />
+                    <Save className="w-5 h-5 md:w-6 md:h-6" />
                     Išsaugoti Dienoraštį
                   </Button>
                 </div>
 
                 <div className="flex justify-center pt-6">
-                  <Button onClick={reset} variant="ghost" size="md">
-                    <RotateCcw className="w-5 h-5" />
+                  <Button onClick={reset} variant="ghost" size="lg">
+                    <RotateCcw className="w-5 h-5 md:w-6 md:h-6" />
                     Naujas būrimas
                   </Button>
                 </div>

@@ -173,7 +173,7 @@ export function FiveRuneCross() {
           </p>
           <Link
             to="/auth"
-            className="bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 hover:from-purple-700 hover:via-purple-600 hover:to-violet-500 text-amber-100 font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg shadow-purple-900/30 border border-amber-600/20"
+            className="bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 hover:from-purple-700 hover:via-purple-600 hover:to-violet-500 text-amber-100 font-semibold py-4 px-8 text-lg rounded-lg transition-all duration-300 shadow-lg shadow-purple-900/30 border border-amber-600/20"
           >
             Prisijungti
           </Link>
@@ -205,9 +205,9 @@ export function FiveRuneCross() {
           </div>
           <Link
             to="/premium"
-            className="bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg inline-flex items-center gap-2"
+            className="bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold py-4 px-10 text-lg rounded-lg transition-all duration-300 shadow-lg inline-flex items-center gap-3"
           >
-            <Crown className="w-5 h-5" />
+            <Crown className="w-6 h-6" />
             Gauti Premium
           </Link>
         </div>
@@ -283,8 +283,8 @@ export function FiveRuneCross() {
                 whileHover={{ scale: question.trim() ? 1.05 : 1 }}
                 whileTap={{ scale: question.trim() ? 0.95 : 1 }}
               >
-                <Button onClick={handleDrawRunes} disabled={!question.trim()} variant="gold" size="lg">
-                  <Crown className="w-5 h-5" />
+                <Button onClick={handleDrawRunes} disabled={!question.trim()} variant="gold" size="xl">
+                  <Crown className="w-6 h-6 md:w-7 md:h-7" />
                   Traukti 5 Runas
                 </Button>
               </motion.div>
@@ -549,14 +549,14 @@ export function FiveRuneCross() {
                     size="lg"
                     className="mt-6"
                   >
-                    <Save className="w-5 h-5" />
+                    <Save className="w-5 h-5 md:w-6 md:h-6" />
                     Išsaugoti Dienoraštį
                   </Button>
                 </div>
 
                 <div className="flex justify-center pt-8">
                   <Button onClick={reset} variant="ghost" size="lg">
-                    <RotateCcw className="w-6 h-6" />
+                    <RotateCcw className="w-5 h-5 md:w-6 md:h-6" />
                     Naujas būrimas
                   </Button>
                 </div>

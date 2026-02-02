@@ -1,11 +1,12 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Header } from './components/layout/Header'
 import { Footer } from './components/layout/Footer'
 import { AnimatedBackground } from './components/common/AnimatedBackground'
 import { ToastProvider } from './components/common/Toast'
 import { ErrorBoundary } from './components/common/ErrorBoundary'
+import { PageTransition } from './components/common/PageTransition'
 import { useAuth } from './hooks/useAuth'
 
 // Lazy load pages for better performance
@@ -68,6 +69,30 @@ function PageLoader() {
   )
 }
 
+function AnimatedRoutes() {
+  const location = useLocation()
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+        <Route path="/daily" element={<PageTransition><DailyRune /></PageTransition>} />
+        <Route path="/three-rune" element={<PageTransition><ThreeRune /></PageTransition>} />
+        <Route path="/five-rune-cross" element={<PageTransition><FiveRuneCross /></PageTransition>} />
+        <Route path="/seven-rune-map" element={<PageTransition><SevenRuneMap /></PageTransition>} />
+        <Route path="/library" element={<PageTransition><RuneLibrary /></PageTransition>} />
+        <Route path="/converter" element={<PageTransition><RuneConverter /></PageTransition>} />
+        <Route path="/profile" element={<PageTransition><Profile /></PageTransition>} />
+        <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
+        <Route path="/yes-no" element={<PageTransition><YesNoRune /></PageTransition>} />
+        <Route path="/privacy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
+        <Route path="/terms" element={<PageTransition><TermsOfService /></PageTransition>} />
+        <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+      </Routes>
+    </AnimatePresence>
+  )
+}
+
 function AppContent() {
   const { user, signOut } = useAuth()
 
@@ -81,21 +106,7 @@ function AppContent() {
         <Header user={user} onSignOut={signOut} />
         <main className="flex-1 pt-16 w-full">
           <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/daily" element={<DailyRune />} />
-              <Route path="/three-rune" element={<ThreeRune />} />
-              <Route path="/five-rune-cross" element={<FiveRuneCross />} />
-              <Route path="/seven-rune-map" element={<SevenRuneMap />} />
-              <Route path="/library" element={<RuneLibrary />} />
-              <Route path="/converter" element={<RuneConverter />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/yes-no" element={<YesNoRune />} />
-              <Route path="/privacy" element={<PrivacyPolicy />} />
-              <Route path="/terms" element={<TermsOfService />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <AnimatedRoutes />
           </Suspense>
         </main>
         <Footer />

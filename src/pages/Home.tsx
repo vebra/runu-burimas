@@ -211,8 +211,7 @@ export function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed"
-            style={{ marginTop: '2rem' }}
+            className="mt-8 md:mt-10 text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed"
           >
             Atraskite senovės išmintį per <span className="text-amber-400 font-medium">Elder Futhark</span> runas.
             <br className="hidden sm:block" />
@@ -224,8 +223,7 @@ export function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 sm:gap-6 w-full max-w-xl px-4"
-            style={{ marginTop: '2.5rem' }}
+            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 sm:gap-6 mt-12 md:mt-16 w-full max-w-xl px-4"
           >
             <motion.div
               whileHover={{ scale: 1.03 }}
@@ -234,12 +232,12 @@ export function Home() {
             >
               <Link
                 to="/daily"
-                className="group relative w-full sm:w-auto overflow-hidden bg-linear-to-r from-purple-600 via-purple-500 to-pink-600 text-white font-bold text-lg py-4 px-10 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-purple-900/50 border border-purple-400/30"
+                className="group relative w-full sm:w-auto overflow-hidden bg-linear-to-r from-purple-600 via-purple-500 to-pink-600 text-white font-bold text-xl md:text-2xl py-5 md:py-6 px-12 md:px-16 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-purple-900/50 border border-purple-400/30"
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  <Sparkles className="w-5 h-5" />
+                  <Sparkles className="w-6 h-6 md:w-7 md:h-7" />
                   Pradėti Būrimą
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-6 h-6 md:w-7 md:h-7 group-hover:translate-x-1 transition-transform" />
                 </span>
                 <div className="absolute inset-0 bg-linear-to-r from-purple-500 via-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </Link>
@@ -252,9 +250,9 @@ export function Home() {
             >
               <Link
                 to="/library"
-                className="group w-full sm:w-auto glass-gold text-amber-200 font-bold text-lg py-4 px-10 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 hover:bg-amber-500/20"
+                className="group w-full sm:w-auto glass-gold text-amber-200 font-bold text-xl md:text-2xl py-5 md:py-6 px-12 md:px-16 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 hover:bg-amber-500/20"
               >
-                <BookOpen className="w-5 h-5" />
+                <BookOpen className="w-6 h-6 md:w-7 md:h-7" />
                 Runų Biblioteka
               </Link>
             </motion.div>
@@ -265,7 +263,7 @@ export function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
-            style={{ marginTop: '4rem' }}
+            className="mt-16 md:mt-20"
           >
             <motion.div
               animate={{ y: [0, 10, 0] }}
@@ -286,7 +284,7 @@ export function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="relative py-16 md:py-24 px-4" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <section className="relative py-20 md:py-32 lg:py-40 px-4 w-full flex justify-center">
         <div style={{ width: '100%', maxWidth: '1152px' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -404,7 +402,7 @@ export function Home() {
       </section>
 
       {/* Elder Futhark Section */}
-      <section className="relative py-16 md:py-24 px-4 overflow-hidden" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <section className="relative py-20 md:py-32 lg:py-40 px-4 overflow-hidden w-full flex justify-center">
         {/* Background decoration */}
         <div className="absolute inset-0 bg-linear-to-b from-purple-900/10 via-transparent to-purple-900/10" />
 
@@ -506,21 +504,21 @@ export function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="relative py-16 md:py-24 px-4" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <div style={{ width: '100%', maxWidth: '896px' }}>
+      <section className="relative py-24 md:py-36 lg:py-48 px-6" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ width: '100%', maxWidth: '1024px' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12 md:mb-16"
+            className="text-center mb-16 md:mb-20"
           >
-            <h2 className="text-3xl md:text-4xl font-cinzel font-bold text-white">
+            <h2 className="text-4xl md:text-5xl font-cinzel font-bold text-white">
               Prisijunkite prie bendruomenės
             </h2>
-            <div className="w-24 h-1 bg-linear-to-r from-transparent via-purple-500 to-transparent mx-auto mt-6" />
+            <div className="w-32 h-2 bg-linear-to-r from-transparent via-purple-500 to-transparent mx-auto mt-8" />
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-9 gap-y-6 mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-12 gap-y-8 mx-auto">
             {[
               {
                 icon: Users,
@@ -555,7 +553,7 @@ export function Home() {
               >
                 <div
                   className={`
-                    relative overflow-hidden rounded-2xl p-6 md:p-8 text-center
+                    relative overflow-hidden rounded-2xl p-8 md:p-10 text-center
                     bg-gray-900/60 backdrop-blur-sm
                     border border-${stat.color}-500/30
                     hover:border-${stat.color}-400/50
@@ -574,7 +572,7 @@ export function Home() {
                   {/* Icon with animated background */}
                   <motion.div
                     className={`
-                      relative w-16 h-16 mx-auto mb-4 rounded-xl
+                      relative w-24 h-24 mx-auto mb-6 rounded-xl
                       bg-linear-to-br ${stat.gradient}
                       flex items-center justify-center
                       shadow-lg
@@ -582,7 +580,7 @@ export function Home() {
                     whileHover={{ rotate: [0, -10, 10, 0] }}
                     transition={{ duration: 0.5 }}
                   >
-                    <stat.icon className="w-8 h-8 text-white" />
+                    <stat.icon className="w-12 h-12 text-white" />
                   </motion.div>
 
                   {/* Counter animation */}
@@ -590,7 +588,7 @@ export function Home() {
                     initial={{ scale: 0.5 }}
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
-                    className="text-4xl md:text-5xl font-bold text-white mb-2"
+                    className="text-5xl md:text-6xl font-bold text-white mb-4"
                   >
                     {stat.value}
                   </motion.div>
@@ -604,8 +602,8 @@ export function Home() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="relative py-16 md:py-24 px-4" style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '4rem' }}>
-        <div style={{ width: '100%', maxWidth: '768px' }}>
+      <section className="relative py-24 md:py-36 lg:py-48 px-6 w-full" style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '4rem' }}>
+        <div style={{ width: '100%', maxWidth: '1024px' }}>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -675,14 +673,14 @@ export function Home() {
                 >
                   <Link
                     to="/daily"
-                    className="group inline-flex items-center gap-3 bg-linear-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:via-yellow-400 hover:to-amber-400 text-gray-900 font-bold py-5 px-12 rounded-xl transition-all duration-300 shadow-2xl text-lg"
+                    className="group inline-flex items-center gap-3 bg-linear-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:via-yellow-400 hover:to-amber-400 text-gray-900 font-bold py-6 md:py-7 px-14 md:px-20 rounded-xl transition-all duration-300 shadow-2xl text-xl md:text-2xl"
                     style={{
                       boxShadow: '0 10px 40px -10px rgba(245, 158, 11, 0.5)',
                     }}
                   >
-                    <Sparkles className="w-6 h-6" />
+                    <Sparkles className="w-7 h-7 md:w-8 md:h-8" />
                     <span>Pradėti Dabar</span>
-                    <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-7 h-7 md:w-8 md:h-8 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </motion.div>
 
