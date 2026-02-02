@@ -1,7 +1,214 @@
 import { Link } from 'react-router-dom'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import { Sparkles, Calendar, BookOpen, Type, ArrowRight, Crown, Compass, Users, TrendingUp, Zap, Star, Moon, HelpCircle } from 'lucide-react'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
+
+// Feature type for cards
+interface Feature {
+  icon: React.ComponentType<{ className?: string }>
+  title: string
+  description: string
+  path: string
+  color: string
+  glowColor: string
+  premium: boolean
+}
+
+// 3D Tilt Card Component
+function FeatureCard({ feature }: { feature: Feature }) {
+  const cardRef = useRef<HTMLDivElement>(null)
+  const [isHovered, setIsHovered] = useState(false)
+
+  // Mouse position for 3D tilt
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+
+  // Smooth spring animation for tilt
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]), { stiffness: 300, damping: 30 })
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), { stiffness: 300, damping: 30 })
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
+    mouseX.set(x)
+    mouseY.set(y)
+  }
+
+  const handleMouseLeave = () => {
+    mouseX.set(0)
+    mouseY.set(0)
+    setIsHovered(false)
+  }
+
+  return (
+    <motion.div
+      variants={itemVariants}
+      className="w-full sm:w-[calc(50%-1.125rem)] lg:w-[calc(33.333%-1.5rem)]"
+      style={{ perspective: 1000 }}
+    >
+      <Link to={feature.path} className="block h-full">
+        <motion.div
+          ref={cardRef}
+          onMouseMove={handleMouseMove}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={handleMouseLeave}
+          style={{
+            rotateX: rotateX,
+            rotateY: rotateY,
+            transformStyle: 'preserve-3d',
+          }}
+          className="relative h-full"
+        >
+          {/* Animated border glow */}
+          <motion.div
+            className="absolute -inset-[1px] rounded-2xl opacity-0 transition-opacity duration-500"
+            style={{
+              background: `linear-gradient(135deg, ${feature.glowColor}, transparent 40%, transparent 60%, ${feature.glowColor})`,
+              opacity: isHovered ? 1 : 0,
+            }}
+            animate={isHovered ? {
+              background: [
+                `linear-gradient(0deg, ${feature.glowColor}, transparent 40%, transparent 60%, ${feature.glowColor})`,
+                `linear-gradient(90deg, ${feature.glowColor}, transparent 40%, transparent 60%, ${feature.glowColor})`,
+                `linear-gradient(180deg, ${feature.glowColor}, transparent 40%, transparent 60%, ${feature.glowColor})`,
+                `linear-gradient(270deg, ${feature.glowColor}, transparent 40%, transparent 60%, ${feature.glowColor})`,
+                `linear-gradient(360deg, ${feature.glowColor}, transparent 40%, transparent 60%, ${feature.glowColor})`,
+              ],
+            } : {}}
+            transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+          />
+
+          {/* Card content */}
+          <div
+            className={`
+              relative overflow-hidden rounded-2xl
+              bg-gradient-to-br from-gray-900/95 via-gray-800/90 to-gray-900/95
+              backdrop-blur-md
+              border transition-all duration-500
+              ${feature.premium
+                ? 'border-amber-500/40 hover:border-amber-400/70'
+                : 'border-gray-700/50 hover:border-purple-500/60'
+              }
+            `}
+            style={{
+              boxShadow: feature.premium
+                ? `0 0 40px ${feature.glowColor}, inset 0 1px 0 rgba(255,255,255,0.1)`
+                : 'inset 0 1px 0 rgba(255,255,255,0.05)',
+              padding: '1.75rem',
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              transform: 'translateZ(0)',
+            }}
+          >
+            {/* Shine effect on hover */}
+            <motion.div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: 'linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.03) 55%, transparent 60%)',
+                transform: 'translateX(-100%)',
+              }}
+              animate={isHovered ? { transform: 'translateX(100%)' } : { transform: 'translateX(-100%)' }}
+              transition={{ duration: 0.6, ease: 'easeInOut' }}
+            />
+
+            {/* Glow effect on hover */}
+            <motion.div
+              className="absolute inset-0 pointer-events-none rounded-2xl"
+              style={{
+                background: `radial-gradient(circle at 50% 0%, ${feature.glowColor} 0%, transparent 60%)`,
+              }}
+              animate={{ opacity: isHovered ? 0.6 : 0 }}
+              transition={{ duration: 0.3 }}
+            />
+
+            {/* Premium badge */}
+            {feature.premium && (
+              <motion.div
+                className="absolute top-4 right-4 flex items-center gap-1.5 bg-amber-500/20 backdrop-blur-sm px-3 py-1 rounded-full border border-amber-500/40"
+                animate={isHovered ? { scale: [1, 1.05, 1] } : {}}
+                transition={{ duration: 0.5 }}
+              >
+                <Crown className="w-3.5 h-3.5 text-amber-400" />
+                <span className="text-xs font-medium text-amber-300">Premium</span>
+              </motion.div>
+            )}
+
+            {/* Floating Icon */}
+            <motion.div
+              className={`
+                relative w-16 h-16 rounded-xl flex items-center justify-center
+                bg-gradient-to-br ${feature.color}
+                shadow-lg
+              `}
+              animate={isHovered ? {
+                y: [0, -5, 0],
+                rotate: [0, 5, -5, 0],
+              } : {}}
+              transition={{
+                duration: 2,
+                repeat: isHovered ? Infinity : 0,
+                ease: 'easeInOut',
+              }}
+              style={{
+                boxShadow: `0 10px 30px -10px ${feature.glowColor}`,
+                flexShrink: 0,
+                transform: 'translateZ(20px)',
+              }}
+            >
+              <feature.icon className="w-8 h-8 text-white" />
+            </motion.div>
+
+            {/* Content */}
+            <motion.h3
+              className="text-2xl font-cinzel font-semibold text-white transition-colors"
+              style={{ marginTop: '1.25rem', transform: 'translateZ(10px)' }}
+              animate={{ color: isHovered ? '#fde68a' : '#ffffff' }}
+              transition={{ duration: 0.3 }}
+            >
+              {feature.title}
+            </motion.h3>
+            <p
+              className="text-gray-400 text-base leading-relaxed"
+              style={{ marginTop: '0.75rem', flex: 1, transform: 'translateZ(5px)' }}
+            >
+              {feature.description}
+            </p>
+
+            {/* Arrow indicator */}
+            <motion.div
+              className="flex items-center gap-2 text-purple-400 transition-colors"
+              style={{ marginTop: '1.25rem' }}
+              animate={{ color: isHovered ? '#fbbf24' : '#a78bfa' }}
+              transition={{ duration: 0.3 }}
+            >
+              <span className="text-base font-medium">Atidaryti</span>
+              <motion.div
+                animate={{ x: isHovered ? 8 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ArrowRight className="w-4 h-4" />
+              </motion.div>
+            </motion.div>
+
+            {/* Decorative corner glow */}
+            <motion.div
+              className="absolute bottom-0 right-0 w-24 h-24 overflow-hidden pointer-events-none"
+              animate={{ opacity: isHovered ? 0.5 : 0.2 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div
+                className={`absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl ${feature.color} rounded-full transform translate-x-1/2 translate-y-1/2 blur-sm`}
+              />
+            </motion.div>
+          </div>
+        </motion.div>
+      </Link>
+    </motion.div>
+  )
+}
 
 const features = [
   {
@@ -394,91 +601,10 @@ export function Home() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="flex flex-wrap justify-center gap-x-9 gap-y-6 mx-auto"
+            className="flex flex-wrap justify-center gap-x-9 gap-y-8 mx-auto"
           >
             {features.map((feature) => (
-              <motion.div key={feature.path} variants={itemVariants} className="w-full sm:w-[calc(50%-1.125rem)] lg:w-[calc(33.333%-1.5rem)]">
-                <Link
-                  to={feature.path}
-                  className="group relative block h-full"
-                >
-                  <div
-                    className={`
-                      relative overflow-hidden rounded-2xl
-                      bg-linear-to-br from-gray-900/90 via-gray-800/80 to-gray-900/90
-                      backdrop-blur-sm
-                      border transition-all duration-500
-                      ${feature.premium
-                        ? 'border-amber-500/40 hover:border-amber-400/60'
-                        : 'border-gray-700/50 hover:border-purple-500/50'
-                      }
-                    `}
-                    style={{
-                      boxShadow: feature.premium
-                        ? `0 0 30px ${feature.glowColor}`
-                        : 'none',
-                      padding: '1.5rem',
-                      height: '100%',
-                      display: 'flex',
-                      flexDirection: 'column',
-                    }}
-                  >
-                    {/* Glow effect on hover */}
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                      style={{
-                        background: `radial-gradient(circle at 50% 0%, ${feature.glowColor} 0%, transparent 70%)`,
-                      }}
-                    />
-
-                    {/* Premium badge */}
-                    {feature.premium && (
-                      <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-amber-500/20 backdrop-blur-sm px-3 py-1 rounded-full border border-amber-500/30">
-                        <Crown className="w-3.5 h-3.5 text-amber-400" />
-                        <span className="text-xs font-medium text-amber-300">Premium</span>
-                      </div>
-                    )}
-
-                    {/* Icon */}
-                    <motion.div
-                      className={`
-                        relative w-14 h-14 rounded-xl flex items-center justify-center
-                        bg-linear-to-br ${feature.color}
-                        shadow-lg
-                      `}
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      transition={{ type: 'spring', stiffness: 300 }}
-                      style={{
-                        boxShadow: `0 8px 20px -8px ${feature.glowColor}`,
-                        flexShrink: 0,
-                      }}
-                    >
-                      <feature.icon className="w-7 h-7 text-white" />
-                    </motion.div>
-
-                    {/* Content */}
-                    <h3 className="text-2xl font-cinzel font-semibold text-white group-hover:text-amber-200 transition-colors" style={{ marginTop: '1.25rem' }}>
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-400 text-base leading-relaxed" style={{ marginTop: '0.75rem', flex: 1 }}>
-                      {feature.description}
-                    </p>
-
-                    {/* Arrow indicator */}
-                    <div className="flex items-center gap-2 text-purple-400 group-hover:text-amber-400 transition-colors" style={{ marginTop: '1rem' }}>
-                      <span className="text-base font-medium">Atidaryti</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
-                    </div>
-
-                    {/* Decorative corner */}
-                    <div className="absolute bottom-0 right-0 w-20 h-20 overflow-hidden opacity-20 group-hover:opacity-40 transition-opacity">
-                      <div
-                        className={`absolute bottom-0 right-0 w-32 h-32 bg-linear-to-tl ${feature.color} rounded-full transform translate-x-1/2 translate-y-1/2`}
-                      />
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
+              <FeatureCard key={feature.path} feature={feature} />
             ))}
           </motion.div>
         </div>
