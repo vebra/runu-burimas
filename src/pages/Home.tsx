@@ -479,7 +479,7 @@ export function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="display-xl text-white tracking-tight"
-            style={{ marginTop: '3rem' }}
+            style={{ marginTop: '48px' }}
           >
             <motion.span
               className="inline-block text-gradient-mystic"
@@ -502,7 +502,7 @@ export function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="subheading-lg max-w-2xl text-center"
-            style={{ marginTop: '2rem' }}
+            style={{ marginTop: '40px' }}
           >
             Atraskite senovės išmintį per <span className="text-amber-400 font-semibold not-italic">Elder Futhark</span> runas
           </motion.p>
@@ -513,7 +513,7 @@ export function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
             className="overline"
-            style={{ marginTop: '1.5rem' }}
+            style={{ marginTop: '24px' }}
           >
             Kasdienės runos • Būrimai • Išmintis
           </motion.p>
@@ -524,7 +524,7 @@ export function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 sm:gap-6 w-full max-w-xl px-4"
-            style={{ marginTop: '3rem' }}
+            style={{ marginTop: '48px' }}
           >
             <motion.div
               whileHover={{ scale: 1.03 }}
@@ -564,7 +564,7 @@ export function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
-            style={{ marginTop: '4rem' }}
+            style={{ marginTop: '56px' }}
           >
             <motion.div
               animate={{ y: [0, 10, 0] }}
