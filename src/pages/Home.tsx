@@ -478,11 +478,11 @@ export function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-cinzel text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white"
+            className="display-xl text-white tracking-tight"
             style={{ marginTop: '2.5rem' }}
           >
             <motion.span
-              className="inline-block"
+              className="inline-block text-gradient-mystic"
               animate={{
                 textShadow: [
                   '0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.3)',
@@ -496,16 +496,24 @@ export function Home() {
             </motion.span>
           </motion.h1>
 
-          {/* Subtitle with fade in */}
+          {/* Subtitle with Cormorant font */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-8 md:mt-10 text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed"
+            className="subheading-lg mt-6 md:mt-8 max-w-2xl text-center"
           >
-            Atraskite senovės išmintį per <span className="text-amber-400 font-medium">Elder Futhark</span> runas.
-            <br className="hidden sm:block" />
-            Kasdienės runos, būrimai ir daugiau.
+            Atraskite senovės išmintį per <span className="text-amber-400 font-semibold not-italic">Elder Futhark</span> runas
+          </motion.p>
+
+          {/* Secondary tagline */}
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="overline mt-4"
+          >
+            Kasdienės runos • Būrimai • Išmintis
           </motion.p>
 
           {/* CTA Buttons with enhanced styling */}
@@ -583,16 +591,19 @@ export function Home() {
             className="text-center mb-12 md:mb-16"
           >
             <motion.span
-              className="inline-block text-amber-400 text-sm font-medium tracking-wider uppercase mb-4"
+              className="overline mb-4 block"
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
               Išbandykite
             </motion.span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-cinzel font-bold text-white">
+            <h2 className="display-lg text-white">
               Funkcijos
             </h2>
+            <p className="subheading mt-4 max-w-lg mx-auto">
+              Visos priemonės jūsų dvasiniam keliui
+            </p>
             <div className="w-24 h-1 bg-linear-to-r from-transparent via-amber-500 to-transparent mx-auto mt-6" />
           </motion.div>
 
@@ -652,14 +663,16 @@ export function Home() {
                   ⚔️
                 </motion.span>
 
-                <h2 className="text-3xl md:text-4xl font-cinzel font-bold text-white">
+                <h2 className="display-lg text-white">
                   Elder Futhark Runos
                 </h2>
 
-                <p className="text-gray-300 text-lg leading-relaxed max-w-2xl mx-auto text-center">
-                  24 senovės germanų runos, naudotos nuo <span className="text-amber-400">II</span> iki <span className="text-amber-400">VIII</span> amžiaus.
-                  <br />
-                  Kiekviena runa turi unikalią reikšmę ir energiją.
+                <p className="quote-lg mt-2">
+                  „Kiekviena runa turi unikalią reikšmę ir energiją"
+                </p>
+
+                <p className="body-text-lg text-gray-300 max-w-xl mx-auto text-center mt-4">
+                  24 senovės germanų runos, naudotos nuo <span className="text-amber-400 font-semibold">II</span> iki <span className="text-amber-400 font-semibold">VIII</span> amžiaus.
                 </p>
 
                 {/* Rune display with enhanced animation */}
@@ -721,10 +734,14 @@ export function Home() {
             viewport={{ once: true }}
             className="text-center mb-16 md:mb-20"
           >
-            <h2 className="text-4xl md:text-5xl font-cinzel font-bold text-white">
+            <span className="overline mb-4 block">Statistika</span>
+            <h2 className="display-lg text-white">
               Prisijunkite prie bendruomenės
             </h2>
-            <div className="w-32 h-2 bg-linear-to-r from-transparent via-purple-500 to-transparent mx-auto mt-8" />
+            <p className="subheading mt-4 max-w-md mx-auto">
+              Tūkstančiai žmonių kasdien atranda runų išmintį
+            </p>
+            <div className="w-32 h-1 bg-linear-to-r from-transparent via-purple-500 to-transparent mx-auto mt-8" />
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-12 gap-y-8 mx-auto">
@@ -865,14 +882,15 @@ export function Home() {
                   ✨
                 </motion.span>
 
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-cinzel font-bold text-white">
+                <h2 className="display-lg text-white">
                   Pasiruošęs sužinoti savo likimą?
                 </h2>
 
-                <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed text-center">
-                  Pradėkite savo kelionę su senovės runų išmintimi.
-                  <br />
-                  Traukite savo pirmąją runą šiandien.
+                <p className="subheading-lg mt-4 max-w-xl mx-auto text-center">
+                  Pradėkite savo kelionę su senovės runų išmintimi
+                </p>
+                <p className="body-text text-gray-400 mt-2">
+                  Traukite savo pirmąją runą šiandien
                 </p>
 
                 <motion.div
