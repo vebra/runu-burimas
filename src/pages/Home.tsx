@@ -478,7 +478,8 @@ export function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="display-xl text-white tracking-tight mt-8 md:mt-12"
+            className="display-xl text-white tracking-tight"
+            style={{ marginTop: '3rem' }}
           >
             <motion.span
               className="inline-block text-gradient-mystic"
@@ -500,7 +501,8 @@ export function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="subheading-lg mt-6 md:mt-10 max-w-2xl text-center"
+            className="subheading-lg max-w-2xl text-center"
+            style={{ marginTop: '2rem' }}
           >
             Atraskite senovės išmintį per <span className="text-amber-400 font-semibold not-italic">Elder Futhark</span> runas
           </motion.p>
@@ -510,7 +512,8 @@ export function Home() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="overline mt-6 md:mt-8"
+            className="overline"
+            style={{ marginTop: '1.5rem' }}
           >
             Kasdienės runos • Būrimai • Išmintis
           </motion.p>
@@ -520,7 +523,8 @@ export function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 sm:gap-6 mt-16 md:mt-20 w-full max-w-xl px-4"
+            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 sm:gap-6 w-full max-w-xl px-4"
+            style={{ marginTop: '3rem' }}
           >
             <motion.div
               whileHover={{ scale: 1.03 }}
@@ -560,7 +564,7 @@ export function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
-            className="mt-16 md:mt-20"
+            style={{ marginTop: '4rem' }}
           >
             <motion.div
               animate={{ y: [0, 10, 0] }}
