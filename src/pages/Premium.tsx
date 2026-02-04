@@ -41,7 +41,7 @@ const premiumFeatures = [
 export function Premium() {
   usePageTitle('Premium')
   const { user } = useAuth()
-  const { isPremium, subscription, createCheckout, openCustomerPortal, activateWithCode, loading } = usePremium()
+  const { isPremium, subscription, createCheckout, openCustomerPortal, activateWithCode, verifySession, loading } = usePremium()
   const toast = useToast()
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
@@ -51,17 +51,29 @@ export function Premium() {
   const [adminCode, setAdminCode] = useState('')
   const [activating, setActivating] = useState(false)
 
-  // Handle checkout result
+  // Handle checkout result - verify session with Stripe and activate subscription
   useEffect(() => {
     const checkoutStatus = searchParams.get('checkout')
-    if (checkoutStatus === 'success') {
-      toast.success('Sveikiname! Jūsų Premium prenumerata aktyvuota!')
+    const sessionId = searchParams.get('session_id')
+
+    if (checkoutStatus === 'success' && sessionId) {
+      verifySession(sessionId).then((success) => {
+        if (success) {
+          toast.success('Sveikiname! Jūsų Premium prenumerata aktyvuota!')
+        } else {
+          toast.error('Nepavyko patvirtinti prenumeratos. Pabandykite atnaujinti puslapį.')
+        }
+        navigate('/premium', { replace: true })
+      })
+    } else if (checkoutStatus === 'success') {
+      // Fallback if no session_id (old flow)
+      toast.success('Mokėjimas sėkmingas! Prenumerata bus aktyvuota per kelias minutes.')
       navigate('/premium', { replace: true })
     } else if (checkoutStatus === 'canceled') {
       toast.info('Prenumerata atšaukta')
       navigate('/premium', { replace: true })
     }
-  }, [searchParams, toast, navigate])
+  }, [searchParams, toast, navigate, verifySession])
 
   const handleSubscribe = async (priceId: string) => {
     if (!user) {

@@ -16,6 +16,7 @@ interface UsePremiumResult {
   createCheckout: (priceId: string) => Promise<string | null>
   openCustomerPortal: () => Promise<string | null>
   activateWithCode: (code: string) => Promise<boolean>
+  verifySession: (sessionId: string) => Promise<boolean>
 }
 
 export function usePremium(): UsePremiumResult {
@@ -65,15 +66,25 @@ export function usePremium(): UsePremiumResult {
     }
 
     try {
-      const response = await supabase.functions.invoke('create-checkout', {
-        body: { priceId },
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+      const res = await fetch(`${supabaseUrl}/functions/v1/create-checkout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session!.access_token}`,
+          'apikey': supabaseAnonKey,
+        },
+        body: JSON.stringify({ priceId }),
       })
 
-      if (response.error) {
-        throw new Error(response.error.message)
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || `HTTP ${res.status}`)
       }
 
-      return response.data?.url || null
+      return data?.url || null
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create checkout')
       return null
@@ -161,6 +172,39 @@ export function usePremium(): UsePremiumResult {
     }
   }, [user, fetchSubscription])
 
+  const verifySession = useCallback(async (sessionId: string): Promise<boolean> => {
+    if (!session?.access_token) {
+      setError('Not authenticated')
+      return false
+    }
+
+    try {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+      const res = await fetch(`${supabaseUrl}/functions/v1/verify-session`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session!.access_token}`,
+          'apikey': supabaseAnonKey,
+        },
+        body: JSON.stringify({ session_id: sessionId }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || `HTTP ${res.status}`)
+      }
+
+      await fetchSubscription()
+      return data.success === true
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to verify session')
+      return false
+    }
+  }, [session?.access_token, fetchSubscription])
+
   // Check if user has active premium
   const isPremium = subscription?.status === 'active'
 
@@ -173,5 +217,6 @@ export function usePremium(): UsePremiumResult {
     createCheckout,
     openCustomerPortal,
     activateWithCode,
+    verifySession,
   }
 }
