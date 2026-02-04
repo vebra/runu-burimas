@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
-import { Sparkles, Calendar, BookOpen, Type, ArrowRight, Crown, Compass, Users, TrendingUp, Zap, Star, Moon, HelpCircle } from 'lucide-react'
+import { Sparkles, Calendar, BookOpen, Type, ArrowRight, Crown, Compass, Users, TrendingUp, Zap, Star, Moon, HelpCircle, Heart } from 'lucide-react'
 import { useRef, useState } from 'react'
 
 // Feature type for cards
@@ -45,7 +45,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
   return (
     <motion.div
       variants={itemVariants}
-      className="w-full sm:w-[calc(50%-1.125rem)] lg:w-[calc(33.333%-1.5rem)]"
+      className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
       style={{ perspective: 1000 }}
     >
       <Link to={feature.path} className="block h-full">
@@ -87,6 +87,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
               bg-gradient-to-br from-gray-900/95 via-gray-800/90 to-gray-900/95
               backdrop-blur-md
               border transition-all duration-500
+              p-4 sm:p-5 lg:p-7
               ${feature.premium
                 ? 'border-amber-500/40 hover:border-amber-400/70'
                 : 'border-gray-700/50 hover:border-purple-500/60'
@@ -96,7 +97,6 @@ function FeatureCard({ feature }: { feature: Feature }) {
               boxShadow: feature.premium
                 ? `0 0 40px ${feature.glowColor}, inset 0 1px 0 rgba(255,255,255,0.1)`
                 : 'inset 0 1px 0 rgba(255,255,255,0.05)',
-              padding: '1.75rem',
               height: '100%',
               display: 'flex',
               flexDirection: 'column',
@@ -127,19 +127,19 @@ function FeatureCard({ feature }: { feature: Feature }) {
             {/* Premium badge */}
             {feature.premium && (
               <motion.div
-                className="absolute top-4 right-4 flex items-center gap-1.5 bg-amber-500/20 backdrop-blur-sm px-3 py-1 rounded-full border border-amber-500/40"
+                className="absolute top-2 right-2 sm:top-3 sm:right-3 lg:top-4 lg:right-4 flex items-center gap-1 sm:gap-1.5 bg-amber-500/20 backdrop-blur-sm px-2 py-0.5 sm:px-3 sm:py-1 rounded-full border border-amber-500/40"
                 animate={isHovered ? { scale: [1, 1.05, 1] } : {}}
                 transition={{ duration: 0.5 }}
               >
-                <Crown className="w-3.5 h-3.5 text-amber-400" />
-                <span className="text-xs font-medium text-amber-300">Premium</span>
+                <Crown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400" />
+                <span className="text-[10px] sm:text-xs font-medium text-amber-300">Premium</span>
               </motion.div>
             )}
 
             {/* Floating Icon */}
             <motion.div
               className={`
-                relative w-16 h-16 rounded-xl flex items-center justify-center
+                relative w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl flex items-center justify-center
                 bg-gradient-to-br ${feature.color}
                 shadow-lg
               `}
@@ -158,33 +158,32 @@ function FeatureCard({ feature }: { feature: Feature }) {
                 transform: 'translateZ(20px)',
               }}
             >
-              <feature.icon className="w-8 h-8 text-white" />
+              <feature.icon className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white" />
             </motion.div>
 
             {/* Content */}
             <motion.h3
-              className="text-2xl font-cinzel font-semibold text-white transition-colors"
-              style={{ marginTop: '1.25rem', transform: 'translateZ(10px)' }}
+              className="text-lg sm:text-xl lg:text-2xl font-cinzel font-semibold text-white transition-colors mt-3 sm:mt-4 lg:mt-5"
+              style={{ transform: 'translateZ(10px)' }}
               animate={{ color: isHovered ? '#fde68a' : '#ffffff' }}
               transition={{ duration: 0.3 }}
             >
               {feature.title}
             </motion.h3>
             <p
-              className="text-gray-400 text-base leading-relaxed"
-              style={{ marginTop: '0.75rem', flex: 1, transform: 'translateZ(5px)' }}
+              className="text-gray-400 text-sm sm:text-base leading-relaxed mt-2 sm:mt-3"
+              style={{ flex: 1, transform: 'translateZ(5px)' }}
             >
               {feature.description}
             </p>
 
             {/* Arrow indicator */}
             <motion.div
-              className="flex items-center gap-2 text-purple-400 transition-colors"
-              style={{ marginTop: '1.25rem' }}
+              className="flex items-center gap-2 text-purple-400 transition-colors mt-3 sm:mt-4 lg:mt-5"
               animate={{ color: isHovered ? '#fbbf24' : '#a78bfa' }}
               transition={{ duration: 0.3 }}
             >
-              <span className="text-base font-medium">Atidaryti</span>
+              <span className="text-sm sm:text-base font-medium">Atidaryti</span>
               <motion.div
                 animate={{ x: isHovered ? 8 : 0 }}
                 transition={{ duration: 0.3 }}
@@ -254,6 +253,24 @@ const features = [
     path: '/seven-rune-map',
     color: 'from-purple-600 to-pink-600',
     glowColor: 'rgba(219, 39, 119, 0.4)',
+    premium: true,
+  },
+  {
+    icon: Heart,
+    title: 'Meilės Būrimas',
+    description: '5 runų santykių būrimas apie meilę ir partnerystę',
+    path: '/love-reading',
+    color: 'from-pink-500 to-rose-500',
+    glowColor: 'rgba(236, 72, 153, 0.5)',
+    premium: true,
+  },
+  {
+    icon: Star,
+    title: 'Keltų Kryžius',
+    description: '10 runų pilnas būrimas - gilus situacijos tyrimas',
+    path: '/celtic-cross',
+    color: 'from-amber-700 to-amber-600',
+    glowColor: 'rgba(180, 83, 9, 0.5)',
     premium: true,
   },
   {
@@ -801,7 +818,7 @@ export function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="relative py-20 md:py-32 lg:py-40 px-4 w-full flex justify-center">
+      <section className="relative py-12 sm:py-20 md:py-32 lg:py-40 px-3 sm:px-4 w-full flex justify-center">
         <div style={{ width: '100%', maxWidth: '1152px' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -831,7 +848,7 @@ export function Home() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="flex flex-wrap justify-center gap-x-9 gap-y-8 mx-auto"
+            className="flex flex-wrap justify-center gap-x-4 gap-y-5 sm:gap-x-6 sm:gap-y-6 lg:gap-x-9 lg:gap-y-8 mx-auto"
           >
             {features.map((feature) => (
               <FeatureCard key={feature.path} feature={feature} />

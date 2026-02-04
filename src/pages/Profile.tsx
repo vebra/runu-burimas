@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { User, LogOut, Calendar, Sparkles, Heart, Trophy, Trash2, AlertTriangle } from 'lucide-react'
+import { User, LogOut, Calendar, Sparkles, Heart, Trophy, Trash2, AlertTriangle, Crown, Settings } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import { usePremium } from '../hooks/usePremium'
 import { useFavorites, useDivinations } from '../hooks/useRunes'
 import { supabase } from '../lib/supabase'
 import { Button } from '../components/common/Button'
@@ -18,10 +19,12 @@ interface Stats {
 
 export function Profile() {
   const { user, signOut } = useAuth()
+  const { isPremium, subscription, openCustomerPortal, loading: premiumLoading } = usePremium()
   const { favorites, fetchFavorites } = useFavorites()
   const { divinations, fetchDivinations } = useDivinations()
   const navigate = useNavigate()
   const hasFetched = useRef(false)
+  const [portalLoading, setPortalLoading] = useState(false)
 
   const [stats, setStats] = useState<Stats>({
     totalDailyRunes: 0,
@@ -92,6 +95,20 @@ export function Profile() {
 
   const toast = useToast()
 
+  const handleManageSubscription = async () => {
+    setPortalLoading(true)
+    try {
+      const url = await openCustomerPortal()
+      if (url) {
+        window.location.href = url
+      } else {
+        toast.error('Nepavyko atidaryti prenumeratos valdymo')
+      }
+    } finally {
+      setPortalLoading(false)
+    }
+  }
+
   const handleSignOut = async () => {
     try {
       await signOut()
@@ -112,7 +129,8 @@ export function Profile() {
       // Delete all user data from tables
       await supabase.from('daily_runes').delete().eq('user_id', user.id)
       await supabase.from('divinations').delete().eq('user_id', user.id)
-      await supabase.from('favorite_runes').delete().eq('user_id', user.id)
+      await supabase.from('user_favorite_runes').delete().eq('user_id', user.id)
+      await supabase.from('subscriptions').delete().eq('user_id', user.id)
 
       // Sign out the user
       await signOut()
@@ -251,7 +269,7 @@ export function Profile() {
             className="bg-linear-to-r from-amber-900/30 to-orange-900/30 border-2 border-amber-500/40 rounded-xl text-center shadow-lg cursor-pointer"
             style={{ padding: '1.5rem 1.25rem', maxWidth: '360px', boxShadow: '0 0 30px rgba(217, 119, 6, 0.3)' }}
           >
-            <motion.span 
+            <motion.span
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
               className="text-5xl mb-3 block"
@@ -263,6 +281,93 @@ export function Profile() {
           </motion.div>
           </div>
         )}
+
+        {/* Subscription Section */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.22 }}
+          className={`border-2 rounded-xl ${
+            isPremium
+              ? 'bg-gradient-to-r from-amber-900/20 to-purple-900/20 border-amber-500/40'
+              : 'bg-gray-800/50 border-gray-700'
+          }`}
+          style={{ padding: '1.5rem', marginBottom: '2.5rem', boxShadow: isPremium ? '0 0 30px rgba(217, 119, 6, 0.2)' : 'none' }}
+        >
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <Crown className={`w-6 h-6 ${isPremium ? 'text-amber-400' : 'text-gray-500'}`} />
+              <h3 className="text-lg font-cinzel font-semibold text-white">
+                {isPremium ? 'Premium Narystė' : 'Prenumerata'}
+              </h3>
+            </div>
+            {isPremium && (
+              <span className="bg-amber-500/20 text-amber-400 text-xs font-semibold px-3 py-1 rounded-full">
+                AKTYVUS
+              </span>
+            )}
+          </div>
+
+          {premiumLoading ? (
+            <div className="h-16 bg-gray-700/30 rounded animate-pulse" />
+          ) : isPremium && subscription ? (
+            <div className="space-y-3">
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-400">Planas:</span>
+                <span className="text-white font-medium">
+                  {subscription.plan_type === 'yearly' ? 'Metinis' : 'Mėnesinis'}
+                </span>
+              </div>
+              {subscription.current_period_end && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-400">Galioja iki:</span>
+                  <span className="text-white">
+                    {new Date(subscription.current_period_end).toLocaleDateString('lt-LT')}
+                  </span>
+                </div>
+              )}
+              {subscription.cancel_at_period_end && (
+                <div className="mt-3 p-2 bg-red-500/10 border border-red-500/30 rounded-lg">
+                  <p className="text-red-400 text-xs">
+                    Prenumerata bus atšaukta periodo pabaigoje
+                  </p>
+                </div>
+              )}
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleManageSubscription}
+                disabled={portalLoading}
+                className="w-full mt-4 py-2.5 px-4 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-medium transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                {portalLoading ? (
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                  >
+                    <Settings className="w-4 h-4" />
+                  </motion.div>
+                ) : (
+                  <Settings className="w-4 h-4" />
+                )}
+                Valdyti prenumeratą
+              </motion.button>
+            </div>
+          ) : (
+            <div className="text-center">
+              <p className="text-gray-400 text-sm mb-4">
+                Atrakinkite visas Premium funkcijas ir būrimus
+              </p>
+              <Link
+                to="/premium"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold py-3 px-6 rounded-lg transition-all shadow-lg"
+              >
+                <Crown className="w-5 h-5" />
+                Gauti Premium
+              </Link>
+            </div>
+          )}
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}

@@ -13,8 +13,10 @@ export function PrivacyPolicy() {
 • **Būrimų istorija** – jūsų atlikti būrimai ir užrašai
 • **Kasdienės runos** – jūsų trauktos runos ir refleksijos
 • **Mėgstamos runos** – jūsų pasirinktos mėgstamos runos
+• **Prenumeratos informacija** – prenumeratos statusas ir galiojimo data
 
-Mes **nerenkame** jokių mokėjimo duomenų, tikslios lokacijos ar jautrių asmens duomenų.`
+**Mokėjimų duomenys:**
+Mokėjimus apdoroja **Stripe** – mes **nesaugome** jūsų kortelės numerio ar CVV kodo. Stripe yra PCI DSS sertifikuota platforma.`
     },
     {
       icon: UserCheck,
@@ -89,22 +91,22 @@ Jei esate tėvas/motina ir manote, kad jūsų vaikas pateikė mums asmens duomen
   ]
 
   return (
-    <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '4rem', paddingBottom: '6rem' }}>
+    <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '8rem', paddingBottom: '6rem' }}>
       <div style={{ width: '100%', maxWidth: '896px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
-          style={{ marginBottom: '3rem', marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}
+          style={{ marginBottom: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
         >
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-900/50 border border-purple-500/30">
-            <Shield className="w-8 h-8 text-purple-400" />
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-purple-900/50 border border-purple-500/30">
+            <Shield className="w-7 h-7 text-purple-400" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-cinzel font-bold text-white">
+          <h1 className="text-3xl sm:text-4xl font-cinzel font-bold text-white">
             Privatumo Politika
           </h1>
-          <p className="text-gray-400 text-lg">
-            Paskutinį kartą atnaujinta: {new Date().toLocaleDateString('lt-LT', { year: 'numeric', month: 'long', day: 'numeric' })}
+          <p className="text-gray-400 text-base">
+            Paskutinį kartą atnaujinta: 2026 m. vasario 3 d.
           </p>
         </motion.div>
 

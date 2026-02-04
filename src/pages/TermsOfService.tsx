@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ScrollText, AlertTriangle, UserCheck, Ban, Scale, RefreshCw, Mail, Shield } from 'lucide-react'
+import { ScrollText, AlertTriangle, UserCheck, Ban, Scale, RefreshCw, Mail, Shield, Crown, CreditCard } from 'lucide-react'
 
 export function TermsOfService() {
   const sections = [
@@ -8,10 +8,19 @@ export function TermsOfService() {
       title: '1. Paslaugos aprašymas',
       content: `„Runų Būrimas" yra internetinė platforma, skirta:
 
-• **Runų būrimams** – kasdienės runos, trijų runų, penkių runų kryžiaus ir septynių runų žemėlapio būrimai
-• **Runų bibliotekai** – informacija apie Elder Futhark runas
-• **Teksto konvertavimui** – lotynų raidžių konvertavimas į runas
-• **Asmeninei istorijai** – būrimų išsaugojimas ir refleksijos
+**Nemokamos funkcijos:**
+• **Kasdienė Runa** – viena runa kiekvienai dienai
+• **Trys Runos** – praeitis, dabartis, ateitis
+• **Taip/Ne būrimas** – greitas atsakymas į klausimą
+• **Runų Biblioteka** – informacija apie Elder Futhark runas
+• **Runų Konverteris** – teksto konvertavimas į runas
+
+**Premium funkcijos (mokama prenumerata):**
+• **5 Runų Kryžius** – situacijos analizė
+• **7 Runų Gyvenimo Žemėlapis** – gilus dvasinis kelias
+• **Meilės Būrimas** – 5 runų santykių analizė
+• **Keltų Kryžius** – išsamus 10 runų būrimas
+• **AI interpretacijos** – išsamios būrimų analizės
 
 Paslauga teikiama **pramogos ir savirefleksijos** tikslais. Runų būrimai nėra ir neturėtų būti laikomi profesionalia konsultacija.`
     },
@@ -72,12 +81,51 @@ Jūs **negalite**:
 • Kurti išvestinių produktų be raštiško leidimo`
     },
     {
+      icon: Crown,
+      title: '6. Premium prenumerata',
+      content: `**Prenumeratos planai:**
+• **Mėnesinis** – €9.99/mėn, atnaujinamas automatiškai
+• **Metinis** – €79.99/metai (sutaupote ~33%)
+
+**Mokėjimas:**
+• Mokėjimai apdorojami per **Stripe** – saugų mokėjimų tinklą
+• Priimamos **Visa, Mastercard, American Express** kortelės
+• Mokėjimas nuskaičiuojamas **iš karto** po prenumeratos aktyvavimo
+
+**Atšaukimas:**
+• Galite atšaukti prenumeratą **bet kuriuo metu**
+• Po atšaukimo Premium prieiga išliks iki **mokėjimo periodo pabaigos**
+• Pinigai už nepanaudotą laikotarpį **negrąžinami**
+
+**Automatinis atnaujinimas:**
+• Prenumerata atnaujinama automatiškai kiekvieno periodo pabaigoje
+• Prieš atnaujinimą **negausite** papildomo pranešimo
+• Norėdami sustabdyti, atšaukite prenumeratą prieš periodo pabaigą`
+    },
+    {
+      icon: CreditCard,
+      title: '7. Mokėjimai ir grąžinimai',
+      content: `**Mokėjimų saugumas:**
+• Visi mokėjimai apdorojami per **Stripe** – PCI DSS sertifikuotą platformą
+• Mes **nesaugome** jūsų kortelės duomenų savo serveriuose
+• Mokėjimai yra **šifruojami** SSL/TLS protokolu
+
+**Grąžinimo politika:**
+• Prenumeratos mokesčiai **negrąžinami** po aktyvavimo
+• Išimtis: techninės klaidos ar neteisėti nuskaitymai
+• Dėl grąžinimų kreipkitės: **info@runuburimas.lt**
+
+**Kainų pakeitimai:**
+• Apie kainų pakeitimus informuosime **30 dienų** iš anksto
+• Esami prenumeratoriai išlaikys seną kainą iki periodo pabaigos`
+    },
+    {
       icon: RefreshCw,
-      title: '6. Paslaugos pakeitimai',
+      title: '8. Paslaugos pakeitimai',
       content: `Mes pasiliekame teisę:
 
 • **Keisti funkcijas** – pridėti, modifikuoti ar pašalinti funkcijas
-• **Atnaujinti kainas** – jei bus įvestos mokamos funkcijos
+• **Atnaujinti kainas** – pranešus iš anksto
 • **Sustabdyti paslaugą** – laikinai ar visam laikui, pranešus iš anksto
 • **Keisti šias sąlygas** – apie esminius pakeitimus informuosime el. paštu
 
@@ -85,7 +133,7 @@ Tęsdami naudojimąsi paslauga po pakeitimų, sutinkate su naujomis sąlygomis.`
     },
     {
       icon: Scale,
-      title: '7. Ginčų sprendimas',
+      title: '9. Ginčų sprendimas',
       content: `Ginčų sprendimo tvarka:
 
 • **Taikomas teisė** – Lietuvos Respublikos teisė
@@ -97,7 +145,7 @@ Jei nesutinkate su mūsų sprendimu, galite kreiptis į Valstybinę vartotojų t
     },
     {
       icon: ScrollText,
-      title: '8. Baigiamosios nuostatos',
+      title: '10. Baigiamosios nuostatos',
       content: `Papildoma informacija:
 
 • **Sąlygų galiojimas** – šios sąlygos galioja nuo pirmo paslaugos naudojimo
@@ -110,22 +158,22 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
   ]
 
   return (
-    <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '4rem', paddingBottom: '6rem' }}>
+    <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '8rem', paddingBottom: '6rem' }}>
       <div style={{ width: '100%', maxWidth: '896px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
-          style={{ marginBottom: '3rem', marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}
+          style={{ marginBottom: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
         >
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-900/50 border border-amber-500/30">
-            <ScrollText className="w-8 h-8 text-amber-400" />
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-amber-900/50 border border-amber-500/30">
+            <ScrollText className="w-7 h-7 text-amber-400" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-cinzel font-bold text-white">
+          <h1 className="text-3xl sm:text-4xl font-cinzel font-bold text-white">
             Naudojimo Sąlygos
           </h1>
-          <p className="text-gray-400 text-lg">
-            Paskutinį kartą atnaujinta: {new Date().toLocaleDateString('lt-LT', { year: 'numeric', month: 'long', day: 'numeric' })}
+          <p className="text-gray-400 text-base">
+            Paskutinį kartą atnaujinta: 2026 m. vasario 3 d.
           </p>
         </motion.div>
 

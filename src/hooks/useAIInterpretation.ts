@@ -10,7 +10,7 @@ interface RuneData {
   position: string
 }
 
-type SpreadType = 'daily' | 'three_rune' | 'five_rune' | 'seven_rune' | 'yes_no'
+type SpreadType = 'daily' | 'three_rune' | 'five_rune' | 'seven_rune' | 'yes_no' | 'celtic_cross' | 'love_reading'
 
 interface UseAIInterpretationReturn {
   interpretation: string | null

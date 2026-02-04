@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, User, LogOut, ArrowLeft, Sparkles } from 'lucide-react'
+import { Menu, X, User, LogOut, ArrowLeft, Sparkles, Crown, ChevronDown } from 'lucide-react'
 import type { User as SupabaseUser } from '@supabase/supabase-js'
 
 interface HeaderProps {
@@ -18,8 +18,16 @@ const navLinks = [
   { path: '/converter', label: 'Konverteris', icon: '🔄' },
 ]
 
+const premiumLinks = [
+  { path: '/five-rune-cross', label: '5 Runų Kryžius', icon: '✨' },
+  { path: '/seven-rune-map', label: '7 Runų Žemėlapis', icon: '🗺️' },
+  { path: '/love-reading', label: 'Meilės Būrimas', icon: '💕' },
+  { path: '/celtic-cross', label: 'Keltų Kryžius', icon: '🔮' },
+]
+
 export function Header({ user, onSignOut }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [premiumMenuOpen, setPremiumMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
 
@@ -76,14 +84,14 @@ export function Header({ user, onSignOut }: HeaderProps) {
           </div>
 
           {/* Center - Navigation */}
-          <nav className="hidden lg:flex items-center gap-11">
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path
               return (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                  className={`relative px-4 py-2.5 rounded-lg text-base font-medium transition-all duration-300 ${
                     isActive
                       ? 'text-amber-300'
                       : 'text-gray-300 hover:text-amber-200'
@@ -101,6 +109,60 @@ export function Header({ user, onSignOut }: HeaderProps) {
                 </Link>
               )
             })}
+
+            {/* Premium Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setPremiumMenuOpen(!premiumMenuOpen)}
+                onBlur={() => setTimeout(() => setPremiumMenuOpen(false), 150)}
+                className={`relative px-4 py-2.5 rounded-lg text-base font-medium transition-all duration-300 flex items-center gap-2 ${
+                  premiumLinks.some(l => location.pathname === l.path)
+                    ? 'text-amber-300'
+                    : 'text-amber-400 hover:text-amber-300'
+                }`}
+              >
+                <Crown className="w-5 h-5" />
+                <span>Premium</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${premiumMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              <AnimatePresence>
+                {premiumMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute top-full left-0 mt-2 w-64 bg-gray-900/95 backdrop-blur-xl border border-amber-600/30 rounded-xl shadow-xl overflow-hidden z-50"
+                  >
+                    {premiumLinks.map((link) => (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        onClick={() => setPremiumMenuOpen(false)}
+                        className={`flex items-center gap-3 px-5 py-3.5 text-base transition-all ${
+                          location.pathname === link.path
+                            ? 'bg-amber-500/20 text-amber-300'
+                            : 'text-gray-300 hover:bg-amber-500/10 hover:text-amber-200'
+                        }`}
+                      >
+                        <span className="text-lg">{link.icon}</span>
+                        <span>{link.label}</span>
+                      </Link>
+                    ))}
+                    <div className="border-t border-gray-700/50">
+                      <Link
+                        to="/premium"
+                        onClick={() => setPremiumMenuOpen(false)}
+                        className="flex items-center gap-3 px-5 py-3.5 text-base text-amber-400 hover:bg-amber-500/10 transition-all"
+                      >
+                        <Sparkles className="w-5 h-5" />
+                        <span>Gauti Premium</span>
+                      </Link>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </nav>
 
           {/* Right side - Auth */}
@@ -194,33 +256,81 @@ export function Header({ user, onSignOut }: HeaderProps) {
                     <Link
                       to={link.path}
                       onClick={() => setMobileMenuOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-base font-medium transition-all duration-300 ${
+                      className={`flex items-center gap-4 px-5 py-4 rounded-xl text-lg font-medium transition-all duration-300 ${
                         location.pathname === link.path
                           ? 'bg-purple-900/50 text-amber-300 border border-amber-600/30 shadow-lg shadow-purple-900/20'
                           : 'text-gray-300 hover:text-amber-200 hover:bg-purple-900/30'
                       }`}
                     >
-                      <span className="text-lg">{link.icon}</span>
+                      <span className="text-xl">{link.icon}</span>
                       <span>{link.label}</span>
                     </Link>
                   </motion.div>
                 ))}
 
+                {/* Premium Section in Mobile */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                  className="pt-4 mt-4 border-t border-gray-800"
+                  transition={{ delay: 0.25 }}
+                  className="pt-5 mt-5 border-t border-amber-600/30"
+                >
+                  <div className="flex items-center gap-3 px-5 mb-4">
+                    <Crown className="w-6 h-6 text-amber-400" />
+                    <span className="text-amber-400 font-semibold text-lg">Premium Būrimai</span>
+                  </div>
+                  {premiumLinks.map((link, index) => (
+                    <motion.div
+                      key={link.path}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.25 + index * 0.05 }}
+                    >
+                      <Link
+                        to={link.path}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`flex items-center gap-4 px-5 py-4 rounded-xl text-lg font-medium transition-all duration-300 ${
+                          location.pathname === link.path
+                            ? 'bg-amber-500/20 text-amber-300 border border-amber-600/30'
+                            : 'text-gray-300 hover:text-amber-200 hover:bg-amber-500/10'
+                        }`}
+                      >
+                        <span className="text-xl">{link.icon}</span>
+                        <span>{link.label}</span>
+                      </Link>
+                    </motion.div>
+                  ))}
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.45 }}
+                  >
+                    <Link
+                      to="/premium"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-4 px-5 py-4 mt-2 rounded-xl text-lg text-amber-400 hover:bg-amber-500/10 transition-all"
+                    >
+                      <Sparkles className="w-6 h-6" />
+                      <span className="font-semibold">Gauti Premium</span>
+                    </Link>
+                  </motion.div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="pt-5 mt-5 border-t border-gray-800"
                 >
                   {user ? (
                     <div className="space-y-2">
                       <Link
                         to="/profile"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:text-white hover:bg-gray-800/50 transition-all duration-300"
+                        className="flex items-center gap-4 px-5 py-4 rounded-xl text-lg text-gray-300 hover:text-white hover:bg-gray-800/50 transition-all duration-300"
                       >
-                        <div className="w-8 h-8 rounded-full bg-purple-700/50 border border-purple-500/30 flex items-center justify-center">
-                          <User className="w-4 h-4" />
+                        <div className="w-10 h-10 rounded-full bg-purple-700/50 border border-purple-500/30 flex items-center justify-center">
+                          <User className="w-5 h-5" />
                         </div>
                         <span>Profilis</span>
                       </Link>
@@ -229,10 +339,10 @@ export function Header({ user, onSignOut }: HeaderProps) {
                           onSignOut()
                           setMobileMenuOpen(false)
                         }}
-                        className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-gray-300 hover:text-red-400 hover:bg-red-500/10 transition-all duration-300"
+                        className="flex items-center gap-4 w-full px-5 py-4 rounded-xl text-lg text-gray-300 hover:text-red-400 hover:bg-red-500/10 transition-all duration-300"
                       >
-                        <div className="w-8 h-8 rounded-full bg-gray-800/50 flex items-center justify-center">
-                          <LogOut className="w-4 h-4" />
+                        <div className="w-10 h-10 rounded-full bg-gray-800/50 flex items-center justify-center">
+                          <LogOut className="w-5 h-5" />
                         </div>
                         <span>Atsijungti</span>
                       </button>
@@ -241,9 +351,9 @@ export function Header({ user, onSignOut }: HeaderProps) {
                     <Link
                       to="/auth"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center gap-2 w-full bg-linear-to-r from-purple-700 to-violet-600 text-white font-medium py-4 px-4 rounded-xl border border-purple-400/20 shadow-lg shadow-purple-900/30"
+                      className="flex items-center justify-center gap-3 w-full bg-linear-to-r from-purple-700 to-violet-600 text-white font-semibold text-lg py-5 px-5 rounded-xl border border-purple-400/20 shadow-lg shadow-purple-900/30"
                     >
-                      <Sparkles className="w-5 h-5" />
+                      <Sparkles className="w-6 h-6" />
                       <span>Prisijungti</span>
                     </Link>
                   )}

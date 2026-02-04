@@ -23,6 +23,9 @@ const YesNoRune = lazy(() => import('./pages/YesNoRune').then(m => ({ default: m
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy').then(m => ({ default: m.PrivacyPolicy })))
 const TermsOfService = lazy(() => import('./pages/TermsOfService').then(m => ({ default: m.TermsOfService })))
 const NotFound = lazy(() => import('./pages/NotFound').then(m => ({ default: m.NotFound })))
+const Premium = lazy(() => import('./pages/Premium').then(m => ({ default: m.Premium })))
+const CelticCross = lazy(() => import('./pages/CelticCross').then(m => ({ default: m.CelticCross })))
+const LoveReading = lazy(() => import('./pages/LoveReading').then(m => ({ default: m.LoveReading })))
 
 // Magical loading fallback component
 function PageLoader() {
@@ -87,6 +90,9 @@ function AnimatedRoutes() {
         <Route path="/yes-no" element={<PageTransition><YesNoRune /></PageTransition>} />
         <Route path="/privacy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
         <Route path="/terms" element={<PageTransition><TermsOfService /></PageTransition>} />
+        <Route path="/premium" element={<PageTransition><Premium /></PageTransition>} />
+        <Route path="/celtic-cross" element={<PageTransition><CelticCross /></PageTransition>} />
+        <Route path="/love-reading" element={<PageTransition><LoveReading /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>

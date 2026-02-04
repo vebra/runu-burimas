@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { RotateCcw, Crown, Compass, BookOpen, Save, Loader2 } from 'lucide-react'
+import { RotateCcw, Compass, BookOpen, Save, Loader2 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
+import { usePremium } from '../hooks/usePremium'
 import { useRunes, useDivinations } from '../hooks/useRunes'
 import { Link } from 'react-router-dom'
 import type { Rune } from '../types/database'
@@ -10,6 +11,7 @@ import { useToast } from '../components/common/Toast'
 import { AIInterpretation } from '../components/common/AIInterpretation'
 import { useAIInterpretation } from '../hooks/useAIInterpretation'
 import { RuneCard } from '../components/common/RuneCard'
+import { PremiumPaywall } from '../components/premium/PremiumPaywall'
 
 type Position = 'self' | 'foundation' | 'past' | 'future' | 'obstacles' | 'help' | 'outcome'
 
@@ -31,6 +33,7 @@ const positionLabels: Record<Position, { label: string; description: string; emo
 
 export function SevenRuneMap() {
   const { user } = useAuth()
+  const { isPremium, loading: premiumLoading } = usePremium()
   const { runes, loading: runesLoading, getRandomOrientation } = useRunes()
   const { saveDivination, updateDivinationNotes } = useDivinations()
 
@@ -44,8 +47,6 @@ export function SevenRuneMap() {
   const [savingNotes, setSavingNotes] = useState(false)
   const [divinationId, setDivinationId] = useState<string | null>(null)
 
-  // Check if user has premium access (placeholder - will be replaced with real check)
-  const hasPremium = true // TODO: Replace with actual premium check
   const toast = useToast()
 
   const {
@@ -185,40 +186,33 @@ export function SevenRuneMap() {
     )
   }
 
-  if (!hasPremium) {
+  if (premiumLoading) {
     return (
-      <div className="min-h-screen py-12 px-4" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <div className="text-center" style={{ width: '100%', maxWidth: '448px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
-          <div className="flex items-center justify-center gap-2">
-            <Crown className="w-16 h-16 text-amber-400" />
-            <Crown className="w-16 h-16 text-amber-400" />
-          </div>
-          <h2 className="text-3xl font-cinzel font-bold text-white">
-            Premium+ Funkcija
-          </h2>
-          <p className="text-gray-400 text-lg">
-            7 Runų Gyvenimo Žemėlapis yra aukščiausio lygio premium funkcija, skirta giliam dvasiniam augimui.
-          </p>
-          <div className="bg-purple-900/30 border-2 border-amber-500/40 rounded-xl p-6 w-full">
-            <h3 className="text-amber-300 font-semibold mb-3">Premium+ privalumai:</h3>
-            <ul className="text-gray-300 text-left space-y-2">
-              <li>✨✨ Neriboti 7 Runų Gyvenimo žemėlapio būrimai</li>
-              <li>✨ Neriboti 5 Runų Kryžiaus būrimai</li>
-              <li>✨ AI interpretacijos (greitai)</li>
-              <li>✨ Pilna būrimų istorija</li>
-              <li>✨ PDF eksportas</li>
-              <li>✨ Prioritetinė pagalba</li>
-            </ul>
-          </div>
-          <Link
-            to="/premium"
-            className="bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold py-4 px-10 text-lg rounded-lg transition-all duration-300 shadow-lg inline-flex items-center gap-3"
-          >
-            <Crown className="w-6 h-6" />
-            Gauti Premium+
-          </Link>
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <motion.div
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          className="text-6xl text-purple-400"
+        >
+          🗺️
+        </motion.div>
       </div>
+    )
+  }
+
+  if (!isPremium) {
+    return (
+      <PremiumPaywall
+        title="7 Runų Gyvenimo Žemėlapis"
+        description="7 Runų Gyvenimo Žemėlapis yra premium funkcija, skirta giliam dvasiniam augimui."
+        features={[
+          'Tu centre + 6 aspektai',
+          'Pagrindas, praeitis, ateitis',
+          'Kliūtys, pagalba, tikslas',
+          'Gilus dvasinis kelias',
+          'AI interpretacijos',
+        ]}
+      />
     )
   }
 
@@ -240,25 +234,45 @@ export function SevenRuneMap() {
   }
 
   return (
-    <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '4rem', paddingBottom: '6rem' }}>
+    <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '8rem', paddingBottom: '6rem' }}>
       <div style={{ width: '100%', maxWidth: '1152px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
-          style={{ marginBottom: '3rem', marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}
+          style={{ marginBottom: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
         >
           <div className="flex items-center justify-center gap-4">
-            <Compass className="w-10 h-10 text-purple-400" />
-            <h1 className="text-5xl md:text-6xl font-cinzel font-bold text-white">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            >
+              <Compass className="w-10 h-10 text-purple-400" />
+            </motion.div>
+            <motion.h1
+              className="text-4xl sm:text-5xl font-cinzel font-bold text-white tracking-wide uppercase"
+              animate={{
+                textShadow: [
+                  "0 0 20px rgba(168, 85, 247, 0.3)",
+                  "0 0 40px rgba(168, 85, 247, 0.6)",
+                  "0 0 20px rgba(168, 85, 247, 0.3)"
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
               7 Runų Gyvenimo Žemėlapis
-            </h1>
-            <Compass className="w-10 h-10 text-purple-400" />
+            </motion.h1>
+            <motion.div
+              animate={{ rotate: -360 }}
+              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            >
+              <Compass className="w-10 h-10 text-purple-400" />
+            </motion.div>
           </div>
-          <p className="text-gray-400 text-xl">
+          <p className="text-gray-300 text-lg sm:text-xl italic">
             Gilus dvasinis kelias su 7 aspektais
           </p>
-          <p className="text-purple-300 text-lg">
+          <p className="text-purple-300 text-base sm:text-lg">
             Tu centre + 6 aspektai (pagrindas, praeitis, ateitis, kliūtys, pagalba, tikslas)
           </p>
         </motion.div>
