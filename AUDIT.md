@@ -214,17 +214,17 @@
 ### BUG-07: syncDivinations() yra tuščias stub
 - **Failas**: `public/sw.js:92-95`
 - **Sprendimas**: Implementuoti arba pašalinti sync handler.
-- [ ] Ištaisyta
+- [x] Ištaisyta (dead code pašalintas audito metu)
 
 ### MISS-01: Background sync neimplementuotas
 - **Failas**: `public/sw.js:86-95`
 - **Sprendimas**: Implementuoti IndexedDB + sync arba pašalinti.
-- [ ] Ištaisyta
+- [x] Ištaisyta (dead code pašalintas audito metu)
 
 ### MISS-02: Push notifications handler neveikia
 - **Failas**: `public/sw.js:97-136`
 - **Sprendimas**: Implementuoti arba pašalinti.
-- [ ] Ištaisyta
+- [x] Ištaisyta (dead code pašalintas audito metu)
 
 ### UI-11: Textarea be character limit
 - **Failai**: Spread puslapių question textarea
