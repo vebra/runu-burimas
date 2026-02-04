@@ -209,7 +209,7 @@
 ### PERF-05: Kartotiniai .find() drawnRunes masyve
 - **Failai**: `CelticCross.tsx:370-453`
 - **Sprendimas**: Sukurti `runeByPosition` map iš anksto.
-- [ ] Ištaisyta
+- [x] Ištaisyta (pašalinta per CQ-01 refaktorizaciją)
 
 ### BUG-07: syncDivinations() yra tuščias stub
 - **Failas**: `public/sw.js:92-95`
