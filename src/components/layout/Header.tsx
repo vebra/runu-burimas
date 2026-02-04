@@ -69,15 +69,14 @@ export function Header({ user, onSignOut }: HeaderProps) {
               </motion.div>
             )}
 
-            <Link to="/" className="flex items-center gap-3 group" aria-label="Runų Būrimas - Pradžia">
-              <motion.span
-                className="text-2xl md:text-3xl"
-                whileHover={{ scale: 1.1, rotate: 10 }}
+            <Link to="/" className="flex items-center gap-2 group" aria-label="Runų Būrimas - Pradžia">
+              <motion.img
+                src={import.meta.env.BASE_URL + 'logo.png'}
+                alt="Runų Būrimas"
+                className="h-10 md:h-12 w-auto"
+                whileHover={{ scale: 1.08 }}
                 transition={{ type: 'spring', stiffness: 300 }}
-                aria-hidden="true"
-              >
-                🔮
-              </motion.span>
+              />
               <span className="font-cinzel font-bold text-lg md:text-xl text-white hidden sm:block group-hover:text-amber-200 transition-colors">
                 Runų Būrimas
               </span>
