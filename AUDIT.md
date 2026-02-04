@@ -204,7 +204,7 @@
 ### PERF-02: Zustand instaliuotas bet nenaudojamas
 - **Failas**: `package.json`
 - **Sprendimas**: Pašalinti arba naudoti AuthProvider.
-- [ ] Ištaisyta
+- [x] Ištaisyta (pašalintas iš dependencies)
 
 ### PERF-05: Kartotiniai .find() drawnRunes masyve
 - **Failai**: `CelticCross.tsx:370-453`
