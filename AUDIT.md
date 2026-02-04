@@ -76,7 +76,7 @@
 - **Failai**: `src/pages/FiveRuneCross.tsx:353`, `SevenRuneMap.tsx`
 - **Problema**: Absoliučios pozicijos rūnų kortelės persidengia mažuose ekranuose.
 - **Sprendimas**: Mobiliam vaizdui naudoti vertikalų stacked layout.
-- [ ] Ištaisyta
+- [x] Ištaisyta (mobile stacked layout + desktop absolute/circular layout)
 
 ---
 

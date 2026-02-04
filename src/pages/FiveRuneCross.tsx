@@ -318,39 +318,98 @@ export function FiveRuneCross() {
 
         {drawnRunes.length > 0 && !isDrawing && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            {/* Kryžiaus layout */}
-            <div className="flex justify-center px-4" style={{ marginBottom: '5rem' }}>
-            <div className="relative w-full max-w-[600px] aspect-square md:w-[600px] md:h-[600px]">
-              {drawnRunes.map((drawn) => {
-                const isRevealed = revealedPositions.has(drawn.position)
-                const position = drawn.position
+            {/* Kryžiaus layout - Desktop */}
+            <div className="hidden md:flex justify-center px-4" style={{ marginBottom: '5rem' }}>
+              <div className="relative w-[600px] h-[600px]">
+                {drawnRunes.map((drawn) => {
+                  const isRevealed = revealedPositions.has(drawn.position)
+                  const position = drawn.position
 
-                const positionStyles = {
-                  center: { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' },
-                  top: { top: '0%', left: '50%', transform: 'translate(-50%, 0)' },
-                  bottom: { bottom: '0%', left: '50%', transform: 'translate(-50%, 0)' },
-                  left: { top: '50%', left: '0%', transform: 'translate(0, -50%)' },
-                  right: { top: '50%', right: '0%', transform: 'translate(0, -50%)' },
-                }
+                  const positionStyles = {
+                    center: { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' },
+                    top: { top: '0%', left: '50%', transform: 'translate(-50%, 0)' },
+                    bottom: { bottom: '0%', left: '50%', transform: 'translate(-50%, 0)' },
+                    left: { top: '50%', left: '0%', transform: 'translate(0, -50%)' },
+                    right: { top: '50%', right: '0%', transform: 'translate(0, -50%)' },
+                  }
 
-                return (
-                  <div
-                    key={position}
-                    className="absolute"
-                    style={positionStyles[position]}
-                  >
-                    <RuneCard
-                      rune={drawn.rune}
-                      orientation={drawn.orientation}
-                      revealed={isRevealed}
-                      onReveal={() => revealRune(position)}
-                      label={positionLabels[position].label}
-                      size="sm"
-                    />
-                  </div>
-                )
-              })}
+                  return (
+                    <div
+                      key={position}
+                      className="absolute"
+                      style={positionStyles[position]}
+                    >
+                      <RuneCard
+                        rune={drawn.rune}
+                        orientation={drawn.orientation}
+                        revealed={isRevealed}
+                        onReveal={() => revealRune(position)}
+                        label={positionLabels[position].label}
+                        size="sm"
+                      />
+                    </div>
+                  )
+                })}
+              </div>
             </div>
+
+            {/* Kryžiaus layout - Mobile (stacked) */}
+            <div className="md:hidden flex flex-col items-center gap-3 px-4" style={{ marginBottom: '3rem' }}>
+              {/* Viršus */}
+              {drawnRunes.find(r => r.position === 'top') && (
+                <RuneCard
+                  rune={drawnRunes.find(r => r.position === 'top')!.rune}
+                  orientation={drawnRunes.find(r => r.position === 'top')!.orientation}
+                  revealed={revealedPositions.has('top')}
+                  onReveal={() => revealRune('top')}
+                  label={positionLabels.top.label}
+                  size="sm"
+                />
+              )}
+              {/* Kairė - Centras - Dešinė */}
+              <div className="flex items-center justify-center gap-3">
+                {drawnRunes.find(r => r.position === 'left') && (
+                  <RuneCard
+                    rune={drawnRunes.find(r => r.position === 'left')!.rune}
+                    orientation={drawnRunes.find(r => r.position === 'left')!.orientation}
+                    revealed={revealedPositions.has('left')}
+                    onReveal={() => revealRune('left')}
+                    label={positionLabels.left.label}
+                    size="sm"
+                  />
+                )}
+                {drawnRunes.find(r => r.position === 'center') && (
+                  <RuneCard
+                    rune={drawnRunes.find(r => r.position === 'center')!.rune}
+                    orientation={drawnRunes.find(r => r.position === 'center')!.orientation}
+                    revealed={revealedPositions.has('center')}
+                    onReveal={() => revealRune('center')}
+                    label={positionLabels.center.label}
+                    size="sm"
+                  />
+                )}
+                {drawnRunes.find(r => r.position === 'right') && (
+                  <RuneCard
+                    rune={drawnRunes.find(r => r.position === 'right')!.rune}
+                    orientation={drawnRunes.find(r => r.position === 'right')!.orientation}
+                    revealed={revealedPositions.has('right')}
+                    onReveal={() => revealRune('right')}
+                    label={positionLabels.right.label}
+                    size="sm"
+                  />
+                )}
+              </div>
+              {/* Apačia */}
+              {drawnRunes.find(r => r.position === 'bottom') && (
+                <RuneCard
+                  rune={drawnRunes.find(r => r.position === 'bottom')!.rune}
+                  orientation={drawnRunes.find(r => r.position === 'bottom')!.orientation}
+                  revealed={revealedPositions.has('bottom')}
+                  onReveal={() => revealRune('bottom')}
+                  label={positionLabels.bottom.label}
+                  size="sm"
+                />
+              )}
             </div>
 
             {spreadComplete && (

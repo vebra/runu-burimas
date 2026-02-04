@@ -326,53 +326,86 @@ export function SevenRuneMap() {
 
         {drawnRunes.length > 0 && !isDrawing && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            {/* Circular layout */}
-            <div className="flex justify-center px-4" style={{ marginBottom: '5rem' }}>
-            <div className="relative w-full max-w-[700px] aspect-square md:w-[700px] md:h-[700px]">
-              {drawnRunes.map((drawn) => {
-                const isRevealed = revealedPositions.has(drawn.position)
-                const position = drawn.position
+            {/* Circular layout - Desktop */}
+            <div className="hidden md:flex justify-center px-4" style={{ marginBottom: '5rem' }}>
+              <div className="relative w-[700px] h-[700px]">
+                {drawnRunes.map((drawn) => {
+                  const isRevealed = revealedPositions.has(drawn.position)
+                  const position = drawn.position
 
-                let positionStyle: React.CSSProperties = {}
+                  let positionStyle: React.CSSProperties = {}
 
-                if (position === 'self') {
-                  positionStyle = { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }
-                } else {
-                  const positions = ['foundation', 'past', 'future', 'obstacles', 'help', 'outcome']
-                  const index = positions.indexOf(position)
-                  const angle = (index * 60) - 90
-                  // Use percentage-based radius for responsiveness (34% of container)
-                  const radiusPercent = 34
-                  const x = Math.cos(angle * Math.PI / 180) * radiusPercent
-                  const y = Math.sin(angle * Math.PI / 180) * radiusPercent
+                  if (position === 'self') {
+                    positionStyle = { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }
+                  } else {
+                    const positions = ['foundation', 'past', 'future', 'obstacles', 'help', 'outcome']
+                    const index = positions.indexOf(position)
+                    const angle = (index * 60) - 90
+                    const radiusPercent = 34
+                    const x = Math.cos(angle * Math.PI / 180) * radiusPercent
+                    const y = Math.sin(angle * Math.PI / 180) * radiusPercent
 
-                  positionStyle = {
-                    top: `calc(50% + ${y}%)`,
-                    left: `calc(50% + ${x}%)`,
-                    transform: 'translate(-50%, -50%)',
+                    positionStyle = {
+                      top: `calc(50% + ${y}%)`,
+                      left: `calc(50% + ${x}%)`,
+                      transform: 'translate(-50%, -50%)',
+                    }
                   }
-                }
 
-                const isCenterRune = position === 'self'
+                  const isCenterRune = position === 'self'
 
-                return (
-                  <div
-                    key={position}
-                    className="absolute"
-                    style={positionStyle}
-                  >
-                    <RuneCard
-                      rune={drawn.rune}
-                      orientation={drawn.orientation}
-                      revealed={isRevealed}
-                      onReveal={() => revealRune(position)}
-                      label={`${positionLabels[position].emoji} ${positionLabels[position].label}`}
-                      size={isCenterRune ? 'md' : 'sm'}
-                    />
-                  </div>
-                )
-              })}
+                  return (
+                    <div
+                      key={position}
+                      className="absolute"
+                      style={positionStyle}
+                    >
+                      <RuneCard
+                        rune={drawn.rune}
+                        orientation={drawn.orientation}
+                        revealed={isRevealed}
+                        onReveal={() => revealRune(position)}
+                        label={`${positionLabels[position].emoji} ${positionLabels[position].label}`}
+                        size={isCenterRune ? 'md' : 'sm'}
+                      />
+                    </div>
+                  )
+                })}
+              </div>
             </div>
+
+            {/* Stacked layout - Mobile */}
+            <div className="md:hidden flex flex-col items-center gap-4 px-4" style={{ marginBottom: '3rem' }}>
+              {/* Centras - Tu */}
+              {drawnRunes.find(r => r.position === 'self') && (
+                <RuneCard
+                  rune={drawnRunes.find(r => r.position === 'self')!.rune}
+                  orientation={drawnRunes.find(r => r.position === 'self')!.orientation}
+                  revealed={revealedPositions.has('self')}
+                  onReveal={() => revealRune('self')}
+                  label={`${positionLabels.self.emoji} ${positionLabels.self.label}`}
+                  size="md"
+                />
+              )}
+              {/* 6 aplinkinės runos - po 2 eilutėje */}
+              <div className="grid grid-cols-2 gap-4">
+                {(['foundation', 'past', 'future', 'obstacles', 'help', 'outcome'] as Position[]).map((pos) => {
+                  const drawn = drawnRunes.find(r => r.position === pos)
+                  if (!drawn) return null
+                  return (
+                    <div key={pos} className="flex justify-center">
+                      <RuneCard
+                        rune={drawn.rune}
+                        orientation={drawn.orientation}
+                        revealed={revealedPositions.has(pos)}
+                        onReveal={() => revealRune(pos)}
+                        label={`${positionLabels[pos].emoji} ${positionLabels[pos].label}`}
+                        size="sm"
+                      />
+                    </div>
+                  )
+                })}
+              </div>
             </div>
 
             {spreadComplete && (
