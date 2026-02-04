@@ -70,7 +70,7 @@
 - **Failai**: `FiveRuneCross.tsx`, `SevenRuneMap.tsx`, `CelticCross.tsx`, `LoveReading.tsx`
 - **Problema**: 80% identiškas kodas: auth check, premium check, loading, question form, drawing, reveal, interpretation, notes, reset.
 - **Sprendimas**: Sukurti `useSpread` hook arba `SpreadPage` komponentą.
-- [ ] Ištaisyta
+- [x] Ištaisyta (useSpread hook + SpreadComponents: -471 eilutė neto, bendra logika 1 vietoje)
 
 ### UI-02: Fixed-dimension layouts lūžta mobiliuose
 - **Failai**: `src/pages/FiveRuneCross.tsx:353`, `SevenRuneMap.tsx`

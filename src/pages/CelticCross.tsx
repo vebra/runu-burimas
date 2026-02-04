@@ -1,29 +1,23 @@
-import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { RotateCcw, Sparkles, BookOpen, Save, Loader2 } from 'lucide-react'
-import { useAuth } from '../hooks/useAuth'
+import { Sparkles } from 'lucide-react'
 import { usePremium } from '../hooks/usePremium'
-import { useRunes, useDivinations } from '../hooks/useRunes'
 import { usePageTitle } from '../hooks/usePageTitle'
-import type { Rune } from '../types/database'
-import { Button } from '../components/common/Button'
-import { useToast } from '../components/common/Toast'
-import { AIInterpretation } from '../components/common/AIInterpretation'
-import { useAIInterpretation } from '../hooks/useAIInterpretation'
+import { useSpread, type PositionLabel } from '../hooks/useSpread'
 import { RuneCard } from '../components/common/RuneCard'
 import { AuthGate } from '../components/common/AuthGate'
 import { RuneLoader } from '../components/common/RuneLoader'
 import { PremiumPaywall } from '../components/premium/PremiumPaywall'
+import {
+  SpreadQuestionForm,
+  SpreadDrawingAnimation,
+  SpreadInterpretationCard,
+  SpreadBottomSection,
+  getRuneText,
+} from '../components/spread/SpreadComponents'
 
 type Position = 'present' | 'challenge' | 'past' | 'future' | 'above' | 'below' | 'advice' | 'external' | 'hopes' | 'outcome'
 
-interface DrawnRune {
-  rune: Rune
-  position: Position
-  orientation: 'upright' | 'reversed'
-}
-
-const positionLabels: Record<Position, { label: string; description: string; emoji: string }> = {
+const positionLabels: Record<Position, PositionLabel> = {
   present: { label: 'Dabartis', description: 'Situacija dabar', emoji: '🎯' },
   challenge: { label: 'Iššūkis', description: 'Kliūtis ar konfliktas', emoji: '⚔️' },
   past: { label: 'Praeitis', description: 'Įvykiai vedę į dabartį', emoji: '📜' },
@@ -36,139 +30,19 @@ const positionLabels: Record<Position, { label: string; description: string; emo
   outcome: { label: 'Rezultatas', description: 'Galutinis rezultatas', emoji: '🏆' },
 }
 
+const POSITIONS: Position[] = ['present', 'challenge', 'past', 'future', 'above', 'below', 'advice', 'external', 'hopes', 'outcome']
+
 export function CelticCross() {
   usePageTitle('Keltų Kryžius')
-  const { user } = useAuth()
   const { isPremium, loading: premiumLoading } = usePremium()
-  const { runes, loading: runesLoading, getRandomOrientation } = useRunes()
-  const { saveDivination, updateDivinationNotes } = useDivinations()
 
-  const [question, setQuestion] = useState('')
-  const [isDrawing, setIsDrawing] = useState(false)
-  const [drawnRunes, setDrawnRunes] = useState<DrawnRune[]>([])
-  const [revealedPositions, setRevealedPositions] = useState<Set<Position>>(new Set())
-  const [spreadComplete, setSpreadComplete] = useState(false)
-  const [saving, setSaving] = useState(false)
-  const [notes, setNotes] = useState('')
-  const [savingNotes, setSavingNotes] = useState(false)
-  const [divinationId, setDivinationId] = useState<string | null>(null)
+  const spread = useSpread<Position>({
+    positions: POSITIONS,
+    divinationType: 'celtic_cross',
+    drawDelay: 3000,
+  })
 
-  const toast = useToast()
-
-  const {
-    interpretation,
-    loading: aiLoading,
-    error: aiError,
-    getInterpretation,
-    clearInterpretation
-  } = useAIInterpretation()
-
-  const handleRequestAIInterpretation = () => {
-    const runeData = drawnRunes.map(r => ({
-      name: r.rune.name,
-      symbol: r.rune.symbol,
-      meaning: r.rune.interpretation,
-      reversed_meaning: r.rune.reversed_interpretation || undefined,
-      orientation: r.orientation,
-      position: `${positionLabels[r.position].emoji} ${positionLabels[r.position].label}`
-    }))
-    getInterpretation(runeData, 'celtic_cross', question || undefined)
-  }
-
-  useEffect(() => {
-    if (drawnRunes.length === 10 && revealedPositions.size === 10) {
-      setSpreadComplete(true)
-      if (user) {
-        saveDivinationToDb()
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [revealedPositions])
-
-  const saveDivinationToDb = async () => {
-    if (!user || drawnRunes.length !== 10) return
-
-    setSaving(true)
-    try {
-      const result = await saveDivination(
-        user.id,
-        'celtic_cross',
-        drawnRunes.map(d => ({
-          rune_id: d.rune.id,
-          position: d.position,
-          orientation: d.orientation,
-        })),
-        question || null
-      )
-      if (result?.id) {
-        setDivinationId(result.id)
-        toast.success('Būrimas išsaugotas!')
-      }
-    } catch {
-      toast.error('Nepavyko išsaugoti būrimo')
-    }
-    setSaving(false)
-  }
-
-  const handleSaveNotes = async () => {
-    if (!divinationId) return
-
-    setSavingNotes(true)
-    try {
-      await updateDivinationNotes(divinationId, notes)
-      toast.success('Dienoraštis išsaugotas!')
-    } catch {
-      toast.error('Nepavyko išsaugoti dienoraščio')
-    }
-    setSavingNotes(false)
-  }
-
-  const handleDrawRunes = async () => {
-    if (!user || runes.length === 0 || !question.trim()) return
-
-    setIsDrawing(true)
-    setRevealedPositions(new Set())
-    setSpreadComplete(false)
-
-    await new Promise(resolve => setTimeout(resolve, 3000))
-
-    const positions: Position[] = ['present', 'challenge', 'past', 'future', 'above', 'below', 'advice', 'external', 'hopes', 'outcome']
-    const drawn: DrawnRune[] = []
-    const usedIndices = new Set<number>()
-
-    for (const position of positions) {
-      let runeIndex: number
-      do {
-        runeIndex = Math.floor(Math.random() * runes.length)
-      } while (usedIndices.has(runeIndex))
-
-      usedIndices.add(runeIndex)
-      drawn.push({
-        rune: runes[runeIndex],
-        position,
-        orientation: getRandomOrientation(),
-      })
-    }
-
-    setDrawnRunes(drawn)
-    setIsDrawing(false)
-  }
-
-  const revealRune = (position: Position) => {
-    setRevealedPositions(prev => new Set([...prev, position]))
-  }
-
-  const reset = () => {
-    setQuestion('')
-    setDrawnRunes([])
-    setRevealedPositions(new Set())
-    setSpreadComplete(false)
-    setNotes('')
-    setDivinationId(null)
-    clearInterpretation()
-  }
-
-  if (!user) {
+  if (!spread.user) {
     return <AuthGate message="Norėdami atlikti Keltų Kryžiaus būrimą, turite prisijungti." />
   }
 
@@ -202,13 +76,16 @@ export function CelticCross() {
     )
   }
 
-  if (runesLoading) {
+  if (spread.runesLoading) {
     return <RuneLoader symbol="ᛟ" />
   }
+
+  const handleRequestAI = () => spread.requestAIInterpretation(positionLabels, 'celtic_cross')
 
   return (
     <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '8rem', paddingBottom: '6rem' }}>
       <div style={{ width: '100%', maxWidth: '1200px' }}>
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -252,78 +129,35 @@ export function CelticCross() {
           </p>
         </motion.div>
 
-        {drawnRunes.length === 0 && !isDrawing && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="w-full flex items-center justify-center"
-          >
-            <div className="max-w-2xl w-full">
-              <div className="bg-gray-800/50 border-2 border-amber-500/30 rounded-xl shadow-lg" style={{ padding: '3rem', marginBottom: '3rem', boxShadow: '0 0 40px rgba(217, 119, 6, 0.3)' }}>
-                <h2 className="text-3xl font-cinzel font-semibold text-amber-200" style={{ marginBottom: '2rem' }}>
-                  Užduok Savo Klausimą
-                </h2>
-                <p className="text-gray-400 text-lg" style={{ marginBottom: '2rem' }}>
-                  Keltų Kryžius atskleidžia visą situacijos paveikslą - nuo gilių pasąmonės veiksnių
-                  iki galutinio rezultato. Suformuluok klausimą, kuris tau svarbus.
-                </p>
-                <textarea
-                  value={question}
-                  onChange={(e) => setQuestion(e.target.value)}
-                  placeholder="Pvz.: Kokia yra mano karjeros ateitis ir ko turėčiau siekti?"
-                  className="w-full bg-gray-900/50 border-2 border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50 transition-colors resize-none text-xl"
-                  rows={5}
-                  style={{ marginBottom: '2rem', padding: '1.5rem' }}
-                />
-                <motion.div
-                  whileHover={{ scale: question.trim() ? 1.05 : 1 }}
-                  whileTap={{ scale: question.trim() ? 0.95 : 1 }}
-                >
-                  <Button onClick={handleDrawRunes} disabled={!question.trim()} variant="gold" size="xl">
-                    <Sparkles className="w-6 h-6 md:w-7 md:h-7" />
-                    Traukti 10 Runų
-                  </Button>
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
+        {/* Question Form */}
+        {spread.drawnRunes.length === 0 && !spread.isDrawing && (
+          <SpreadQuestionForm
+            question={spread.question}
+            onQuestionChange={spread.setQuestion}
+            onDraw={spread.draw}
+            title="Užduok Savo Klausimą"
+            description="Keltų Kryžius atskleidžia visą situacijos paveikslą - nuo gilių pasąmonės veiksnių iki galutinio rezultato. Suformuluok klausimą, kuris tau svarbus."
+            placeholder="Pvz.: Kokia yra mano karjeros ateitis ir ko turėčiau siekti?"
+            buttonText="Traukti 10 Runų"
+            buttonIcon={<Sparkles className="w-6 h-6 md:w-7 md:h-7" />}
+            buttonVariant="gold"
+            borderColor="border-amber-500/30"
+            glowColor="rgba(217, 119, 6, 0.3)"
+          />
         )}
 
-        {isDrawing && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex flex-col items-center"
-          >
-            <div className="flex justify-center relative">
-              {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
-                <motion.div
-                  key={i}
-                  animate={{
-                    rotateY: [0, 180, 360],
-                    scale: [1, 1.05, 1],
-                  }}
-                  transition={{
-                    duration: 1,
-                    repeat: Infinity,
-                    delay: i * 0.08,
-                  }}
-                  className="w-16 h-24 bg-linear-to-br from-amber-800 via-amber-700 to-orange-600 rounded-xl shadow-lg shadow-amber-900/40 border border-amber-500/30 -ml-3 first:ml-0"
-                />
-              ))}
-              <motion.div
-                animate={{ rotate: 360, scale: [1, 1.3, 1] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                className="absolute -top-12 text-5xl text-amber-400/40"
-              >
-                ᛟ
-              </motion.div>
-            </div>
-            <p className="text-amber-300 animate-pulse mt-8 text-2xl font-semibold">Traukiamos 10 runų...</p>
-          </motion.div>
+        {/* Drawing Animation */}
+        {spread.isDrawing && (
+          <SpreadDrawingAnimation
+            count={10}
+            cardColors="from-amber-800 via-amber-700 to-orange-600"
+            emoji="ᛟ"
+            text="Traukiamos 10 runų..."
+          />
         )}
 
-        {drawnRunes.length > 0 && !isDrawing && (
+        {/* Drawn Runes */}
+        {spread.drawnRunes.length > 0 && !spread.isDrawing && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             {/* Celtic Cross Layout */}
             <div className="flex flex-col lg:flex-row justify-center items-start gap-12 lg:gap-20 px-4" style={{ marginBottom: '5rem' }}>
@@ -337,12 +171,12 @@ export function CelticCross() {
               }}>
                 {/* Row 1: Above (center top) */}
                 <div style={{ gridColumn: '2', gridRow: '1' }}>
-                  {drawnRunes.find(r => r.position === 'above') && (
+                  {spread.drawnRunes.find(r => r.position === 'above') && (
                     <RuneCard
-                      rune={drawnRunes.find(r => r.position === 'above')!.rune}
-                      orientation={drawnRunes.find(r => r.position === 'above')!.orientation}
-                      revealed={revealedPositions.has('above')}
-                      onReveal={() => revealRune('above')}
+                      rune={spread.drawnRunes.find(r => r.position === 'above')!.rune}
+                      orientation={spread.drawnRunes.find(r => r.position === 'above')!.orientation}
+                      revealed={spread.revealedPositions.has('above')}
+                      onReveal={() => spread.revealRune('above')}
                       label={`${positionLabels.above.emoji} ${positionLabels.above.label}`}
                       size="sm"
                     />
@@ -351,12 +185,12 @@ export function CelticCross() {
 
                 {/* Row 2: Past - Present/Challenge - Future */}
                 <div style={{ gridColumn: '1', gridRow: '2' }}>
-                  {drawnRunes.find(r => r.position === 'past') && (
+                  {spread.drawnRunes.find(r => r.position === 'past') && (
                     <RuneCard
-                      rune={drawnRunes.find(r => r.position === 'past')!.rune}
-                      orientation={drawnRunes.find(r => r.position === 'past')!.orientation}
-                      revealed={revealedPositions.has('past')}
-                      onReveal={() => revealRune('past')}
+                      rune={spread.drawnRunes.find(r => r.position === 'past')!.rune}
+                      orientation={spread.drawnRunes.find(r => r.position === 'past')!.orientation}
+                      revealed={spread.revealedPositions.has('past')}
+                      onReveal={() => spread.revealRune('past')}
                       label={`${positionLabels.past.emoji} ${positionLabels.past.label}`}
                       size="sm"
                     />
@@ -366,25 +200,25 @@ export function CelticCross() {
                 {/* Center: Present + Challenge stacked */}
                 <div style={{ gridColumn: '2', gridRow: '2' }} className="relative">
                   {/* Challenge card (behind, rotated) */}
-                  {drawnRunes.find(r => r.position === 'challenge') && (
+                  {spread.drawnRunes.find(r => r.position === 'challenge') && (
                     <div className="absolute inset-0 flex items-center justify-center" style={{ transform: 'rotate(90deg)', zIndex: 1 }}>
                       <RuneCard
-                        rune={drawnRunes.find(r => r.position === 'challenge')!.rune}
-                        orientation={drawnRunes.find(r => r.position === 'challenge')!.orientation}
-                        revealed={revealedPositions.has('challenge')}
-                        onReveal={() => revealRune('challenge')}
+                        rune={spread.drawnRunes.find(r => r.position === 'challenge')!.rune}
+                        orientation={spread.drawnRunes.find(r => r.position === 'challenge')!.orientation}
+                        revealed={spread.revealedPositions.has('challenge')}
+                        onReveal={() => spread.revealRune('challenge')}
                         size="sm"
                       />
                     </div>
                   )}
                   {/* Present card (front) */}
-                  {drawnRunes.find(r => r.position === 'present') && (
+                  {spread.drawnRunes.find(r => r.position === 'present') && (
                     <div style={{ position: 'relative', zIndex: 2 }}>
                       <RuneCard
-                        rune={drawnRunes.find(r => r.position === 'present')!.rune}
-                        orientation={drawnRunes.find(r => r.position === 'present')!.orientation}
-                        revealed={revealedPositions.has('present')}
-                        onReveal={() => revealRune('present')}
+                        rune={spread.drawnRunes.find(r => r.position === 'present')!.rune}
+                        orientation={spread.drawnRunes.find(r => r.position === 'present')!.orientation}
+                        revealed={spread.revealedPositions.has('present')}
+                        onReveal={() => spread.revealRune('present')}
                         label={`${positionLabels.present.emoji} ${positionLabels.present.label}`}
                         size="sm"
                       />
@@ -397,12 +231,12 @@ export function CelticCross() {
                 </div>
 
                 <div style={{ gridColumn: '3', gridRow: '2' }}>
-                  {drawnRunes.find(r => r.position === 'future') && (
+                  {spread.drawnRunes.find(r => r.position === 'future') && (
                     <RuneCard
-                      rune={drawnRunes.find(r => r.position === 'future')!.rune}
-                      orientation={drawnRunes.find(r => r.position === 'future')!.orientation}
-                      revealed={revealedPositions.has('future')}
-                      onReveal={() => revealRune('future')}
+                      rune={spread.drawnRunes.find(r => r.position === 'future')!.rune}
+                      orientation={spread.drawnRunes.find(r => r.position === 'future')!.orientation}
+                      revealed={spread.revealedPositions.has('future')}
+                      onReveal={() => spread.revealRune('future')}
                       label={`${positionLabels.future.emoji} ${positionLabels.future.label}`}
                       size="sm"
                     />
@@ -411,12 +245,12 @@ export function CelticCross() {
 
                 {/* Row 3: Below (center bottom) */}
                 <div style={{ gridColumn: '2', gridRow: '3' }}>
-                  {drawnRunes.find(r => r.position === 'below') && (
+                  {spread.drawnRunes.find(r => r.position === 'below') && (
                     <RuneCard
-                      rune={drawnRunes.find(r => r.position === 'below')!.rune}
-                      orientation={drawnRunes.find(r => r.position === 'below')!.orientation}
-                      revealed={revealedPositions.has('below')}
-                      onReveal={() => revealRune('below')}
+                      rune={spread.drawnRunes.find(r => r.position === 'below')!.rune}
+                      orientation={spread.drawnRunes.find(r => r.position === 'below')!.orientation}
+                      revealed={spread.revealedPositions.has('below')}
+                      onReveal={() => spread.revealRune('below')}
                       label={`${positionLabels.below.emoji} ${positionLabels.below.label}`}
                       size="sm"
                     />
@@ -427,15 +261,15 @@ export function CelticCross() {
               {/* Staff section (right side - vertical column) */}
               <div className="flex flex-col gap-4">
                 {(['outcome', 'hopes', 'external', 'advice'] as Position[]).map((pos) => {
-                  const drawn = drawnRunes.find(r => r.position === pos)
+                  const drawn = spread.drawnRunes.find(r => r.position === pos)
                   if (!drawn) return null
                   return (
                     <RuneCard
                       key={pos}
                       rune={drawn.rune}
                       orientation={drawn.orientation}
-                      revealed={revealedPositions.has(pos)}
-                      onReveal={() => revealRune(pos)}
+                      revealed={spread.revealedPositions.has(pos)}
+                      onReveal={() => spread.revealRune(pos)}
                       label={`${positionLabels[pos].emoji} ${positionLabels[pos].label}`}
                       size="sm"
                     />
@@ -444,57 +278,25 @@ export function CelticCross() {
               </div>
             </div>
 
-            {spreadComplete && (
+            {spread.spreadComplete && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
               >
                 {/* Individual interpretations */}
-                {drawnRunes.map((drawn) => (
-                  <div
+                {spread.drawnRunes.map((drawn) => (
+                  <SpreadInterpretationCard
                     key={drawn.position}
-                    className="bg-gray-800/50 border-2 border-amber-500/30 rounded-xl shadow-lg"
-                    style={{ padding: '1.5rem', boxShadow: '0 0 25px rgba(217, 119, 6, 0.2)' }}
-                  >
-                    <div className="flex items-start gap-4">
-                      <span
-                        className="text-4xl text-amber-400"
-                        style={{
-                          transform: drawn.orientation === 'reversed' ? 'rotate(180deg)' : 'none',
-                        }}
-                      >
-                        {drawn.rune.symbol}
-                      </span>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2" style={{ marginBottom: '0.75rem' }}>
-                          <span className="text-amber-400 text-sm font-semibold">
-                            {positionLabels[drawn.position].emoji} {positionLabels[drawn.position].label}
-                          </span>
-                          <span className="text-gray-600">•</span>
-                          <span className="text-white font-cinzel font-bold text-base">
-                            {drawn.rune.name}
-                          </span>
-                          {drawn.orientation === 'reversed' && (
-                            <span className="text-xs text-red-400 bg-red-500/10 px-2 py-0.5 rounded">
-                              Apversta
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-gray-500 text-xs" style={{ marginBottom: '0.75rem' }}>
-                          {positionLabels[drawn.position].description}
-                        </p>
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                          {drawn.orientation === 'reversed' && drawn.rune.reversed_interpretation
-                            ? drawn.rune.reversed_interpretation
-                            : drawn.rune.interpretation}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                    drawn={drawn}
+                    positionLabels={positionLabels}
+                    accentColor="text-amber-400"
+                    borderColor="border-amber-500/30"
+                    glowColor="rgba(217, 119, 6, 0.2)"
+                  />
                 ))}
 
-                {/* Overall interpretation */}
+                {/* Overall interpretation - Keltų Kryžiaus Sintezė */}
                 <div className="bg-linear-to-br from-amber-900/20 to-purple-900/20 border-2 border-amber-500/40 rounded-xl shadow-lg" style={{ padding: '3rem', boxShadow: '0 0 50px rgba(217, 119, 6, 0.4)' }}>
                   <div className="flex items-center gap-4 mb-8">
                     <Sparkles className="w-8 h-8 text-amber-400" />
@@ -503,94 +305,58 @@ export function CelticCross() {
                     </h3>
                   </div>
 
-                  {question && (
+                  {spread.question && (
                     <div className="bg-purple-900/30 border border-purple-500/30 rounded-lg mb-8" style={{ padding: '1.5rem' }}>
                       <p className="text-purple-300 text-lg font-semibold mb-2">Tavo klausimas:</p>
-                      <p className="text-white italic text-xl">"{question}"</p>
+                      <p className="text-white italic text-xl">"{spread.question}"</p>
                     </div>
                   )}
 
                   <div className="space-y-5 text-gray-200 text-lg leading-relaxed">
                     <p>
-                      <strong className="text-amber-300">Dabartinė situacija</strong> atskleidžia <strong className="text-amber-300">{drawnRunes.find(r => r.position === 'present')?.rune.name}</strong> energiją,
-                      o <strong className="text-red-300">iššūkis</strong>, kurį reikia įveikti, yra <strong className="text-amber-300">{drawnRunes.find(r => r.position === 'challenge')?.rune.name}</strong>.
+                      <strong className="text-amber-300">Dabartinė situacija</strong> atskleidžia <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'present').name}</strong> energiją,
+                      o <strong className="text-red-300">iššūkis</strong>, kurį reikia įveikti, yra <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'challenge').name}</strong>.
                     </p>
 
                     <p>
-                      <strong className="text-purple-300">Pasąmonėje</strong> slypi <strong className="text-amber-300">{drawnRunes.find(r => r.position === 'below')?.rune.name}</strong>,
-                      o <strong className="text-yellow-300">geriausias įmanomas rezultatas</strong> yra <strong className="text-amber-300">{drawnRunes.find(r => r.position === 'above')?.rune.name}</strong>.
+                      <strong className="text-purple-300">Pasąmonėje</strong> slypi <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'below').name}</strong>,
+                      o <strong className="text-yellow-300">geriausias įmanomas rezultatas</strong> yra <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'above').name}</strong>.
                     </p>
 
                     <p>
-                      <strong className="text-blue-300">Praeitis</strong> suformavo pagrindą per <strong className="text-amber-300">{drawnRunes.find(r => r.position === 'past')?.rune.name}</strong>,
-                      o <strong className="text-green-300">artimiausia ateitis</strong> veda link <strong className="text-amber-300">{drawnRunes.find(r => r.position === 'future')?.rune.name}</strong>.
+                      <strong className="text-blue-300">Praeitis</strong> suformavo pagrindą per <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'past').name}</strong>,
+                      o <strong className="text-green-300">artimiausia ateitis</strong> veda link <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'future').name}</strong>.
                     </p>
 
                     <p>
-                      <strong className="text-cyan-300">Patarimas</strong> - <strong className="text-amber-300">{drawnRunes.find(r => r.position === 'advice')?.rune.name}</strong>.
-                      <strong className="text-orange-300"> Išoriniai veiksniai</strong> pasirodo kaip <strong className="text-amber-300">{drawnRunes.find(r => r.position === 'external')?.rune.name}</strong>.
+                      <strong className="text-cyan-300">Patarimas</strong> - <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'advice').name}</strong>.
+                      <strong className="text-orange-300"> Išoriniai veiksniai</strong> pasirodo kaip <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'external').name}</strong>.
                     </p>
 
                     <p>
-                      Tavo <strong className="text-pink-300">viltys ir baimės</strong> atspindi <strong className="text-amber-300">{drawnRunes.find(r => r.position === 'hopes')?.rune.name}</strong>,
-                      o <strong className="text-amber-300">galutinis rezultatas</strong> yra <strong className="text-amber-300">{drawnRunes.find(r => r.position === 'outcome')?.rune.name}</strong>.
+                      Tavo <strong className="text-pink-300">viltys ir baimės</strong> atspindi <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'hopes').name}</strong>,
+                      o <strong className="text-amber-300">galutinis rezultatas</strong> yra <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'outcome').name}</strong>.
                     </p>
                   </div>
                 </div>
 
-                {/* AI Interpretacija */}
-                <AIInterpretation
-                  interpretation={interpretation}
-                  loading={aiLoading}
-                  error={aiError}
-                  onRequestInterpretation={handleRequestAIInterpretation}
-                  onRetry={handleRequestAIInterpretation}
+                <SpreadBottomSection
+                  interpretation={spread.interpretation}
+                  aiLoading={spread.aiLoading}
+                  aiError={spread.aiError}
+                  onRequestAI={handleRequestAI}
+                  notes={spread.notes}
+                  onNotesChange={spread.setNotes}
+                  onSaveNotes={spread.saveNotes}
+                  notesDisabled={!spread.divinationId}
+                  savingNotes={spread.savingNotes}
+                  saving={spread.saving}
+                  onReset={spread.reset}
+                  notesProps={{
+                    description: 'Užrašykite savo mintis, įžvalgas ar pastebėjimus apie šį išsamų būrimą.',
+                    placeholder: 'Kokias įžvalgas gavau iš šio Keltų Kryžiaus būrimo? Kaip tai atsiliepia mano situacijai?',
+                  }}
                 />
-
-                {/* Dienoraštis */}
-                <div className="bg-gray-800/50 border-2 border-amber-600/30 rounded-xl shadow-lg" style={{ padding: '2rem', boxShadow: '0 0 30px rgba(217, 119, 6, 0.2)' }}>
-                  <div className="flex items-center gap-2" style={{ marginBottom: '1.5rem' }}>
-                    <BookOpen className="w-5 h-5 text-amber-400" />
-                    <h3 className="text-xl font-cinzel font-semibold text-amber-200">
-                      Dienoraštis
-                    </h3>
-                  </div>
-                  <p className="text-gray-400 text-sm" style={{ marginBottom: '1rem' }}>
-                    Užrašykite savo mintis, įžvalgas ar pastebėjimus apie šį išsamų būrimą.
-                  </p>
-                  <textarea
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Kokias įžvalgas gavau iš šio Keltų Kryžiaus būrimo? Kaip tai atsiliepia mano situacijai?"
-                    className="w-full bg-gray-900/50 border-2 border-gray-700 rounded-lg p-6 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50 transition-colors resize-none text-xl shadow-lg"
-                    style={{ height: '200px', boxShadow: '0 0 20px rgba(107, 114, 128, 0.2)' }}
-                  />
-                  <Button
-                    onClick={handleSaveNotes}
-                    disabled={!divinationId}
-                    loading={savingNotes}
-                    variant="secondary"
-                    size="lg"
-                    className="mt-6"
-                  >
-                    <Save className="w-5 h-5 md:w-6 md:h-6" />
-                    Išsaugoti Dienoraštį
-                  </Button>
-                </div>
-
-                <div className="flex justify-center pt-8">
-                  <Button onClick={reset} variant="ghost" size="lg">
-                    <RotateCcw className="w-5 h-5 md:w-6 md:h-6" />
-                    Naujas būrimas
-                  </Button>
-                </div>
-
-                {saving && (
-                  <p className="text-center text-gray-500 text-lg">
-                    <Loader2 className="w-5 h-5 animate-spin inline mr-2" />
-                    Išsaugoma...
-                  </p>
-                )}
               </motion.div>
             )}
           </motion.div>
