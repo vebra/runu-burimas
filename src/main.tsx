@@ -7,12 +7,16 @@ import App from './App.tsx'
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('/sw.js')
+      .register(import.meta.env.BASE_URL + 'sw.js')
       .then((registration) => {
-        console.log('SW registered: ', registration)
+        if (import.meta.env.DEV) {
+          console.log('SW registered: ', registration)
+        }
       })
       .catch((registrationError) => {
-        console.log('SW registration failed: ', registrationError)
+        if (import.meta.env.DEV) {
+          console.log('SW registration failed: ', registrationError)
+        }
       })
   })
 } else if ('serviceWorker' in navigator && import.meta.env.DEV) {

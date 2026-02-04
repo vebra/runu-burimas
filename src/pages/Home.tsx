@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
-import { Sparkles, Calendar, BookOpen, Type, ArrowRight, Crown, Compass, Users, TrendingUp, Zap, Star, Moon, HelpCircle, Heart } from 'lucide-react'
+import { Sparkles, Calendar, BookOpen, Type, ArrowRight, Crown, Compass, TrendingUp, Zap, Star, Moon, HelpCircle, Heart } from 'lucide-react'
 import { useRef, useState } from 'react'
 
 // Feature type for cards
@@ -983,24 +983,24 @@ export function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-12 gap-y-8 mx-auto">
             {[
               {
-                icon: Users,
-                value: '1,247',
-                label: 'Aktyvių vartotojų',
-                color: 'purple',
+                icon: Sparkles,
+                value: '6',
+                label: 'Būrimų tipų',
+                borderClass: 'border-purple-500/30 hover:border-purple-400/50',
                 gradient: 'from-purple-600 to-violet-600',
               },
               {
                 icon: TrendingUp,
-                value: '8,542',
-                label: 'Būrimų šiandien',
-                color: 'amber',
+                value: '10',
+                label: 'Pozicijų Keltų Kryžiuje',
+                borderClass: 'border-amber-500/30 hover:border-amber-400/50',
                 gradient: 'from-amber-500 to-yellow-500',
               },
               {
                 icon: Zap,
                 value: '24',
                 label: 'Elder Futhark runų',
-                color: 'pink',
+                borderClass: 'border-pink-500/30 hover:border-pink-400/50',
                 gradient: 'from-pink-500 to-rose-500',
               },
             ].map((stat, index) => (
@@ -1017,8 +1017,7 @@ export function Home() {
                   className={`
                     relative overflow-hidden rounded-2xl p-8 md:p-10 text-center
                     bg-gray-900/60 backdrop-blur-sm
-                    border border-${stat.color}-500/30
-                    hover:border-${stat.color}-400/50
+                    border ${stat.borderClass}
                     transition-all duration-300
                   `}
                 >

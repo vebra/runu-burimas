@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion'
 import { ScrollText, AlertTriangle, UserCheck, Ban, Scale, RefreshCw, Mail, Shield, Crown, CreditCard } from 'lucide-react'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export function TermsOfService() {
+  usePageTitle('Naudojimo Sąlygos')
   const sections = [
     {
       icon: UserCheck,

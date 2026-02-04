@@ -1,12 +1,14 @@
-import { useState, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Loader2 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
+import { usePageTitle } from '../hooks/usePageTitle'
 import { EmptySearchResults } from '../components/common/EmptyState'
 import { useRunes, useFavorites } from '../hooks/useRunes'
 import type { Rune } from '../types/database'
 
 export function RuneLibrary() {
+  usePageTitle('Runų Biblioteka')
   const { user } = useAuth()
   const { runes, loading } = useRunes()
   const { fetchFavorites, toggleFavorite, isFavorite } = useFavorites()
@@ -15,11 +17,11 @@ export function RuneLibrary() {
   const [revealedRunes, setRevealedRunes] = useState<Set<string>>(new Set())
   const [selectedRune, setSelectedRune] = useState<Rune | null>(null)
 
-  useState(() => {
+  useEffect(() => {
     if (user) {
       fetchFavorites(user.id)
     }
-  })
+  }, [user?.id])
 
   const filteredRunes = useMemo(() => {
     return runes.filter(rune => {
@@ -37,8 +39,8 @@ export function RuneLibrary() {
     if (!user) return
     try {
       await toggleFavorite(user.id, runeId)
-    } catch (error) {
-      console.error('Error toggling favorite:', error)
+    } catch {
+      // Error handled silently
     }
   }
 
@@ -169,13 +171,16 @@ export function RuneLibrary() {
               className="fixed inset-0 z-50 flex items-center justify-center p-4"
               onClick={() => setSelectedRune(null)}
             >
-              <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+              <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" aria-hidden="true" />
 
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
                 onClick={(e) => e.stopPropagation()}
+                role="dialog"
+                aria-modal="true"
+                aria-label={selectedRune?.name ? `Rūna: ${selectedRune.name}` : 'Runos informacija'}
                 className="relative bg-gray-900 border border-amber-600/30 rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto"
               >
                 {/* Header */}
@@ -190,9 +195,10 @@ export function RuneLibrary() {
                   </div>
                   <button
                     onClick={() => setSelectedRune(null)}
+                    aria-label="Uždaryti"
                     className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
                   >
-                    <X className="w-6 h-6" />
+                    <X className="w-6 h-6" aria-hidden="true" />
                   </button>
                 </div>
 

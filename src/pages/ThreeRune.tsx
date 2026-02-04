@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Sparkles, RotateCcw, BookOpen, Save, Loader2 } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useRunes, useDivinations } from '../hooks/useRunes'
+import { usePageTitle } from '../hooks/usePageTitle'
 import type { Rune, RuneSpread } from '../types/database'
 import { Button } from '../components/common/Button'
 import { Textarea } from '../components/common/Input'
@@ -11,6 +11,8 @@ import { useToast } from '../components/common/Toast'
 import { AIInterpretation } from '../components/common/AIInterpretation'
 import { useAIInterpretation } from '../hooks/useAIInterpretation'
 import { RuneCard } from '../components/common/RuneCard'
+import { AuthGate } from '../components/common/AuthGate'
+import { RuneLoader } from '../components/common/RuneLoader'
 
 interface DrawnRune {
   rune: Rune
@@ -26,6 +28,7 @@ const positionLabels = {
 }
 
 export function ThreeRune() {
+  usePageTitle('Trijų Runų Būrimas')
   const { user } = useAuth()
   const { runes, loading: runesLoading, getRandomOrientation } = useRunes()
   const { saveThreeRuneSpread, updateDivinationNotes } = useDivinations()
@@ -101,8 +104,7 @@ export function ThreeRune() {
         setDivinationId(result.id)
         toast.success('Būrimas išsaugotas!')
       }
-    } catch (error) {
-      console.error('Error saving spread:', error)
+    } catch {
       toast.error('Nepavyko išsaugoti būrimo')
     }
     setSaving(false)
@@ -115,8 +117,7 @@ export function ThreeRune() {
     try {
       await updateDivinationNotes(divinationId, notes)
       toast.success('Dienoraštis išsaugotas!')
-    } catch (error) {
-      console.error('Error saving notes:', error)
+    } catch {
       toast.error('Nepavyko išsaugoti dienoraščio')
     }
     setSavingNotes(false)
@@ -145,42 +146,11 @@ export function ThreeRune() {
   }
 
   if (!user) {
-    return (
-      <div className="min-h-screen py-12 px-4" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <div className="text-center" style={{ width: '100%', maxWidth: '448px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
-          <span className="text-6xl block">🔐</span>
-          <h2 className="text-2xl font-cinzel font-bold text-white">
-            Prisijunkite
-          </h2>
-          <p className="text-gray-400">
-            Norėdami atlikti būrimą, turite prisijungti.
-          </p>
-          <Link
-            to="/auth"
-            className="bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 hover:from-purple-700 hover:via-purple-600 hover:to-violet-500 text-amber-100 font-semibold py-4 px-8 text-lg rounded-lg transition-all duration-300 shadow-lg shadow-purple-900/30 border border-amber-600/20"
-          >
-            Prisijungti
-          </Link>
-        </div>
-      </div>
-    )
+    return <AuthGate />
   }
 
   if (runesLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="text-6xl text-purple-400"
-          >
-            ᚦ
-          </motion.div>
-          <p className="text-purple-300 text-lg">Kraunamos runos...</p>
-        </div>
-      </div>
-    )
+    return <RuneLoader symbol="ᚦ" color="text-purple-400" />
   }
 
   return (

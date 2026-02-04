@@ -1,9 +1,11 @@
 import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Copy, Check, Download, Type } from 'lucide-react'
+import { usePageTitle } from '../hooks/usePageTitle'
 import { textToRunes, getRuneString, getUniqueRunes } from '../utils/runeConverter'
 
 export function RuneConverter() {
+  usePageTitle('Runų Konverteris')
   const [text, setText] = useState('')
   const [copied, setCopied] = useState(false)
 
@@ -16,8 +18,8 @@ export function RuneConverter() {
       await navigator.clipboard.writeText(runeString)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-    } catch (error) {
-      console.error('Failed to copy:', error)
+    } catch {
+      // Copy failed silently
     }
   }
 

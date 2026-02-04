@@ -1,4 +1,4 @@
-import { forwardRef, type ReactNode, type InputHTMLAttributes, type TextareaHTMLAttributes } from 'react'
+import { forwardRef, useId, type ReactNode, type InputHTMLAttributes, type TextareaHTMLAttributes } from 'react'
 
 type BaseProps = {
   label?: string
@@ -53,6 +53,11 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>(
     },
     ref
   ) => {
+    const id = useId()
+    const inputId = props.id || id
+    const errorId = `${inputId}-error`
+    const hintId = `${inputId}-hint`
+    
     const hasLeftIcon = !!leftIcon
     const hasRightIcon = !!rightIcon
 
@@ -67,18 +72,23 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>(
     `.trim()
 
     const style = variant === 'glow' ? { boxShadow: glowShadow } : undefined
+    
+    const ariaDescribedBy = [
+      error ? errorId : null,
+      hint && !error ? hintId : null,
+    ].filter(Boolean).join(' ') || undefined
 
     return (
       <div className="space-y-2">
         {label && (
-          <label className="block text-sm font-medium text-gray-300">
+          <label htmlFor={inputId} className="block text-sm font-medium text-gray-300">
             {label}
           </label>
         )}
 
         <div className="relative">
           {leftIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" aria-hidden="true">
               {leftIcon}
             </div>
           )}
@@ -86,32 +96,42 @@ export const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>(
           {as === 'textarea' ? (
             <textarea
               ref={ref as React.Ref<HTMLTextAreaElement>}
+              id={inputId}
               className={`${inputClasses} resize-none`}
               style={style}
+              aria-invalid={!!error}
+              aria-describedby={ariaDescribedBy}
               {...(props as TextareaHTMLAttributes<HTMLTextAreaElement>)}
             />
           ) : (
             <input
               ref={ref as React.Ref<HTMLInputElement>}
+              id={inputId}
               className={inputClasses}
               style={style}
+              aria-invalid={!!error}
+              aria-describedby={ariaDescribedBy}
               {...(props as InputHTMLAttributes<HTMLInputElement>)}
             />
           )}
 
           {rightIcon && (
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 flex items-center">
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 flex items-center" aria-hidden="true">
               {rightIcon}
             </div>
           )}
         </div>
 
         {error && (
-          <p className="text-sm text-red-400">{error}</p>
+          <p id={errorId} className="text-sm text-red-400" role="alert">
+            {error}
+          </p>
         )}
 
         {hint && !error && (
-          <p className="text-sm text-gray-500">{hint}</p>
+          <p id={hintId} className="text-sm text-gray-500">
+            {hint}
+          </p>
         )}
       </div>
     )

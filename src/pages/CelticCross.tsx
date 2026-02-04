@@ -4,13 +4,15 @@ import { RotateCcw, Sparkles, BookOpen, Save, Loader2 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { usePremium } from '../hooks/usePremium'
 import { useRunes, useDivinations } from '../hooks/useRunes'
-import { Link } from 'react-router-dom'
+import { usePageTitle } from '../hooks/usePageTitle'
 import type { Rune } from '../types/database'
 import { Button } from '../components/common/Button'
 import { useToast } from '../components/common/Toast'
 import { AIInterpretation } from '../components/common/AIInterpretation'
 import { useAIInterpretation } from '../hooks/useAIInterpretation'
 import { RuneCard } from '../components/common/RuneCard'
+import { AuthGate } from '../components/common/AuthGate'
+import { RuneLoader } from '../components/common/RuneLoader'
 import { PremiumPaywall } from '../components/premium/PremiumPaywall'
 
 type Position = 'present' | 'challenge' | 'past' | 'future' | 'above' | 'below' | 'advice' | 'external' | 'hopes' | 'outcome'
@@ -35,6 +37,7 @@ const positionLabels: Record<Position, { label: string; description: string; emo
 }
 
 export function CelticCross() {
+  usePageTitle('Keltų Kryžius')
   const { user } = useAuth()
   const { isPremium, loading: premiumLoading } = usePremium()
   const { runes, loading: runesLoading, getRandomOrientation } = useRunes()
@@ -101,8 +104,7 @@ export function CelticCross() {
         setDivinationId(result.id)
         toast.success('Būrimas išsaugotas!')
       }
-    } catch (error) {
-      console.error('Error saving divination:', error)
+    } catch {
       toast.error('Nepavyko išsaugoti būrimo')
     }
     setSaving(false)
@@ -115,8 +117,7 @@ export function CelticCross() {
     try {
       await updateDivinationNotes(divinationId, notes)
       toast.success('Dienoraštis išsaugotas!')
-    } catch (error) {
-      console.error('Error saving notes:', error)
+    } catch {
       toast.error('Nepavyko išsaugoti dienoraščio')
     }
     setSavingNotes(false)
@@ -168,25 +169,7 @@ export function CelticCross() {
   }
 
   if (!user) {
-    return (
-      <div className="min-h-screen py-12 px-4" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <div className="text-center" style={{ width: '100%', maxWidth: '448px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
-          <span className="text-6xl block">🔐</span>
-          <h2 className="text-2xl font-cinzel font-bold text-white">
-            Prisijunkite
-          </h2>
-          <p className="text-gray-400">
-            Norėdami atlikti Keltų Kryžiaus būrimą, turite prisijungti.
-          </p>
-          <Link
-            to="/auth"
-            className="bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 hover:from-purple-700 hover:via-purple-600 hover:to-violet-500 text-amber-100 font-semibold py-4 px-8 text-lg rounded-lg transition-all duration-300 shadow-lg shadow-purple-900/30 border border-amber-600/20"
-          >
-            Prisijungti
-          </Link>
-        </div>
-      </div>
-    )
+    return <AuthGate message="Norėdami atlikti Keltų Kryžiaus būrimą, turite prisijungti." />
   }
 
   if (premiumLoading) {
@@ -220,20 +203,7 @@ export function CelticCross() {
   }
 
   if (runesLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="text-6xl text-amber-400"
-          >
-            ᛟ
-          </motion.div>
-          <p className="text-amber-300 text-lg">Kraunamos runos...</p>
-        </div>
-      </div>
-    )
+    return <RuneLoader symbol="ᛟ" />
   }
 
   return (

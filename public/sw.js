@@ -1,17 +1,17 @@
-const CACHE_NAME = 'runu-burimas-v1'
+const CACHE_NAME = 'runu-burimas-v2'
+const BASE_PATH = '/runu-burimas/'
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png',
+  BASE_PATH,
+  BASE_PATH + 'index.html',
+  BASE_PATH + 'manifest.json',
+  BASE_PATH + 'icons/icon-192x192.png',
+  BASE_PATH + 'icons/icon-512x512.png',
 ]
 
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('Opened cache')
       return cache.addAll(urlsToCache)
     })
   )
@@ -25,7 +25,6 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheName !== CACHE_NAME) {
-            console.log('Deleting old cache:', cacheName)
             return caches.delete(cacheName)
           }
         })
@@ -75,62 +74,9 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         // Offline fallback - return cached index.html for navigation requests
         if (event.request.mode === 'navigate') {
-          return caches.match('/index.html')
+          return caches.match(BASE_PATH + 'index.html')
         }
       })
     })
   )
-})
-
-// Background sync for offline actions
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'sync-divinations') {
-    event.waitUntil(syncDivinations())
-  }
-})
-
-async function syncDivinations() {
-  // Placeholder for syncing offline divinations when back online
-  console.log('Syncing divinations...')
-}
-
-// Push notifications (future feature)
-self.addEventListener('push', (event) => {
-  const options = {
-    body: event.data ? event.data.text() : 'Nauja runa laukia tavęs!',
-    icon: '/icons/icon-192x192.png',
-    badge: '/icons/icon-72x72.png',
-    vibrate: [200, 100, 200],
-    data: {
-      dateOfArrival: Date.now(),
-      primaryKey: 1
-    },
-    actions: [
-      {
-        action: 'explore',
-        title: 'Peržiūrėti',
-        icon: '/icons/icon-96x96.png'
-      },
-      {
-        action: 'close',
-        title: 'Uždaryti',
-        icon: '/icons/icon-96x96.png'
-      }
-    ]
-  }
-
-  event.waitUntil(
-    self.registration.showNotification('Runų Būrimas 🔮', options)
-  )
-})
-
-// Notification click handler
-self.addEventListener('notificationclick', (event) => {
-  event.notification.close()
-
-  if (event.action === 'explore') {
-    event.waitUntil(
-      clients.openWindow('/')
-    )
-  }
 })

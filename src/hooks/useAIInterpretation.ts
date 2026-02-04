@@ -55,7 +55,6 @@ export function useAIInterpretation(): UseAIInterpretationReturn {
 
       setInterpretation(response.data.interpretation)
     } catch (err) {
-      console.error('AI interpretation error:', err)
       setError(err instanceof Error ? err.message : 'Klaida gaunant interpretaciją')
     } finally {
       setLoading(false)

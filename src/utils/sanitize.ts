@@ -5,11 +5,11 @@
 export function sanitizeInput(input: string): string {
   if (!input) return ''
   
-  // Remove HTML tags
-  let sanitized = input.replace(/<[^>]*>/g, '')
-  
-  // Remove script tags and their content
-  sanitized = sanitized.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+  // Remove script tags and their content first (before stripping other tags)
+  let sanitized = input.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+
+  // Remove remaining HTML tags
+  sanitized = sanitized.replace(/<[^>]*>/g, '')
   
   // Remove event handlers
   sanitized = sanitized.replace(/on\w+\s*=\s*["'][^"']*["']/gi, '')

@@ -15,17 +15,14 @@ export function useRunes() {
   const fetchRunes = async () => {
     try {
       setLoading(true)
-      console.log('Fetching runes...')
       const { data, error } = await supabase
         .from('runes')
         .select('*')
         .order('position', { ascending: true })
 
-      console.log('Runes response:', { data, error })
       if (error) throw error
       setRunes(data || [])
     } catch (err) {
-      console.error('Runes fetch error:', err)
       setError(err instanceof Error ? err.message : 'Nepavyko gauti runų')
     } finally {
       setLoading(false)
@@ -60,7 +57,6 @@ export function useDailyRune() {
     try {
       setLoading(true)
       const today = new Date().toISOString().split('T')[0]
-      console.log('Fetching today rune for:', userId, today)
 
       const { data, error } = await supabase
         .from('daily_runes')
@@ -72,12 +68,10 @@ export function useDailyRune() {
         .eq('date', today)
         .maybeSingle()
 
-      console.log('Today rune result:', { data, error })
-
       if (error) throw error
       setTodayRune(data as DailyRune | null)
-    } catch (err) {
-      console.error('Error fetching daily rune:', err)
+    } catch {
+      // Error handled silently
     } finally {
       setLoading(false)
     }
@@ -89,8 +83,6 @@ export function useDailyRune() {
     orientation: string
   ) => {
     const today = new Date().toISOString().split('T')[0]
-
-    console.log('Saving daily rune:', { userId, runeId, orientation, today })
 
     const { data, error } = await supabase
       .from('daily_runes')
@@ -105,8 +97,6 @@ export function useDailyRune() {
         rune:runes(*)
       `)
       .single()
-
-    console.log('Save result:', { data, error })
 
     if (error) throw error
     setTodayRune(data as DailyRune)
@@ -161,8 +151,8 @@ export function useDivinations() {
 
       if (error) throw error
       setDivinations(data || [])
-    } catch (err) {
-      console.error('Error fetching divinations:', err)
+    } catch {
+      // Error handled silently
     } finally {
       setLoading(false)
     }
@@ -173,13 +163,14 @@ export function useDivinations() {
     runeSpread: RuneSpread[],
     question?: string
   ) => {
+    const sanitizedQuestion = question ? sanitizeQuestion(question) : null
     const { data, error } = await supabase
       .from('divinations')
       .insert({
         user_id: userId,
         divination_type: 'three_rune',
         runes: runeSpread,
-        question: question || null,
+        question: sanitizedQuestion,
       })
       .select()
       .single()
@@ -248,8 +239,8 @@ export function useFavorites() {
 
       if (error) throw error
       setFavorites(data?.map(f => f.rune_id) || [])
-    } catch (err) {
-      console.error('Error fetching favorites:', err)
+    } catch {
+      // Error handled silently
     } finally {
       setLoading(false)
     }

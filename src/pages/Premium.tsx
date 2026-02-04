@@ -4,6 +4,7 @@ import { Crown, Check, X, ArrowRight, Key, ChevronDown } from 'lucide-react'
 import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { usePremium } from '../hooks/usePremium'
+import { usePageTitle } from '../hooks/usePageTitle'
 import { useToast } from '../components/common/Toast'
 import { PricingCard } from '../components/premium/PricingCard'
 
@@ -38,6 +39,7 @@ const premiumFeatures = [
 ]
 
 export function Premium() {
+  usePageTitle('Premium')
   const { user } = useAuth()
   const { isPremium, subscription, createCheckout, openCustomerPortal, activateWithCode, loading } = usePremium()
   const toast = useToast()

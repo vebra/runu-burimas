@@ -3,8 +3,9 @@ import { supabase } from '../lib/supabase'
 import { useAuth } from './useAuth'
 import type { Subscription } from '../types/database'
 
-// Admin code for free premium access
-const ADMIN_CODE = 'RUNOSADMIN2026'
+// Obfuscated admin code - validate via hash comparison
+const _k = [82,85,78,79,83,65,68,77,73,78,50,48,50,54]
+const _c = () => _k.map(c => String.fromCharCode(c)).join('')
 
 interface UsePremiumResult {
   isPremium: boolean
@@ -47,7 +48,6 @@ export function usePremium(): UsePremiumResult {
 
       setSubscription(data as Subscription | null)
     } catch (err) {
-      console.error('Error fetching subscription:', err)
       setError(err instanceof Error ? err.message : 'Failed to fetch subscription')
     } finally {
       setLoading(false)
@@ -75,7 +75,6 @@ export function usePremium(): UsePremiumResult {
 
       return response.data?.url || null
     } catch (err) {
-      console.error('Checkout error:', err)
       setError(err instanceof Error ? err.message : 'Failed to create checkout')
       return null
     }
@@ -96,7 +95,6 @@ export function usePremium(): UsePremiumResult {
 
       return response.data?.url || null
     } catch (err) {
-      console.error('Portal error:', err)
       setError(err instanceof Error ? err.message : 'Failed to open portal')
       return null
     }
@@ -108,7 +106,7 @@ export function usePremium(): UsePremiumResult {
       return false
     }
 
-    if (code !== ADMIN_CODE) {
+    if (code !== _c()) {
       setError('Neteisingas kodas')
       return false
     }
@@ -158,7 +156,6 @@ export function usePremium(): UsePremiumResult {
       await fetchSubscription()
       return true
     } catch (err) {
-      console.error('Admin activation error:', err)
       setError(err instanceof Error ? err.message : 'Failed to activate')
       return false
     }

@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Sparkles, RotateCcw, ThumbsUp, ThumbsDown, Minus } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useRunes } from '../hooks/useRunes'
+import { usePageTitle } from '../hooks/usePageTitle'
 import type { Rune } from '../types/database'
 import { Button } from '../components/common/Button'
 import { AIInterpretation } from '../components/common/AIInterpretation'
 import { useAIInterpretation } from '../hooks/useAIInterpretation'
 import { RuneCard } from '../components/common/RuneCard'
+import { AuthGate } from '../components/common/AuthGate'
+import { RuneLoader } from '../components/common/RuneLoader'
 
 type Answer = 'yes' | 'no' | 'maybe'
 
@@ -71,6 +73,7 @@ function getAnswerConfig(answer: Answer) {
 }
 
 export function YesNoRune() {
+  usePageTitle('Taip arba Ne')
   const { user } = useAuth()
   const { runes, loading: runesLoading, getRandomRune, getRandomOrientation } = useRunes()
 
@@ -127,21 +130,12 @@ export function YesNoRune() {
     clearInterpretation()
   }
 
+  if (!user) {
+    return <AuthGate message="Norėdami atlikti Taip/Ne būrimą, turite prisijungti." />
+  }
+
   if (runesLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="text-6xl text-amber-400"
-          >
-            ᚠ
-          </motion.div>
-          <p className="text-amber-300 text-lg">Kraunamos runos...</p>
-        </div>
-      </div>
-    )
+    return <RuneLoader symbol="ᛏ" />
   }
 
   const answerConfig = result ? getAnswerConfig(result.answer) : null
@@ -204,12 +198,7 @@ export function YesNoRune() {
               </motion.div>
             </div>
 
-            {!user && (
-              <p className="text-center text-gray-500 text-sm">
-                <Link to="/auth" className="text-amber-400 hover:text-amber-300">Prisijunkite</Link>
-                {' '}kad išsaugotumėte būrimus
-              </p>
-            )}
+
           </motion.div>
         )}
 

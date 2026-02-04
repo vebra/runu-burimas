@@ -5,11 +5,13 @@ import { Mail } from 'lucide-react'
 import { LoginForm } from '../components/auth/LoginForm'
 import { SignupForm } from '../components/auth/SignupForm'
 import { useAuth } from '../hooks/useAuth'
+import { usePageTitle } from '../hooks/usePageTitle'
 import { Button } from '../components/common/Button'
 import { Input } from '../components/common/Input'
 import { useToast } from '../components/common/Toast'
 
 export function Auth() {
+  usePageTitle('Prisijungimas')
   const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>('login')
   const { signIn, signUp, resetPassword } = useAuth()
   const navigate = useNavigate()

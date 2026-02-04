@@ -6,6 +6,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'sm' | 'md' | 'lg' | 'xl'
   loading?: boolean
   children: React.ReactNode
+  'aria-label'?: string
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -61,11 +62,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         disabled={disabled || loading}
+        aria-busy={loading}
         className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
         {...props}
       >
         {loading && (
-          <Loader2 className={`animate-spin ${size === 'xl' ? 'w-6 h-6' : size === 'lg' ? 'w-5 h-5' : 'w-4 h-4'}`} />
+          <Loader2 
+            className={`animate-spin ${size === 'xl' ? 'w-6 h-6' : size === 'lg' ? 'w-5 h-5' : 'w-4 h-4'}`}
+            aria-hidden="true"
+          />
         )}
         {children}
       </button>

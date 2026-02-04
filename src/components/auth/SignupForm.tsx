@@ -48,7 +48,6 @@ export function SignupForm({ onSubmit, onSwitchToLogin }: SignupFormProps) {
       await onSubmit(email, password)
       setSuccess(true)
     } catch (err) {
-      console.error('Signup error:', err)
       const errorMessage = err instanceof Error ? err.message : 'Registracija nepavyko'
       setError(errorMessage)
     } finally {

@@ -56,6 +56,24 @@ export interface Database {
         Insert: Omit<Database['public']['Tables']['user_favorite_runes']['Row'], 'id' | 'created_at'>
         Update: Partial<Database['public']['Tables']['user_favorite_runes']['Insert']>
       }
+      subscriptions: {
+        Row: {
+          id: string
+          user_id: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          status: string
+          price_id: string | null
+          plan_type: string | null
+          current_period_start: string | null
+          current_period_end: string | null
+          cancel_at_period_end: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['subscriptions']['Row'], 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['subscriptions']['Insert']>
+      }
     }
   }
 }

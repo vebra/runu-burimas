@@ -7,7 +7,7 @@ import { AnimatedBackground } from './components/common/AnimatedBackground'
 import { ToastProvider } from './components/common/Toast'
 import { ErrorBoundary } from './components/common/ErrorBoundary'
 import { PageTransition } from './components/common/PageTransition'
-import { useAuth } from './hooks/useAuth'
+import { useAuth, AuthProvider } from './hooks/useAuth'
 
 // Lazy load pages for better performance
 const Home = lazy(() => import('./pages/Home').then(m => ({ default: m.Home })))
@@ -30,10 +30,10 @@ const LoveReading = lazy(() => import('./pages/LoveReading').then(m => ({ defaul
 // Magical loading fallback component
 function PageLoader() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center" role="status" aria-live="polite" aria-label="Kraunamas puslapis">
       <div className="flex flex-col items-center gap-6">
         {/* Animated rune circle */}
-        <div className="relative w-24 h-24">
+        <div className="relative w-24 h-24" aria-hidden="true">
           <motion.div
             className="absolute inset-0 rounded-full border-2 border-purple-500/30"
             animate={{ rotate: 360 }}
@@ -78,21 +78,21 @@ function AnimatedRoutes() {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Home /></PageTransition>} />
-        <Route path="/daily" element={<PageTransition><DailyRune /></PageTransition>} />
-        <Route path="/three-rune" element={<PageTransition><ThreeRune /></PageTransition>} />
-        <Route path="/five-rune-cross" element={<PageTransition><FiveRuneCross /></PageTransition>} />
-        <Route path="/seven-rune-map" element={<PageTransition><SevenRuneMap /></PageTransition>} />
-        <Route path="/library" element={<PageTransition><RuneLibrary /></PageTransition>} />
-        <Route path="/converter" element={<PageTransition><RuneConverter /></PageTransition>} />
-        <Route path="/profile" element={<PageTransition><Profile /></PageTransition>} />
-        <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
-        <Route path="/yes-no" element={<PageTransition><YesNoRune /></PageTransition>} />
-        <Route path="/privacy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
-        <Route path="/terms" element={<PageTransition><TermsOfService /></PageTransition>} />
-        <Route path="/premium" element={<PageTransition><Premium /></PageTransition>} />
-        <Route path="/celtic-cross" element={<PageTransition><CelticCross /></PageTransition>} />
-        <Route path="/love-reading" element={<PageTransition><LoveReading /></PageTransition>} />
+        <Route path="/" element={<PageTransition><ErrorBoundary><Home /></ErrorBoundary></PageTransition>} />
+        <Route path="/daily" element={<PageTransition><ErrorBoundary><DailyRune /></ErrorBoundary></PageTransition>} />
+        <Route path="/three-rune" element={<PageTransition><ErrorBoundary><ThreeRune /></ErrorBoundary></PageTransition>} />
+        <Route path="/five-rune-cross" element={<PageTransition><ErrorBoundary><FiveRuneCross /></ErrorBoundary></PageTransition>} />
+        <Route path="/seven-rune-map" element={<PageTransition><ErrorBoundary><SevenRuneMap /></ErrorBoundary></PageTransition>} />
+        <Route path="/library" element={<PageTransition><ErrorBoundary><RuneLibrary /></ErrorBoundary></PageTransition>} />
+        <Route path="/converter" element={<PageTransition><ErrorBoundary><RuneConverter /></ErrorBoundary></PageTransition>} />
+        <Route path="/profile" element={<PageTransition><ErrorBoundary><Profile /></ErrorBoundary></PageTransition>} />
+        <Route path="/auth" element={<PageTransition><ErrorBoundary><Auth /></ErrorBoundary></PageTransition>} />
+        <Route path="/yes-no" element={<PageTransition><ErrorBoundary><YesNoRune /></ErrorBoundary></PageTransition>} />
+        <Route path="/privacy" element={<PageTransition><ErrorBoundary><PrivacyPolicy /></ErrorBoundary></PageTransition>} />
+        <Route path="/terms" element={<PageTransition><ErrorBoundary><TermsOfService /></ErrorBoundary></PageTransition>} />
+        <Route path="/premium" element={<PageTransition><ErrorBoundary><Premium /></ErrorBoundary></PageTransition>} />
+        <Route path="/celtic-cross" element={<PageTransition><ErrorBoundary><CelticCross /></ErrorBoundary></PageTransition>} />
+        <Route path="/love-reading" element={<PageTransition><ErrorBoundary><LoveReading /></ErrorBoundary></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>
@@ -109,8 +109,11 @@ function AppContent() {
 
       {/* Main content */}
       <div className="relative z-10 flex flex-col min-h-screen w-full">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-amber-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm">
+          Pereiti prie turinio
+        </a>
         <Header user={user} onSignOut={signOut} />
-        <main className="flex-1 pt-16 w-full">
+        <main id="main-content" className="flex-1 pt-16 w-full">
           <Suspense fallback={<PageLoader />}>
             <AnimatedRoutes />
           </Suspense>
@@ -124,11 +127,13 @@ function AppContent() {
 function App() {
   return (
     <ErrorBoundary>
-      <BrowserRouter basename="/runu-burimas">
-        <ToastProvider>
-          <AppContent />
-        </ToastProvider>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter basename="/runu-burimas">
+          <ToastProvider>
+            <AppContent />
+          </ToastProvider>
+        </BrowserRouter>
+      </AuthProvider>
     </ErrorBoundary>
   )
 }

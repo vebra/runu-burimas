@@ -4,6 +4,7 @@ import { User, LogOut, Calendar, Sparkles, Heart, Trophy, Trash2, AlertTriangle,
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { usePremium } from '../hooks/usePremium'
+import { usePageTitle } from '../hooks/usePageTitle'
 import { useFavorites, useDivinations } from '../hooks/useRunes'
 import { supabase } from '../lib/supabase'
 import { Button } from '../components/common/Button'
@@ -18,6 +19,7 @@ interface Stats {
 }
 
 export function Profile() {
+  usePageTitle('Profilis')
   const { user, signOut } = useAuth()
   const { isPremium, subscription, openCustomerPortal, loading: premiumLoading } = usePremium()
   const { favorites, fetchFavorites } = useFavorites()
@@ -84,8 +86,8 @@ export function Profile() {
           fetchFavorites(user.id),
           fetchDivinations(user.id),
         ])
-      } catch (error) {
-        console.error('Error loading profile data:', error)
+      } catch {
+        // Error handled silently
       }
       setLoading(false)
     }
@@ -114,8 +116,7 @@ export function Profile() {
       await signOut()
       toast.info('Atsijungta')
       navigate('/')
-    } catch (error) {
-      console.error('Error signing out:', error)
+    } catch {
       toast.error('Klaida atsijungiant')
     }
   }
@@ -137,8 +138,7 @@ export function Profile() {
 
       toast.success('Paskyra ir visi duomenys ištrinti')
       navigate('/')
-    } catch (error) {
-      console.error('Error deleting account:', error)
+    } catch {
       toast.error('Klaida ištrinant paskyrą')
     } finally {
       setDeleting(false)

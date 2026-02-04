@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion'
 import { Shield, Mail, Database, Cookie, UserCheck, Trash2, Lock } from 'lucide-react'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export function PrivacyPolicy() {
+  usePageTitle('Privatumo Politika')
   const sections = [
     {
       icon: Database,

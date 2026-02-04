@@ -272,6 +272,15 @@ export function RuneCard({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={handleMouseLeave}
           onClick={handleClick}
+          role={!revealed && !disabled ? 'button' : undefined}
+          aria-label={!revealed ? 'Atskleisti runą' : `${rune?.name} runa${orientation === 'reversed' ? ' (apversta)' : ''}`}
+          tabIndex={!revealed && !disabled ? 0 : undefined}
+          onKeyDown={(e) => {
+            if (!revealed && !disabled && (e.key === 'Enter' || e.key === ' ')) {
+              e.preventDefault()
+              handleClick()
+            }
+          }}
           style={{
             rotateX: revealed ? rotateX : 0,
             rotateY: revealed ? rotateY : 0,
@@ -366,10 +375,10 @@ export function RuneCard({
               </motion.span>
 
               {/* Corner runes decoration */}
-              <span className="absolute top-2 left-2 text-xs text-purple-500/30">ᚠ</span>
-              <span className="absolute top-2 right-2 text-xs text-purple-500/30">ᚢ</span>
-              <span className="absolute bottom-2 left-2 text-xs text-purple-500/30">ᚦ</span>
-              <span className="absolute bottom-2 right-2 text-xs text-purple-500/30">ᚨ</span>
+              <span className="absolute top-2 left-2 text-xs text-purple-500/30" aria-hidden="true">ᚠ</span>
+              <span className="absolute top-2 right-2 text-xs text-purple-500/30" aria-hidden="true">ᚢ</span>
+              <span className="absolute bottom-2 left-2 text-xs text-purple-500/30" aria-hidden="true">ᚦ</span>
+              <span className="absolute bottom-2 right-2 text-xs text-purple-500/30" aria-hidden="true">ᚨ</span>
             </motion.div>
           )}
 
