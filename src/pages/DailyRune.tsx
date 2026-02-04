@@ -6,8 +6,6 @@ import { useRunes, useDailyRune } from '../hooks/useRunes'
 import type { Rune } from '../types/database'
 import { Button } from '../components/common/Button'
 import { useToast } from '../components/common/Toast'
-import { AIInterpretation } from '../components/common/AIInterpretation'
-import { useAIInterpretation } from '../hooks/useAIInterpretation'
 import { RuneCard } from '../components/common/RuneCard'
 import { AuthGate } from '../components/common/AuthGate'
 import { RuneLoader } from '../components/common/RuneLoader'
@@ -29,25 +27,6 @@ export function DailyRune() {
 
   usePageTitle('Kasdienė Runa')
 
-  const {
-    interpretation,
-    loading: aiLoading,
-    error: aiError,
-    getInterpretation
-  } = useAIInterpretation()
-
-  const handleRequestAIInterpretation = () => {
-    if (!displayedRune) return
-    const runeData = [{
-      name: displayedRune.name,
-      symbol: displayedRune.symbol,
-      meaning: displayedRune.interpretation,
-      reversed_meaning: displayedRune.reversed_interpretation || undefined,
-      orientation: displayedOrientation,
-      position: 'Dienos runa'
-    }]
-    getInterpretation(runeData, 'daily')
-  }
 
   useEffect(() => {
     if (user) {
@@ -284,15 +263,6 @@ export function DailyRune() {
                     </div>
                   </div>
                 </div>
-
-                {/* AI Interpretacija */}
-                <AIInterpretation
-                  interpretation={interpretation}
-                  loading={aiLoading}
-                  error={aiError}
-                  onRequestInterpretation={handleRequestAIInterpretation}
-                  onRetry={handleRequestAIInterpretation}
-                />
 
                 {/* Refleksija */}
                 <div className="bg-gray-800/50 border-2 border-purple-500/30 rounded-xl shadow-lg" style={{ padding: '2rem', boxShadow: '0 0 30px rgba(147, 51, 234, 0.2)' }}>

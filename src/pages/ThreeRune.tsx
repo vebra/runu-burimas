@@ -8,8 +8,6 @@ import type { Rune, RuneSpread } from '../types/database'
 import { Button } from '../components/common/Button'
 import { Textarea } from '../components/common/Input'
 import { useToast } from '../components/common/Toast'
-import { AIInterpretation } from '../components/common/AIInterpretation'
-import { useAIInterpretation } from '../hooks/useAIInterpretation'
 import { RuneCard } from '../components/common/RuneCard'
 import { AuthGate } from '../components/common/AuthGate'
 import { RuneLoader } from '../components/common/RuneLoader'
@@ -41,14 +39,6 @@ export function ThreeRune() {
   const [notes, setNotes] = useState('')
   const [savingNotes, setSavingNotes] = useState(false)
   const [divinationId, setDivinationId] = useState<string | null>(null)
-
-  const {
-    interpretation,
-    loading: aiLoading,
-    error: aiError,
-    getInterpretation,
-    clearInterpretation
-  } = useAIInterpretation()
 
   const drawRunes = async () => {
     if (runes.length < 3) return
@@ -129,20 +119,6 @@ export function ThreeRune() {
     setSpreadComplete(false)
     setNotes('')
     setDivinationId(null)
-    clearInterpretation()
-  }
-
-  const handleRequestAIInterpretation = () => {
-    const runeData = drawnRunes.map(r => ({
-      name: r.rune.name,
-      symbol: r.rune.symbol,
-      meaning: r.rune.interpretation,
-      reversed_meaning: r.rune.reversed_interpretation || undefined,
-      orientation: r.orientation,
-      position: positionLabels[r.position].label
-    }))
-
-    getInterpretation(runeData, 'three_rune', question || undefined)
   }
 
   if (!user) {
@@ -353,15 +329,6 @@ export function ThreeRune() {
                     </p>
                   </div>
                 </div>
-
-                {/* AI Interpretacija */}
-                <AIInterpretation
-                  interpretation={interpretation}
-                  loading={aiLoading}
-                  error={aiError}
-                  onRequestInterpretation={handleRequestAIInterpretation}
-                  onRetry={handleRequestAIInterpretation}
-                />
 
                 {/* Dienoraštis */}
                 <div className="bg-gray-800/50 border-2 border-amber-600/30 rounded-xl shadow-lg" style={{ padding: '2rem', boxShadow: '0 0 30px rgba(217, 119, 6, 0.2)' }}>

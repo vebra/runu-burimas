@@ -6,8 +6,6 @@ import { useRunes } from '../hooks/useRunes'
 import { usePageTitle } from '../hooks/usePageTitle'
 import type { Rune } from '../types/database'
 import { Button } from '../components/common/Button'
-import { AIInterpretation } from '../components/common/AIInterpretation'
-import { useAIInterpretation } from '../hooks/useAIInterpretation'
 import { RuneCard } from '../components/common/RuneCard'
 import { AuthGate } from '../components/common/AuthGate'
 import { RuneLoader } from '../components/common/RuneLoader'
@@ -82,27 +80,6 @@ export function YesNoRune() {
   const [result, setResult] = useState<DrawnResult | null>(null)
   const [isRevealed, setIsRevealed] = useState(false)
 
-  const {
-    interpretation,
-    loading: aiLoading,
-    error: aiError,
-    getInterpretation,
-    clearInterpretation
-  } = useAIInterpretation()
-
-  const handleRequestAIInterpretation = () => {
-    if (!result) return
-    const runeData = [{
-      name: result.rune.name,
-      symbol: result.rune.symbol,
-      meaning: result.rune.interpretation,
-      reversed_meaning: result.rune.reversed_interpretation || undefined,
-      orientation: result.orientation,
-      position: `Atsakymas: ${result.answer === 'yes' ? 'TAIP' : result.answer === 'no' ? 'NE' : 'GALBŪT'}`
-    }]
-    getInterpretation(runeData, 'yes_no', question)
-  }
-
   const handleDrawRune = async () => {
     if (runes.length === 0 || !question.trim()) return
 
@@ -127,7 +104,6 @@ export function YesNoRune() {
     setQuestion('')
     setResult(null)
     setIsRevealed(false)
-    clearInterpretation()
   }
 
   if (!user) {
@@ -333,15 +309,6 @@ export function YesNoRune() {
                     Galutinis sprendimas visada priklauso nuo tavęs.
                   </p>
                 </div>
-
-                {/* AI Interpretacija */}
-                <AIInterpretation
-                  interpretation={interpretation}
-                  loading={aiLoading}
-                  error={aiError}
-                  onRequestInterpretation={handleRequestAIInterpretation}
-                  onRetry={handleRequestAIInterpretation}
-                />
 
                 {/* Naujas būrimas */}
                 <div className="flex justify-center pt-4">
