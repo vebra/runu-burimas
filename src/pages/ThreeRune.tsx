@@ -9,7 +9,6 @@ import { Button } from '../components/common/Button'
 import { Textarea } from '../components/common/Input'
 import { useToast } from '../components/common/Toast'
 import { RuneCard } from '../components/common/RuneCard'
-import { AuthGate } from '../components/common/AuthGate'
 import { RuneLoader } from '../components/common/RuneLoader'
 
 interface DrawnRune {
@@ -119,10 +118,6 @@ export function ThreeRune() {
     setSpreadComplete(false)
     setNotes('')
     setDivinationId(null)
-  }
-
-  if (!user) {
-    return <AuthGate />
   }
 
   if (runesLoading) {
@@ -330,36 +325,38 @@ export function ThreeRune() {
                   </div>
                 </div>
 
-                {/* Dienoraštis */}
-                <div className="bg-gray-800/50 border-2 border-amber-600/30 rounded-xl shadow-lg" style={{ padding: '2rem', boxShadow: '0 0 30px rgba(217, 119, 6, 0.2)' }}>
-                  <div className="flex items-center gap-2" style={{ marginBottom: '1.5rem' }}>
-                    <BookOpen className="w-5 h-5 text-amber-400" />
-                    <h3 className="text-xl font-cinzel font-semibold text-amber-200">
-                      Dienoraštis
-                    </h3>
+                {/* Dienoraštis - tik prisijungusiems */}
+                {user && (
+                  <div className="bg-gray-800/50 border-2 border-amber-600/30 rounded-xl shadow-lg" style={{ padding: '2rem', boxShadow: '0 0 30px rgba(217, 119, 6, 0.2)' }}>
+                    <div className="flex items-center gap-2" style={{ marginBottom: '1.5rem' }}>
+                      <BookOpen className="w-5 h-5 text-amber-400" />
+                      <h3 className="text-xl font-cinzel font-semibold text-amber-200">
+                        Dienoraštis
+                      </h3>
+                    </div>
+                    <p className="text-gray-400 text-sm" style={{ marginBottom: '1rem' }}>
+                      Užrašykite savo mintis, įžvalgas ar pastebėjimus apie šį būrimą.
+                    </p>
+                    <textarea
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                      placeholder="Kaip šis būrimas atspindi mano situaciją? Kokios mintys kilo? Ką turiu daryti?"
+                      className="w-full bg-gray-900/50 border-2 border-gray-700 rounded-lg p-6 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50 transition-colors resize-none text-xl shadow-lg"
+                      style={{ height: '200px', boxShadow: '0 0 20px rgba(107, 114, 128, 0.2)' }}
+                    />
+                    <Button
+                      onClick={handleSaveNotes}
+                      disabled={!divinationId}
+                      loading={savingNotes}
+                      variant="secondary"
+                      size="lg"
+                      className="mt-6"
+                    >
+                      <Save className="w-5 h-5 md:w-6 md:h-6" />
+                      Išsaugoti Dienoraštį
+                    </Button>
                   </div>
-                  <p className="text-gray-400 text-sm" style={{ marginBottom: '1rem' }}>
-                    Užrašykite savo mintis, įžvalgas ar pastebėjimus apie šį būrimą.
-                  </p>
-                  <textarea
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Kaip šis būrimas atspindi mano situaciją? Kokios mintys kilo? Ką turiu daryti?"
-                    className="w-full bg-gray-900/50 border-2 border-gray-700 rounded-lg p-6 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50 transition-colors resize-none text-xl shadow-lg"
-                    style={{ height: '200px', boxShadow: '0 0 20px rgba(107, 114, 128, 0.2)' }}
-                  />
-                  <Button
-                    onClick={handleSaveNotes}
-                    disabled={!divinationId}
-                    loading={savingNotes}
-                    variant="secondary"
-                    size="lg"
-                    className="mt-6"
-                  >
-                    <Save className="w-5 h-5 md:w-6 md:h-6" />
-                    Išsaugoti Dienoraštį
-                  </Button>
-                </div>
+                )}
 
                 <div className="flex justify-center pt-6">
                   <Button onClick={reset} variant="ghost" size="lg">

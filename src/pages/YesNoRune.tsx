@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Sparkles, RotateCcw, ThumbsUp, ThumbsDown, Minus } from 'lucide-react'
-import { useAuth } from '../hooks/useAuth'
 import { useRunes } from '../hooks/useRunes'
 import { usePageTitle } from '../hooks/usePageTitle'
 import type { Rune } from '../types/database'
 import { Button } from '../components/common/Button'
 import { RuneCard } from '../components/common/RuneCard'
-import { AuthGate } from '../components/common/AuthGate'
 import { RuneLoader } from '../components/common/RuneLoader'
 
 type Answer = 'yes' | 'no' | 'maybe'
@@ -72,7 +70,6 @@ function getAnswerConfig(answer: Answer) {
 
 export function YesNoRune() {
   usePageTitle('Taip arba Ne')
-  const { user } = useAuth()
   const { runes, loading: runesLoading, getRandomRune, getRandomOrientation } = useRunes()
 
   const [question, setQuestion] = useState('')
@@ -104,10 +101,6 @@ export function YesNoRune() {
     setQuestion('')
     setResult(null)
     setIsRevealed(false)
-  }
-
-  if (!user) {
-    return <AuthGate message="Norėdami atlikti Taip/Ne būrimą, turite prisijungti." />
   }
 
   if (runesLoading) {

@@ -7,7 +7,6 @@ import type { Rune } from '../types/database'
 import { Button } from '../components/common/Button'
 import { useToast } from '../components/common/Toast'
 import { RuneCard } from '../components/common/RuneCard'
-import { AuthGate } from '../components/common/AuthGate'
 import { RuneLoader } from '../components/common/RuneLoader'
 import { usePageTitle } from '../hooks/usePageTitle'
 
@@ -50,7 +49,7 @@ export function DailyRune() {
   const displayedNotes = todayRune?.notes || notes
 
   const handleDrawRune = async () => {
-    if (!user || runes.length === 0) return
+    if (runes.length === 0) return
 
     setIsDrawing(true)
     setIsRevealed(false)
@@ -61,12 +60,14 @@ export function DailyRune() {
     const orient = getRandomOrientation()
 
     if (rune) {
-      try {
-        await saveDailyRune(user.id, rune.id, orient)
-        setDrawnRune(rune)
-        setOrientation(orient)
-      } catch {
-        // Error handled silently
+      setDrawnRune(rune)
+      setOrientation(orient)
+      if (user) {
+        try {
+          await saveDailyRune(user.id, rune.id, orient)
+        } catch {
+          // Save silently fails for non-logged in
+        }
       }
     }
 
@@ -101,11 +102,7 @@ export function DailyRune() {
     setSavingNotes(false)
   }
 
-  if (!user) {
-    return <AuthGate message="Norėdami traukti dienos runą, turite prisijungti." />
-  }
-
-  if (runesLoading || dailyLoading) {
+  if (runesLoading || (user && dailyLoading)) {
     return <RuneLoader symbol="ᚠ" />
   }
 
@@ -264,58 +261,61 @@ export function DailyRune() {
                   </div>
                 </div>
 
-                {/* Refleksija */}
-                <div className="bg-gray-800/50 border-2 border-purple-500/30 rounded-xl shadow-lg" style={{ padding: '2rem', boxShadow: '0 0 30px rgba(147, 51, 234, 0.2)' }}>
-                  <h3 className="text-xl font-cinzel font-semibold text-amber-200" style={{ marginBottom: '1.5rem' }}>
-                    Jūsų Refleksija
-                  </h3>
-                  <textarea
-                    value={displayedReflection || reflection}
-                    onChange={(e) => setReflection(e.target.value)}
-                    placeholder="Užrašykite savo mintis apie šios dienos runą..."
-                    className="w-full bg-gray-900/50 border-2 border-gray-700 rounded-lg p-6 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50 transition-colors resize-none text-xl shadow-lg"
-                    style={{ height: '150px', boxShadow: '0 0 20px rgba(107, 114, 128, 0.2)' }}
-                  />
-                  <Button
-                    onClick={handleSaveReflection}
-                    loading={saving}
-                    size="lg"
-                    className="mt-6"
-                  >
-                    <Save className="w-5 h-5 md:w-6 md:h-6" />
-                    Išsaugoti
-                  </Button>
-                </div>
+                {/* Refleksija ir dienoraštis - tik prisijungusiems */}
+                {user && (
+                  <>
+                    <div className="bg-gray-800/50 border-2 border-purple-500/30 rounded-xl shadow-lg" style={{ padding: '2rem', boxShadow: '0 0 30px rgba(147, 51, 234, 0.2)' }}>
+                      <h3 className="text-xl font-cinzel font-semibold text-amber-200" style={{ marginBottom: '1.5rem' }}>
+                        Jūsų Refleksija
+                      </h3>
+                      <textarea
+                        value={displayedReflection || reflection}
+                        onChange={(e) => setReflection(e.target.value)}
+                        placeholder="Užrašykite savo mintis apie šios dienos runą..."
+                        className="w-full bg-gray-900/50 border-2 border-gray-700 rounded-lg p-6 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50 transition-colors resize-none text-xl shadow-lg"
+                        style={{ height: '150px', boxShadow: '0 0 20px rgba(107, 114, 128, 0.2)' }}
+                      />
+                      <Button
+                        onClick={handleSaveReflection}
+                        loading={saving}
+                        size="lg"
+                        className="mt-6"
+                      >
+                        <Save className="w-5 h-5 md:w-6 md:h-6" />
+                        Išsaugoti
+                      </Button>
+                    </div>
 
-                {/* Dienoraštis */}
-                <div className="bg-gray-800/50 border-2 border-amber-600/30 rounded-xl shadow-lg" style={{ padding: '2rem', boxShadow: '0 0 30px rgba(217, 119, 6, 0.2)' }}>
-                  <div className="flex items-center gap-2" style={{ marginBottom: '1.5rem' }}>
-                    <BookOpen className="w-5 h-5 text-amber-400" />
-                    <h3 className="text-xl font-cinzel font-semibold text-amber-200">
-                      Dienoraštis
-                    </h3>
-                  </div>
-                  <p className="text-gray-400 text-sm" style={{ marginBottom: '1rem' }}>
-                    Užrašykite savo patirtis, įžvalgas ar pastebėjimus apie šią dieną.
-                  </p>
-                  <textarea
-                    value={displayedNotes || notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Ką šiandien patyriau? Kokios mintys kilo? Kaip runa atspindi mano dieną?"
-                    className="w-full bg-gray-900/50 border-2 border-gray-700 rounded-lg p-6 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50 transition-colors resize-none text-xl shadow-lg"
-                    style={{ height: '200px', boxShadow: '0 0 20px rgba(107, 114, 128, 0.2)' }}
-                  />
-                  <Button
-                    onClick={handleSaveNotes}
-                    loading={savingNotes}
-                    variant="secondary"
-                    size="lg"
-                    className="mt-6"
-                  >
-                    <Save className="w-5 h-5 md:w-6 md:h-6" />
-                    Išsaugoti Dienoraštį
-                  </Button>
-                </div>
+                    <div className="bg-gray-800/50 border-2 border-amber-600/30 rounded-xl shadow-lg" style={{ padding: '2rem', boxShadow: '0 0 30px rgba(217, 119, 6, 0.2)' }}>
+                      <div className="flex items-center gap-2" style={{ marginBottom: '1.5rem' }}>
+                        <BookOpen className="w-5 h-5 text-amber-400" />
+                        <h3 className="text-xl font-cinzel font-semibold text-amber-200">
+                          Dienoraštis
+                        </h3>
+                      </div>
+                      <p className="text-gray-400 text-sm" style={{ marginBottom: '1rem' }}>
+                        Užrašykite savo patirtis, įžvalgas ar pastebėjimus apie šią dieną.
+                      </p>
+                      <textarea
+                        value={displayedNotes || notes}
+                        onChange={(e) => setNotes(e.target.value)}
+                        placeholder="Ką šiandien patyriau? Kokios mintys kilo? Kaip runa atspindi mano dieną?"
+                        className="w-full bg-gray-900/50 border-2 border-gray-700 rounded-lg p-6 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/50 transition-colors resize-none text-xl shadow-lg"
+                        style={{ height: '200px', boxShadow: '0 0 20px rgba(107, 114, 128, 0.2)' }}
+                      />
+                      <Button
+                        onClick={handleSaveNotes}
+                        loading={savingNotes}
+                        variant="secondary"
+                        size="lg"
+                        className="mt-6"
+                      >
+                        <Save className="w-5 h-5 md:w-6 md:h-6" />
+                        Išsaugoti Dienoraštį
+                      </Button>
+                    </div>
+                  </>
+                )}
               </motion.div>
             )}
           </motion.div>
