@@ -108,29 +108,29 @@ export function RuneLibrary() {
             {/* Toggle header */}
             <button
               onClick={() => setShowAbout(!showAbout)}
-              className="relative z-10 w-full flex items-center justify-between gap-3 text-left transition-colors"
-              style={{ padding: '1.5rem 2rem' }}
+              className="relative z-10 w-full flex flex-col items-center text-center transition-colors"
+              style={{ padding: '2rem 2rem' }}
             >
-              <div className="flex items-center gap-3">
-                <div
-                  className="flex items-center justify-center w-10 h-10 rounded-lg"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(217, 119, 6, 0.2), rgba(147, 51, 234, 0.2))',
-                    border: '1px solid rgba(217, 119, 6, 0.3)',
-                  }}
-                >
-                  <BookOpen className="w-5 h-5 text-amber-400" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-cinzel font-semibold text-white">Runos ir būrimas</h2>
-                  <p className="text-gray-500 text-sm">Senovinė išmintis šiuolaikiniam žmogui</p>
-                </div>
+              <div
+                className="flex items-center justify-center w-12 h-12 rounded-xl"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(217, 119, 6, 0.25), rgba(147, 51, 234, 0.25))',
+                  border: '1px solid rgba(217, 119, 6, 0.35)',
+                  marginBottom: '1rem',
+                }}
+              >
+                <BookOpen className="w-6 h-6 text-amber-400" />
               </div>
+              <h2 className="text-xl md:text-2xl font-cinzel font-bold text-white" style={{ marginBottom: '0.4rem' }}>
+                Runos ir būrimas
+              </h2>
+              <p className="text-gray-400 text-sm">Senovinė išmintis šiuolaikiniam žmogui</p>
               <motion.div
                 animate={{ rotate: showAbout ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
+                style={{ marginTop: '0.75rem' }}
               >
-                <ChevronDown className="w-5 h-5 text-gray-500" />
+                <ChevronDown className="w-6 h-6 text-gray-500" />
               </motion.div>
             </button>
 
