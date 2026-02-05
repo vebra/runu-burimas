@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Loader2 } from 'lucide-react'
+import { X, Loader2, ChevronDown, BookOpen } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { usePageTitle } from '../hooks/usePageTitle'
 import { EmptySearchResults } from '../components/common/EmptyState'
@@ -16,6 +16,7 @@ export function RuneLibrary() {
   const [filterAett, setFilterAett] = useState<string | null>(null)
   const [revealedRunes, setRevealedRunes] = useState<Set<string>>(new Set())
   const [selectedRune, setSelectedRune] = useState<Rune | null>(null)
+  const [showAbout, setShowAbout] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -73,6 +74,102 @@ export function RuneLibrary() {
           <p className="text-gray-400 text-lg">
             24 Elder Futhark runos • Paspausk ant runos, kad atskleistum
           </p>
+        </motion.div>
+
+        {/* Apie runas */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          style={{ marginBottom: '2.5rem' }}
+        >
+          <button
+            onClick={() => setShowAbout(!showAbout)}
+            className="w-full flex items-center justify-center gap-3 py-3 px-6 rounded-xl bg-gray-800/30 border border-gray-700/50 hover:border-amber-600/30 transition-all text-gray-300 hover:text-amber-300"
+          >
+            <BookOpen className="w-5 h-5" />
+            <span className="font-medium text-base">Runos ir būrimas</span>
+            <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${showAbout ? 'rotate-180' : ''}`} />
+          </button>
+
+          <AnimatePresence>
+            {showAbout && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <div
+                  className="bg-gray-800/30 border border-gray-700/50 rounded-2xl"
+                  style={{ marginTop: '1rem', padding: '2rem' }}
+                >
+                  <div className="max-w-2xl mx-auto space-y-6 text-gray-300 text-base leading-relaxed">
+                    <p>
+                      Runos – tai senoviniai simboliai, kilę iš šiaurės Europos tradicijų, naudoti ne tik raštui,
+                      bet ir kaip gilių prasmių bei vidinės išminties nešėjai. Kiekviena runa turi savitą energiją,
+                      reikšmę ir simboliką, atspindinčią gyvenimo dėsnius, gamtos ciklus bei žmogaus kelią.
+                    </p>
+
+                    <p>
+                      Runų būrimas – tai apmąstymų ir įžvalgos praktika, padedanti pažvelgti giliau į situacijas,
+                      sprendimus ir vidinius klausimus. Tai nėra ateities „nuspėjimas" tiesiogine prasme. Runos veikia
+                      kaip veidrodis: jos padeda išryškinti tai, kas jau slypi pasąmonėje, ir leidžia aiškiau suprasti
+                      galimas kryptis.
+                    </p>
+
+                    <div>
+                      <h3 className="text-amber-300 font-semibold text-lg" style={{ marginBottom: '0.75rem' }}>
+                        Ką gali atskleisti runų būrimas
+                      </h3>
+                      <ul className="space-y-2 text-gray-300">
+                        <li className="flex items-start gap-2">
+                          <span className="text-amber-500 mt-1">•</span>
+                          <span>Dabartinę situaciją ir jos esmę</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-amber-500 mt-1">•</span>
+                          <span>Galimas ateities tendencijas ir pasirinkimų pasekmes</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-amber-500 mt-1">•</span>
+                          <span>Vidinius blokus, stiprybes ir silpnybes</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-amber-500 mt-1">•</span>
+                          <span>Santykių, darbo ar asmeninio kelio kryptį</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <p>
+                      Runų kalba yra simbolinė ir daugiasluoksnė, todėl kiekvienas būrimas yra individualus.
+                      Tas pats ženklas skirtingiems žmonėms gali kalbėti skirtingai – priklausomai nuo konteksto,
+                      klausimo ir gyvenimo etapo.
+                    </p>
+
+                    <div>
+                      <h3 className="text-amber-300 font-semibold text-lg" style={{ marginBottom: '0.75rem' }}>
+                        Senovinė išmintis šiuolaikiniam žmogui
+                      </h3>
+                      <p>
+                        Nors runos atkeliavo iš tolimos praeities, jų žinutės išlieka aktualios ir šiandien.
+                        Šiuolaikiniame, greitame pasaulyje runų būrimas suteikia galimybę sustoti, susitelkti ir
+                        priimti sprendimus sąmoningiau. Tai pagarbus dialogas su savimi ir tradicija, perduodama
+                        per kartas.
+                      </p>
+                    </div>
+
+                    <p className="text-gray-400 italic border-l-2 border-amber-600/40" style={{ paddingLeft: '1rem' }}>
+                      Ši svetainė skirta tiems, kurie vertina senąją išmintį, ieško prasmės ir nori pažvelgti
+                      į savo gyvenimo kelią giliau – ramiai, atsakingai ir su pagarba tradicijoms.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         {/* Filtrai */}
