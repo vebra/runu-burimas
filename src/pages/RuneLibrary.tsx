@@ -78,98 +78,156 @@ export function RuneLibrary() {
 
         {/* Apie runas */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          style={{ marginBottom: '2.5rem' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          style={{ marginBottom: '3rem' }}
         >
-          <button
-            onClick={() => setShowAbout(!showAbout)}
-            className="w-full flex items-center justify-center gap-3 py-3 px-6 rounded-xl bg-gray-800/30 border border-gray-700/50 hover:border-amber-600/30 transition-all text-gray-300 hover:text-amber-300"
+          <div
+            className="relative overflow-hidden rounded-2xl"
+            style={{
+              background: 'linear-gradient(135deg, rgba(88, 28, 135, 0.3) 0%, rgba(107, 33, 168, 0.2) 50%, rgba(126, 34, 206, 0.3) 100%)',
+              border: '1px solid rgba(217, 119, 6, 0.2)',
+              boxShadow: '0 0 40px rgba(147, 51, 234, 0.15), inset 0 0 40px rgba(147, 51, 234, 0.05)',
+            }}
           >
-            <BookOpen className="w-5 h-5" />
-            <span className="font-medium text-base">Runos ir būrimas</span>
-            <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${showAbout ? 'rotate-180' : ''}`} />
-          </button>
+            {/* Decorative rune watermark */}
+            <div
+              className="absolute -right-6 -top-6 text-9xl font-cinzel text-amber-500/5 select-none pointer-events-none"
+              style={{ fontSize: '12rem', lineHeight: 1 }}
+            >
+              ᚠ
+            </div>
+            <div
+              className="absolute -left-4 -bottom-4 text-9xl font-cinzel text-purple-500/5 select-none pointer-events-none"
+              style={{ fontSize: '10rem', lineHeight: 1 }}
+            >
+              ᛟ
+            </div>
 
-          <AnimatePresence>
-            {showAbout && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden"
-              >
+            {/* Toggle header */}
+            <button
+              onClick={() => setShowAbout(!showAbout)}
+              className="relative z-10 w-full flex items-center justify-between gap-3 text-left transition-colors"
+              style={{ padding: '1.5rem 2rem' }}
+            >
+              <div className="flex items-center gap-3">
                 <div
-                  className="bg-gray-800/30 border border-gray-700/50 rounded-2xl"
-                  style={{ marginTop: '1rem', padding: '2rem' }}
+                  className="flex items-center justify-center w-10 h-10 rounded-lg"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(217, 119, 6, 0.2), rgba(147, 51, 234, 0.2))',
+                    border: '1px solid rgba(217, 119, 6, 0.3)',
+                  }}
                 >
-                  <div className="max-w-2xl mx-auto space-y-6 text-gray-300 text-base leading-relaxed">
-                    <p>
-                      Runos – tai senoviniai simboliai, kilę iš šiaurės Europos tradicijų, naudoti ne tik raštui,
-                      bet ir kaip gilių prasmių bei vidinės išminties nešėjai. Kiekviena runa turi savitą energiją,
-                      reikšmę ir simboliką, atspindinčią gyvenimo dėsnius, gamtos ciklus bei žmogaus kelią.
-                    </p>
+                  <BookOpen className="w-5 h-5 text-amber-400" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-cinzel font-semibold text-white">Runos ir būrimas</h2>
+                  <p className="text-gray-500 text-sm">Senovinė išmintis šiuolaikiniam žmogui</p>
+                </div>
+              </div>
+              <motion.div
+                animate={{ rotate: showAbout ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ChevronDown className="w-5 h-5 text-gray-500" />
+              </motion.div>
+            </button>
 
-                    <p>
-                      Runų būrimas – tai apmąstymų ir įžvalgos praktika, padedanti pažvelgti giliau į situacijas,
-                      sprendimus ir vidinius klausimus. Tai nėra ateities „nuspėjimas" tiesiogine prasme. Runos veikia
-                      kaip veidrodis: jos padeda išryškinti tai, kas jau slypi pasąmonėje, ir leidžia aiškiau suprasti
-                      galimas kryptis.
-                    </p>
+            {/* Expandable content */}
+            <AnimatePresence>
+              {showAbout && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.4, ease: 'easeInOut' }}
+                  className="overflow-hidden"
+                >
+                  <div className="relative z-10" style={{ padding: '0 2rem 2rem' }}>
+                    {/* Divider */}
+                    <div
+                      className="w-full h-px mb-6"
+                      style={{ background: 'linear-gradient(90deg, transparent, rgba(217, 119, 6, 0.3), rgba(147, 51, 234, 0.3), transparent)' }}
+                    />
 
-                    <div>
-                      <h3 className="text-amber-300 font-semibold text-lg" style={{ marginBottom: '0.75rem' }}>
-                        Ką gali atskleisti runų būrimas
-                      </h3>
-                      <ul className="space-y-2 text-gray-300">
-                        <li className="flex items-start gap-2">
-                          <span className="text-amber-500 mt-1">•</span>
-                          <span>Dabartinę situaciją ir jos esmę</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-amber-500 mt-1">•</span>
-                          <span>Galimas ateities tendencijas ir pasirinkimų pasekmes</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-amber-500 mt-1">•</span>
-                          <span>Vidinius blokus, stiprybes ir silpnybes</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-amber-500 mt-1">•</span>
-                          <span>Santykių, darbo ar asmeninio kelio kryptį</span>
-                        </li>
-                      </ul>
-                    </div>
+                    <div className="space-y-5 text-gray-300 text-base leading-relaxed">
+                      <p>
+                        Runos – tai senoviniai simboliai, kilę iš šiaurės Europos tradicijų, naudoti ne tik raštui,
+                        bet ir kaip gilių prasmių bei vidinės išminties nešėjai. Kiekviena runa turi savitą energiją,
+                        reikšmę ir simboliką, atspindinčią gyvenimo dėsnius, gamtos ciklus bei žmogaus kelią.
+                      </p>
 
-                    <p>
-                      Runų kalba yra simbolinė ir daugiasluoksnė, todėl kiekvienas būrimas yra individualus.
-                      Tas pats ženklas skirtingiems žmonėms gali kalbėti skirtingai – priklausomai nuo konteksto,
-                      klausimo ir gyvenimo etapo.
-                    </p>
+                      <p>
+                        Runų būrimas – tai apmąstymų ir įžvalgos praktika, padedanti pažvelgti giliau į situacijas,
+                        sprendimus ir vidinius klausimus. Tai nėra ateities „nuspėjimas" tiesiogine prasme. Runos veikia
+                        kaip veidrodis: jos padeda išryškinti tai, kas jau slypi pasąmonėje, ir leidžia aiškiau suprasti
+                        galimas kryptis.
+                      </p>
 
-                    <div>
-                      <h3 className="text-amber-300 font-semibold text-lg" style={{ marginBottom: '0.75rem' }}>
-                        Senovinė išmintis šiuolaikiniam žmogui
-                      </h3>
+                      {/* Feature cards */}
+                      <div>
+                        <h3 className="text-amber-300 font-cinzel font-semibold text-base" style={{ marginBottom: '1rem' }}>
+                          Ką gali atskleisti runų būrimas
+                        </h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {[
+                            { rune: 'ᚠ', text: 'Dabartinę situaciją ir jos esmę' },
+                            { rune: 'ᚱ', text: 'Galimas ateities tendencijas ir pasirinkimų pasekmes' },
+                            { rune: 'ᚺ', text: 'Vidinius blokus, stiprybes ir silpnybes' },
+                            { rune: 'ᛗ', text: 'Santykių, darbo ar asmeninio kelio kryptį' },
+                          ].map((item, i) => (
+                            <div
+                              key={i}
+                              className="flex items-start gap-3 rounded-lg"
+                              style={{
+                                padding: '0.75rem 1rem',
+                                background: 'rgba(147, 51, 234, 0.1)',
+                                border: '1px solid rgba(147, 51, 234, 0.15)',
+                              }}
+                            >
+                              <span className="text-amber-500/60 text-lg flex-shrink-0" style={{ textShadow: '0 0 8px rgba(217, 119, 6, 0.3)' }}>
+                                {item.rune}
+                              </span>
+                              <span className="text-gray-300 text-sm">{item.text}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <p>
+                        Runų kalba yra simbolinė ir daugiasluoksnė, todėl kiekvienas būrimas yra individualus.
+                        Tas pats ženklas skirtingiems žmonėms gali kalbėti skirtingai – priklausomai nuo konteksto,
+                        klausimo ir gyvenimo etapo.
+                      </p>
+
                       <p>
                         Nors runos atkeliavo iš tolimos praeities, jų žinutės išlieka aktualios ir šiandien.
                         Šiuolaikiniame, greitame pasaulyje runų būrimas suteikia galimybę sustoti, susitelkti ir
                         priimti sprendimus sąmoningiau. Tai pagarbus dialogas su savimi ir tradicija, perduodama
                         per kartas.
                       </p>
-                    </div>
 
-                    <p className="text-gray-400 italic border-l-2 border-amber-600/40" style={{ paddingLeft: '1rem' }}>
-                      Ši svetainė skirta tiems, kurie vertina senąją išmintį, ieško prasmės ir nori pažvelgti
-                      į savo gyvenimo kelią giliau – ramiai, atsakingai ir su pagarba tradicijoms.
-                    </p>
+                      {/* Closing quote */}
+                      <div
+                        className="relative rounded-xl"
+                        style={{
+                          padding: '1.25rem 1.5rem',
+                          background: 'linear-gradient(135deg, rgba(217, 119, 6, 0.08), rgba(147, 51, 234, 0.08))',
+                          borderLeft: '3px solid rgba(217, 119, 6, 0.4)',
+                        }}
+                      >
+                        <p className="text-gray-400 italic text-sm leading-relaxed">
+                          Ši svetainė skirta tiems, kurie vertina senąją išmintį, ieško prasmės ir nori pažvelgti
+                          į savo gyvenimo kelią giliau – ramiai, atsakingai ir su pagarba tradicijoms.
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </motion.div>
 
         {/* Filtrai */}
