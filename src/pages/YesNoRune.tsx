@@ -6,6 +6,7 @@ import { usePageTitle } from '../hooks/usePageTitle'
 import type { Rune } from '../types/database'
 import { Button } from '../components/common/Button'
 import { ReadingDisclaimer } from '../components/common/ReadingDisclaimer'
+import { AIPremiumBanner } from '../components/common/AIPremiumBanner'
 import { RuneCard } from '../components/common/RuneCard'
 import { RuneLoader } from '../components/common/RuneLoader'
 
@@ -296,6 +297,8 @@ export function YesNoRune() {
                     </div>
                   </div>
                 </div>
+
+                <AIPremiumBanner />
 
                 {/* Patarimas */}
                 <div className="bg-purple-900/20 border border-purple-500/30 rounded-xl" style={{ padding: '1rem' }}>

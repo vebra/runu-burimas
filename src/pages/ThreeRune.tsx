@@ -7,6 +7,7 @@ import { usePageTitle } from '../hooks/usePageTitle'
 import type { Rune, RuneSpread } from '../types/database'
 import { Button } from '../components/common/Button'
 import { ReadingDisclaimer } from '../components/common/ReadingDisclaimer'
+import { AIPremiumBanner } from '../components/common/AIPremiumBanner'
 import { Textarea } from '../components/common/Input'
 import { useToast } from '../components/common/Toast'
 import { RuneCard } from '../components/common/RuneCard'
@@ -326,6 +327,8 @@ export function ThreeRune() {
                     </p>
                   </div>
                 </div>
+
+                <AIPremiumBanner />
 
                 {/* Dienoraštis - tik prisijungusiems */}
                 {user && (
