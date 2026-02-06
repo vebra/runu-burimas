@@ -1,7 +1,18 @@
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import { Sparkles, Calendar, BookOpen, Type, ArrowRight, Crown, Compass, TrendingUp, Zap, Star, Moon, HelpCircle, Heart } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768 || /Android/i.test(navigator.userAgent))
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+  return isMobile
+}
 
 // Feature type for cards
 interface Feature {
@@ -325,7 +336,67 @@ const PARTICLES = Array.from({ length: 20 }, (_, i) => ({
   delay: ((i * 29 + 3) % 50) / 10,
 }))
 
+// Static Hero for mobile — zero JS animations, zero flickering
+function MobileHero() {
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Static gradient background */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `
+            radial-gradient(ellipse 80% 50% at 50% 20%, rgba(120, 0, 255, 0.2) 0%, transparent 50%),
+            radial-gradient(ellipse 60% 40% at 70% 50%, rgba(0, 255, 200, 0.08) 0%, transparent 50%),
+            radial-gradient(ellipse 70% 50% at 30% 70%, rgba(255, 0, 150, 0.1) 0%, transparent 50%),
+            radial-gradient(ellipse 100% 80% at 50% 0%, rgba(147, 51, 234, 0.2) 0%, transparent 70%)
+          `,
+        }}
+      />
+      <div className="absolute inset-0 bg-linear-to-b from-purple-900/30 via-transparent to-transparent" />
+
+      <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 py-20">
+        <span className="text-7xl block">🔮</span>
+
+        <h1 className="display-xl text-white tracking-tight" style={{ marginTop: '32px' }}>
+          <span className="inline-block text-gradient-mystic">Runų Būrimas</span>
+        </h1>
+
+        <p className="subheading-lg max-w-2xl text-center" style={{ marginTop: '24px' }}>
+          Atraskite senovės išmintį per <span className="text-amber-400 font-semibold not-italic">Elder Futhark</span> runas
+        </p>
+
+        <p className="overline" style={{ marginTop: '16px' }}>
+          Kasdienės runos • Būrimai • Išmintis
+        </p>
+
+        <div
+          className="flex flex-col items-stretch justify-center gap-4 w-full max-w-xl px-4"
+          style={{ marginTop: '32px' }}
+        >
+          <Link
+            to="/daily"
+            className="group relative w-full overflow-hidden bg-linear-to-r from-purple-600 via-purple-500 to-pink-600 text-white font-bold text-xl py-5 px-12 rounded-xl flex items-center justify-center gap-3 shadow-xl shadow-purple-900/50 border border-purple-400/30"
+          >
+            <Sparkles className="w-6 h-6" />
+            Pradėti Būrimą
+            <ArrowRight className="w-6 h-6" />
+          </Link>
+
+          <Link
+            to="/library"
+            className="group w-full bg-amber-500/10 border border-amber-500/30 text-amber-200 font-bold text-xl py-5 px-12 rounded-xl flex items-center justify-center gap-3"
+          >
+            <BookOpen className="w-6 h-6" />
+            Runų Biblioteka
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export function Home() {
+  const isMobile = useIsMobile()
   const heroRef = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -349,7 +420,8 @@ export function Home() {
 
   return (
     <div className="min-h-screen w-full" style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
-      {/* Hero Section with Parallax */}
+      {/* Mobile: static hero. Desktop: full animated hero */}
+      {isMobile ? <MobileHero /> : (
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Aurora Background Effect */}
         <div className="absolute inset-0 overflow-hidden">
@@ -825,6 +897,7 @@ export function Home() {
           </motion.div>
         </motion.div>
       </section>
+      )}
 
       {/* Features Section */}
       <section className="relative py-12 sm:py-20 md:py-32 lg:py-40 px-3 sm:px-4 w-full flex justify-center">
