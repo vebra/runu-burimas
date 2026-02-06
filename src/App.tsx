@@ -130,7 +130,7 @@ function App() {
   return (
     <ErrorBoundary>
       <AuthProvider>
-        <BrowserRouter basename="/runu-burimas">
+        <BrowserRouter>
           <ToastProvider>
             <AppContent />
           </ToastProvider>

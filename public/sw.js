@@ -1,5 +1,5 @@
 const CACHE_NAME = 'runu-burimas-v2'
-const BASE_PATH = '/runu-burimas/'
+const BASE_PATH = '/'
 const urlsToCache = [
   BASE_PATH,
   BASE_PATH + 'index.html',
