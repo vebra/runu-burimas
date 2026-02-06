@@ -6,6 +6,7 @@ import { Footer } from './components/layout/Footer'
 import { AnimatedBackground } from './components/common/AnimatedBackground'
 import { ToastProvider } from './components/common/Toast'
 import { ErrorBoundary } from './components/common/ErrorBoundary'
+import { CookieConsent } from './components/common/CookieConsent'
 import { PageTransition } from './components/common/PageTransition'
 import { useAuth, AuthProvider } from './hooks/useAuth'
 
@@ -109,7 +110,7 @@ function AppContent() {
 
       {/* Main content */}
       <div className="relative z-10 flex flex-col min-h-screen w-full">
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-amber-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-60 focus:bg-amber-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm">
           Pereiti prie turinio
         </a>
         <Header user={user} onSignOut={signOut} />
@@ -119,6 +120,7 @@ function AppContent() {
           </Suspense>
         </main>
         <Footer />
+        <CookieConsent />
       </div>
     </div>
   )

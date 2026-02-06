@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { BookOpen, Save, RotateCcw, Loader2 } from 'lucide-react'
 import { Button } from '../common/Button'
 import { AIInterpretation } from '../common/AIInterpretation'
+import { ReadingDisclaimer } from '../common/ReadingDisclaimer'
 import type { DrawnRune, PositionLabel } from '../../hooks/useSpread'
 
 // --- Question Form ---
@@ -78,6 +79,7 @@ export function SpreadQuestionForm({
               {buttonText}
             </Button>
           </motion.div>
+          <ReadingDisclaimer />
         </div>
       </div>
     </motion.div>

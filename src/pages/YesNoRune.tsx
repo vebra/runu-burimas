@@ -5,6 +5,7 @@ import { useRunes } from '../hooks/useRunes'
 import { usePageTitle } from '../hooks/usePageTitle'
 import type { Rune } from '../types/database'
 import { Button } from '../components/common/Button'
+import { ReadingDisclaimer } from '../components/common/ReadingDisclaimer'
 import { RuneCard } from '../components/common/RuneCard'
 import { RuneLoader } from '../components/common/RuneLoader'
 
@@ -165,6 +166,7 @@ export function YesNoRune() {
                   Traukti Runą
                 </Button>
               </motion.div>
+              <ReadingDisclaimer />
             </div>
 
 

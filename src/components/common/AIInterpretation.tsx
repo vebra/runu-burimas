@@ -81,7 +81,7 @@ export function AIInterpretation({
         className="mt-8 bg-red-900/20 border border-red-500/30 rounded-2xl p-6"
       >
         <div className="flex items-start gap-4">
-          <AlertCircle className="w-6 h-6 text-red-400 flex-shrink-0 mt-1" />
+          <AlertCircle className="w-6 h-6 text-red-400 shrink-0 mt-1" />
           <div className="flex-1">
             <p className="text-red-300 font-medium">Nepavyko gauti interpretacijos</p>
             <p className="text-gray-400 text-sm mt-1">{error}</p>
@@ -110,7 +110,7 @@ export function AIInterpretation({
         animate={{ opacity: 1, y: 0 }}
         className="mt-8"
       >
-        <div className="bg-gradient-to-br from-purple-900/30 via-indigo-900/20 to-amber-900/20 border border-purple-500/30 rounded-2xl p-6 md:p-8">
+        <div className="bg-linear-to-br from-purple-900/30 via-indigo-900/20 to-amber-900/20 border border-purple-500/30 rounded-2xl p-6 md:p-8">
           {/* Header */}
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center">

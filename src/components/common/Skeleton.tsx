@@ -33,7 +33,7 @@ export function Skeleton({
       style={style}
     >
       <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-700/30 to-transparent"
+        className="absolute inset-0 bg-linear-to-r from-transparent via-gray-700/30 to-transparent"
         animate={{ x: ['-100%', '100%'] }}
         transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
       />

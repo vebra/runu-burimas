@@ -93,7 +93,7 @@ Jei esate tėvas/motina ir manote, kad jūsų vaikas pateikė mums asmens duomen
   ]
 
   return (
-    <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '8rem', paddingBottom: '6rem' }}>
+    <div className="px-4 pt-8 md:pt-32 pb-24" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div style={{ width: '100%', maxWidth: '896px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -134,7 +134,7 @@ Jei esate tėvas/motina ir manote, kad jūsų vaikas pateikė mums asmens duomen
               className="bg-gray-900/40 backdrop-blur-sm border border-gray-800 rounded-xl p-6 md:p-8 hover:border-purple-500/30 transition-colors"
             >
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-purple-900/50 border border-purple-500/30 flex items-center justify-center">
+                <div className="shrink-0 w-10 h-10 rounded-lg bg-purple-900/50 border border-purple-500/30 flex items-center justify-center">
                   <section.icon className="w-5 h-5 text-purple-400" />
                 </div>
                 <div className="flex-1">
@@ -157,10 +157,10 @@ Jei esate tėvas/motina ir manote, kad jūsų vaikas pateikė mums asmens duomen
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="mt-12 bg-gradient-to-r from-purple-900/40 to-amber-900/20 border border-purple-500/30 rounded-2xl p-6 md:p-8"
+          className="mt-12 bg-linear-to-r from-purple-900/40 to-amber-900/20 border border-purple-500/30 rounded-2xl p-6 md:p-8"
         >
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
+            <div className="shrink-0 w-12 h-12 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
               <Mail className="w-6 h-6 text-amber-400" />
             </div>
             <div>

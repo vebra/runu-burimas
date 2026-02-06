@@ -91,15 +91,15 @@ export function RuneLibrary() {
               boxShadow: '0 0 40px rgba(147, 51, 234, 0.15), inset 0 0 40px rgba(147, 51, 234, 0.05)',
             }}
           >
-            {/* Decorative rune watermark */}
+            {/* Decorative rune watermark - hidden on small screens */}
             <div
-              className="absolute -right-6 -top-6 text-9xl font-cinzel text-amber-500/5 select-none pointer-events-none"
+              className="absolute -right-6 -top-6 font-cinzel text-amber-500/5 select-none pointer-events-none hidden sm:block"
               style={{ fontSize: '12rem', lineHeight: 1 }}
             >
               ᚠ
             </div>
             <div
-              className="absolute -left-4 -bottom-4 text-9xl font-cinzel text-purple-500/5 select-none pointer-events-none"
+              className="absolute -left-4 -bottom-4 font-cinzel text-purple-500/5 select-none pointer-events-none hidden sm:block"
               style={{ fontSize: '10rem', lineHeight: 1 }}
             >
               ᛟ
@@ -109,28 +109,28 @@ export function RuneLibrary() {
             <button
               onClick={() => setShowAbout(!showAbout)}
               className="relative z-10 w-full flex flex-col items-center text-center transition-colors"
-              style={{ padding: '2rem 2rem' }}
+              style={{ padding: '1.25rem 1rem' }}
             >
               <div
-                className="flex items-center justify-center w-12 h-12 rounded-xl"
+                className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl"
                 style={{
                   background: 'linear-gradient(135deg, rgba(217, 119, 6, 0.25), rgba(147, 51, 234, 0.25))',
                   border: '1px solid rgba(217, 119, 6, 0.35)',
-                  marginBottom: '1rem',
+                  marginBottom: '0.75rem',
                 }}
               >
-                <BookOpen className="w-6 h-6 text-amber-400" />
+                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" />
               </div>
-              <h2 className="text-xl md:text-2xl font-cinzel font-bold text-white" style={{ marginBottom: '0.4rem' }}>
+              <h2 className="text-lg sm:text-xl md:text-2xl font-cinzel font-bold text-white" style={{ marginBottom: '0.3rem' }}>
                 Runos ir būrimas
               </h2>
-              <p className="text-gray-400 text-sm">Senovinė išmintis šiuolaikiniam žmogui</p>
+              <p className="text-gray-400 text-xs sm:text-sm">Senovinė išmintis šiuolaikiniam žmogui</p>
               <motion.div
                 animate={{ rotate: showAbout ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
-                style={{ marginTop: '0.75rem' }}
+                style={{ marginTop: '0.5rem' }}
               >
-                <ChevronDown className="w-6 h-6 text-gray-500" />
+                <ChevronDown className="w-5 h-5 text-gray-500" />
               </motion.div>
             </button>
 
@@ -144,14 +144,14 @@ export function RuneLibrary() {
                   transition={{ duration: 0.4, ease: 'easeInOut' }}
                   className="overflow-hidden"
                 >
-                  <div className="relative z-10" style={{ padding: '0 2rem 2rem' }}>
+                  <div className="relative z-10 px-4 pb-5 sm:px-8 sm:pb-8">
                     {/* Divider */}
                     <div
-                      className="w-full h-px mb-6"
+                      className="w-full h-px mb-5 sm:mb-6"
                       style={{ background: 'linear-gradient(90deg, transparent, rgba(217, 119, 6, 0.3), rgba(147, 51, 234, 0.3), transparent)' }}
                     />
 
-                    <div className="space-y-5 text-gray-300 text-base leading-relaxed">
+                    <div className="space-y-4 sm:space-y-5 text-gray-300 text-sm sm:text-base leading-relaxed">
                       <p>
                         Runos – tai senoviniai simboliai, kilę iš šiaurės Europos tradicijų, naudoti ne tik raštui,
                         bet ir kaip gilių prasmių bei vidinės išminties nešėjai. Kiekviena runa turi savitą energiją,
@@ -167,10 +167,10 @@ export function RuneLibrary() {
 
                       {/* Feature cards */}
                       <div>
-                        <h3 className="text-amber-300 font-cinzel font-semibold text-base" style={{ marginBottom: '1rem' }}>
+                        <h3 className="text-amber-300 font-cinzel font-semibold text-sm sm:text-base" style={{ marginBottom: '0.75rem' }}>
                           Ką gali atskleisti runų būrimas
                         </h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                           {[
                             { rune: 'ᚠ', text: 'Dabartinę situaciją ir jos esmę' },
                             { rune: 'ᚱ', text: 'Galimas ateities tendencijas ir pasirinkimų pasekmes' },
@@ -179,17 +179,17 @@ export function RuneLibrary() {
                           ].map((item, i) => (
                             <div
                               key={i}
-                              className="flex items-start gap-3 rounded-lg"
+                              className="flex items-start gap-2 sm:gap-3 rounded-lg"
                               style={{
-                                padding: '0.75rem 1rem',
+                                padding: '0.6rem 0.75rem',
                                 background: 'rgba(147, 51, 234, 0.1)',
                                 border: '1px solid rgba(147, 51, 234, 0.15)',
                               }}
                             >
-                              <span className="text-amber-500/60 text-lg flex-shrink-0" style={{ textShadow: '0 0 8px rgba(217, 119, 6, 0.3)' }}>
+                              <span className="text-amber-500/60 text-base sm:text-lg shrink-0" style={{ textShadow: '0 0 8px rgba(217, 119, 6, 0.3)' }}>
                                 {item.rune}
                               </span>
-                              <span className="text-gray-300 text-sm">{item.text}</span>
+                              <span className="text-gray-300 text-xs sm:text-sm">{item.text}</span>
                             </div>
                           ))}
                         </div>
@@ -212,12 +212,12 @@ export function RuneLibrary() {
                       <div
                         className="relative rounded-xl"
                         style={{
-                          padding: '1.25rem 1.5rem',
+                          padding: '1rem 1.25rem',
                           background: 'linear-gradient(135deg, rgba(217, 119, 6, 0.08), rgba(147, 51, 234, 0.08))',
                           borderLeft: '3px solid rgba(217, 119, 6, 0.4)',
                         }}
                       >
-                        <p className="text-gray-400 italic text-sm leading-relaxed">
+                        <p className="text-gray-400 italic text-xs sm:text-sm leading-relaxed">
                           Ši svetainė skirta tiems, kurie vertina senąją išmintį, ieško prasmės ir nori pažvelgti
                           į savo gyvenimo kelią giliau – ramiai, atsakingai ir su pagarba tradicijoms.
                         </p>

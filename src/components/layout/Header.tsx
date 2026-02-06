@@ -31,6 +31,29 @@ export function Header({ user, onSignOut }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
 
+  // Body scroll lock when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileMenuOpen])
+
+  // Escape key support
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false)
+      }
+    }
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [mobileMenuOpen])
+
   // Track scroll for header background
   useEffect(() => {
     const handleScroll = () => {
@@ -48,7 +71,8 @@ export function Header({ user, onSignOut }: HeaderProps) {
           : 'bg-gray-900/80 backdrop-blur-md'
       }`}
     >
-      <div className="w-full px-4 md:px-8">
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <div style={{ width: '100%', maxWidth: '1500px' }} className="px-4 md:px-8">
         <div className="flex items-center justify-between h-16 md:h-18">
           {/* Left side - Logo and back button */}
           <div className="flex items-center gap-3">
@@ -92,7 +116,7 @@ export function Header({ user, onSignOut }: HeaderProps) {
                   key={link.path}
                   to={link.path}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`relative px-4 py-2.5 rounded-lg text-base font-medium transition-all duration-300 ${
+                  className={`relative px-4 py-2.5 rounded-lg text-base font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
                     isActive
                       ? 'text-amber-300'
                       : 'text-gray-300 hover:text-amber-200'
@@ -118,7 +142,7 @@ export function Header({ user, onSignOut }: HeaderProps) {
                 onBlur={() => setTimeout(() => setPremiumMenuOpen(false), 150)}
                 aria-expanded={premiumMenuOpen}
                 aria-label="Premium meniu"
-                className={`relative px-4 py-2.5 rounded-lg text-base font-medium transition-all duration-300 flex items-center gap-2 ${
+                className={`relative px-4 py-2.5 rounded-lg text-base font-medium transition-all duration-300 flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
                   premiumLinks.some(l => location.pathname === l.path)
                     ? 'text-amber-300'
                     : 'text-amber-400 hover:text-amber-300'
@@ -169,7 +193,7 @@ export function Header({ user, onSignOut }: HeaderProps) {
           </nav>
 
           {/* Right side - Auth */}
-          <div className="flex items-center gap-3 mr-4">
+          <div className="flex items-center gap-3">
             {user ? (
               <div className="hidden md:flex items-center gap-2">
                 <Link
@@ -239,118 +263,170 @@ export function Header({ user, onSignOut }: HeaderProps) {
           </div>
         </div>
       </div>
+      </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            className="lg:hidden overflow-hidden"
-          >
-            <div className="bg-gray-900/98 backdrop-blur-xl border-b border-amber-600/20">
-              <nav className="px-4 py-6 space-y-2" aria-label="Mobilusis meniu">
-                {navLinks.map((link, index) => (
-                  <motion.div
-                    key={link.path}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <Link
-                      to={link.path}
-                      onClick={() => setMobileMenuOpen(false)}
-                      aria-current={location.pathname === link.path ? 'page' : undefined}
-                      className={`flex items-center gap-4 px-5 py-4 rounded-xl text-lg font-medium transition-all duration-300 ${
-                        location.pathname === link.path
-                          ? 'bg-purple-900/50 text-amber-300 border border-amber-600/30 shadow-lg shadow-purple-900/20'
-                          : 'text-gray-300 hover:text-amber-200 hover:bg-purple-900/30'
-                      }`}
-                    >
-                      <span className="text-xl" aria-hidden="true">{link.icon}</span>
-                      <span>{link.label}</span>
-                    </Link>
-                  </motion.div>
-                ))}
+      {/* Mobile Menu - Full screen overlay */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed lg:hidden"
+          style={{
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            background: 'linear-gradient(180deg, rgba(17, 12, 29, 0.98) 0%, rgba(10, 8, 20, 0.99) 100%)',
+            zIndex: 9999,
+            overflowY: 'auto',
+          }}
+        >
+              {/* Menu header */}
+              <div className="flex items-center justify-between px-4 h-16 sticky top-0 bg-gray-900/95" style={{ borderBottom: '1px solid rgba(147, 51, 234, 0.15)' }}>
+                <span className="font-cinzel font-bold text-white text-2xl">Meniu</span>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  aria-label="Uždaryti meniu"
+                  className="p-2 text-gray-400 hover:text-white rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
 
-                {/* Premium Section in Mobile */}
+              <nav className="px-3 py-3" aria-label="Mobilusis meniu">
+                {/* Main navigation */}
+                <div className="space-y-1.5">
+                  <p className="text-gray-600 text-base font-medium uppercase tracking-wider px-3 mb-3">Navigacija</p>
+                  {navLinks.map((link, index) => {
+                    const isActive = location.pathname === link.path
+                    return (
+                      <motion.div
+                        key={link.path}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.04 }}
+                      >
+                        <Link
+                          to={link.path}
+                          onClick={() => setMobileMenuOpen(false)}
+                          aria-current={isActive ? 'page' : undefined}
+                          className={`flex items-center gap-4 px-4 py-4 rounded-xl text-lg font-medium transition-all ${
+                            isActive
+                              ? 'text-amber-300'
+                              : 'text-gray-300 active:bg-purple-900/30'
+                          }`}
+                          style={isActive ? {
+                            background: 'linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(88, 28, 135, 0.15))',
+                            border: '1px solid rgba(217, 119, 6, 0.25)',
+                            boxShadow: '0 0 15px rgba(147, 51, 234, 0.1)',
+                          } : undefined}
+                        >
+                          <span className="text-base w-6 text-center" aria-hidden="true">{link.icon}</span>
+                          <span>{link.label}</span>
+                          {isActive && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-amber-400" />}
+                        </Link>
+                      </motion.div>
+                    )
+                  })}
+                </div>
+
+                {/* Premium Section */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.25 }}
-                  className="pt-5 mt-5 border-t border-amber-600/30"
+                  transition={{ delay: 0.2 }}
+                  className="mt-5"
                 >
-                  <div className="flex items-center gap-3 px-5 mb-4">
-                    <Crown className="w-6 h-6 text-amber-400" aria-hidden="true" />
-                    <span className="text-amber-400 font-semibold text-lg">Premium Būrimai</span>
-                  </div>
-                  {premiumLinks.map((link, index) => (
-                    <motion.div
-                      key={link.path}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.25 + index * 0.05 }}
-                    >
-                      <Link
-                        to={link.path}
-                        onClick={() => setMobileMenuOpen(false)}
-                        aria-current={location.pathname === link.path ? 'page' : undefined}
-                        className={`flex items-center gap-4 px-5 py-4 rounded-xl text-lg font-medium transition-all duration-300 ${
-                          location.pathname === link.path
-                            ? 'bg-amber-500/20 text-amber-300 border border-amber-600/30'
-                            : 'text-gray-300 hover:text-amber-200 hover:bg-amber-500/10'
-                        }`}
-                      >
-                        <span className="text-xl" aria-hidden="true">{link.icon}</span>
-                        <span>{link.label}</span>
-                      </Link>
-                    </motion.div>
-                  ))}
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.45 }}
+                  <div
+                    className="rounded-lg overflow-hidden"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(217, 119, 6, 0.08), rgba(147, 51, 234, 0.08))',
+                      border: '1px solid rgba(217, 119, 6, 0.2)',
+                    }}
                   >
-                    <Link
-                      to="/premium"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-4 px-5 py-4 mt-2 rounded-xl text-lg text-amber-400 hover:bg-amber-500/10 transition-all"
-                    >
-                      <Sparkles className="w-6 h-6" aria-hidden="true" />
-                      <span className="font-semibold">Gauti Premium</span>
-                    </Link>
-                  </motion.div>
+                    <div className="flex items-center gap-2 px-4 pt-4 pb-2">
+                      <Crown className="w-5 h-5 text-amber-400" aria-hidden="true" />
+                      <span className="text-amber-400 font-semibold text-base uppercase tracking-wider">Premium</span>
+                    </div>
+
+                    <div className="px-2 pb-2 space-y-1.5">
+                      {premiumLinks.map((link, index) => {
+                        const isActive = location.pathname === link.path
+                        return (
+                          <motion.div
+                            key={link.path}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.25 + index * 0.04 }}
+                          >
+                            <Link
+                              to={link.path}
+                              onClick={() => setMobileMenuOpen(false)}
+                              aria-current={isActive ? 'page' : undefined}
+                              className={`flex items-center gap-4 px-4 py-3 rounded-xl text-lg font-medium transition-all ${
+                                isActive
+                                  ? 'bg-amber-500/15 text-amber-300'
+                                  : 'text-gray-300 active:bg-amber-500/10'
+                              }`}
+                            >
+                              <span className="text-2xl w-10 text-center" aria-hidden="true">{link.icon}</span>
+                              <span>{link.label}</span>
+                              {isActive && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-amber-400" />}
+                            </Link>
+                          </motion.div>
+                        )
+                      })}
+                    </div>
+
+                    <div style={{ borderTop: '1px solid rgba(217, 119, 6, 0.15)' }}>
+                      <Link
+                        to="/premium"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-center gap-2 mx-3 my-3 py-3 rounded-xl text-lg font-semibold text-amber-900 transition-all"
+                        style={{
+                          background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                          boxShadow: '0 0 20px rgba(217, 119, 6, 0.3)',
+                        }}
+                      >
+                        <Sparkles className="w-6 h-6" aria-hidden="true" />
+                        <span>Gauti Premium</span>
+                      </Link>
+                    </div>
+                  </div>
                 </motion.div>
 
+                {/* User section */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="pt-5 mt-5 border-t border-gray-800"
+                  transition={{ delay: 0.4 }}
+                  className="mt-6 pt-5"
+                  style={{ borderTop: '1px solid rgba(147, 51, 234, 0.15)' }}
                 >
                   {user ? (
-                    <div className="space-y-2">
+                    <div className="space-y-1">
                       <Link
                         to="/profile"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-4 px-5 py-4 rounded-xl text-lg text-gray-300 hover:text-white hover:bg-gray-800/50 transition-all duration-300"
+                        className="flex items-center gap-4 px-4 py-4 rounded-xl text-lg text-gray-300 active:bg-gray-800/50 transition-all"
                       >
-                        <div className="w-10 h-10 rounded-full bg-purple-700/50 border border-purple-500/30 flex items-center justify-center">
-                          <User className="w-5 h-5" aria-hidden="true" />
+                        <div className="w-12 h-12 rounded-full bg-purple-700/40 border border-purple-500/30 flex items-center justify-center shrink-0">
+                          <User className="w-6 h-6 text-purple-300" aria-hidden="true" />
                         </div>
-                        <span>Profilis</span>
+                        <div className="min-w-0 flex-1">
+                          <span className="font-medium text-lg block">Profilis</span>
+                          <p className="text-gray-500 text-base truncate">{user.email}</p>
+                        </div>
                       </Link>
                       <button
                         onClick={() => {
                           onSignOut()
                           setMobileMenuOpen(false)
                         }}
-                        className="flex items-center gap-4 w-full px-5 py-4 rounded-xl text-lg text-gray-300 hover:text-red-400 hover:bg-red-500/10 transition-all duration-300"
+                        className="flex items-center gap-4 w-full px-4 py-4 rounded-xl text-lg text-gray-500 active:bg-red-500/10 active:text-red-400 transition-all"
                       >
-                        <div className="w-10 h-10 rounded-full bg-gray-800/50 flex items-center justify-center">
-                          <LogOut className="w-5 h-5" aria-hidden="true" />
+                        <div className="w-12 h-12 rounded-full bg-gray-800/50 flex items-center justify-center shrink-0">
+                          <LogOut className="w-6 h-6" aria-hidden="true" />
                         </div>
                         <span>Atsijungti</span>
                       </button>
@@ -359,7 +435,11 @@ export function Header({ user, onSignOut }: HeaderProps) {
                     <Link
                       to="/auth"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center gap-3 w-full bg-linear-to-r from-purple-700 to-violet-600 text-white font-semibold text-lg py-5 px-5 rounded-xl border border-purple-400/20 shadow-lg shadow-purple-900/30"
+                      className="flex items-center justify-center gap-2 w-full py-4 rounded-xl text-lg font-semibold text-white transition-all border border-purple-400/20"
+                      style={{
+                        background: 'linear-gradient(135deg, #7c3aed, #6d28d9)',
+                        boxShadow: '0 4px 20px rgba(124, 58, 237, 0.3)',
+                      }}
                     >
                       <Sparkles className="w-6 h-6" aria-hidden="true" />
                       <span>Prisijungti</span>
@@ -367,10 +447,8 @@ export function Header({ user, onSignOut }: HeaderProps) {
                   )}
                 </motion.div>
               </nav>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
     </header>
   )
 }

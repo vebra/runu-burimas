@@ -289,7 +289,7 @@ export function Profile() {
           transition={{ delay: 0.22 }}
           className={`border-2 rounded-xl ${
             isPremium
-              ? 'bg-gradient-to-r from-amber-900/20 to-purple-900/20 border-amber-500/40'
+              ? 'bg-linear-to-r from-amber-900/20 to-purple-900/20 border-amber-500/40'
               : 'bg-gray-800/50 border-gray-700'
           }`}
           style={{ padding: '1.5rem', marginBottom: '2.5rem', boxShadow: isPremium ? '0 0 30px rgba(217, 119, 6, 0.2)' : 'none' }}
@@ -360,7 +360,7 @@ export function Profile() {
               </p>
               <Link
                 to="/premium"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold py-3 px-6 rounded-lg transition-all shadow-lg"
+                className="inline-flex items-center gap-2 bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold py-3 px-6 rounded-lg transition-all shadow-lg"
               >
                 <Crown className="w-5 h-5" />
                 Gauti Premium

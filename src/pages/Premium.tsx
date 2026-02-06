@@ -136,14 +136,12 @@ export function Premium() {
   if (isPremium && subscription) {
     return (
       <div
-        className="px-4 sm:px-6"
+        className="px-4 sm:px-6 pt-8 md:pt-32 pb-32"
         style={{
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          paddingTop: '8rem',
-          paddingBottom: '8rem',
         }}
       >
         <div style={{ width: '100%', maxWidth: '600px' }}>
@@ -259,14 +257,12 @@ export function Premium() {
   // Non-premium view - pricing page
   return (
     <div
-      className="px-4 sm:px-6"
+      className="px-4 sm:px-6 pt-8 md:pt-32 pb-32"
       style={{
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        paddingTop: '8rem',
-        paddingBottom: '8rem',
       }}
     >
       <div style={{ width: '100%', maxWidth: '1100px' }}>

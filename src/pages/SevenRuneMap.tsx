@@ -80,7 +80,7 @@ export function SevenRuneMap() {
   const handleRequestAI = () => spread.requestAIInterpretation(positionLabels, 'seven_rune')
 
   return (
-    <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '8rem', paddingBottom: '6rem' }}>
+    <div className="px-4 pt-8 md:pt-32 pb-24" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div style={{ width: '100%', maxWidth: '1152px' }}>
         {/* Header */}
         <motion.div
@@ -159,7 +159,7 @@ export function SevenRuneMap() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             {/* Circular layout - Desktop */}
             <div className="hidden md:flex justify-center px-4" style={{ marginBottom: '5rem' }}>
-              <div className="relative w-[700px] h-[700px]">
+              <div className="relative w-175 h-175">
                 {spread.drawnRunes.map((drawn) => {
                   const position = drawn.position
 

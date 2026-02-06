@@ -22,8 +22,8 @@ export function PremiumPaywall({
 }: PremiumPaywallProps) {
   return (
     <div
-      className="min-h-screen px-4 sm:px-6"
-      style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '8rem', paddingBottom: '4rem' }}
+      className="min-h-screen px-4 sm:px-6 pt-8 md:pt-32 pb-16"
+      style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
@@ -50,7 +50,7 @@ export function PremiumPaywall({
           }}
           className="relative"
         >
-          <div className="w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-br from-amber-500/20 to-purple-500/20 rounded-full flex items-center justify-center border-2 border-amber-500/40">
+          <div className="w-24 h-24 sm:w-28 sm:h-28 bg-linear-to-br from-amber-500/20 to-purple-500/20 rounded-full flex items-center justify-center border-2 border-amber-500/40">
             <Crown className="w-12 h-12 sm:w-14 sm:h-14 text-amber-400" />
           </div>
           <motion.div
@@ -94,7 +94,7 @@ export function PremiumPaywall({
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
             <Link
               to="/premium"
-              className="w-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold py-4 sm:py-5 px-8 text-lg sm:text-xl rounded-xl transition-all duration-300 shadow-lg inline-flex items-center justify-center gap-3"
+              className="w-full bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold py-4 sm:py-5 px-8 text-lg sm:text-xl rounded-xl transition-all duration-300 shadow-lg inline-flex items-center justify-center gap-3"
               style={{ boxShadow: '0 0 25px rgba(217, 119, 6, 0.4)' }}
             >
               <Crown className="w-6 h-6 sm:w-7 sm:h-7" />

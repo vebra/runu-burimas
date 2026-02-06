@@ -6,6 +6,7 @@ import { useRunes, useDivinations } from '../hooks/useRunes'
 import { usePageTitle } from '../hooks/usePageTitle'
 import type { Rune, RuneSpread } from '../types/database'
 import { Button } from '../components/common/Button'
+import { ReadingDisclaimer } from '../components/common/ReadingDisclaimer'
 import { Textarea } from '../components/common/Input'
 import { useToast } from '../components/common/Toast'
 import { RuneCard } from '../components/common/RuneCard'
@@ -168,6 +169,7 @@ export function ThreeRune() {
                 Traukti Runas
               </Button>
             </motion.div>
+            <ReadingDisclaimer />
           </motion.div>
         )}
 

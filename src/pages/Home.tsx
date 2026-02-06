@@ -63,7 +63,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
         >
           {/* Animated border glow */}
           <motion.div
-            className="absolute -inset-[1px] rounded-2xl opacity-0 transition-opacity duration-500"
+            className="absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-500"
             style={{
               background: `linear-gradient(135deg, ${feature.glowColor}, transparent 40%, transparent 60%, ${feature.glowColor})`,
               opacity: isHovered ? 1 : 0,
@@ -84,7 +84,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
           <div
             className={`
               relative overflow-hidden rounded-2xl
-              bg-gradient-to-br from-gray-900/95 via-gray-800/90 to-gray-900/95
+              bg-linear-to-br from-gray-900/95 via-gray-800/90 to-gray-900/95
               backdrop-blur-md
               border transition-all duration-500
               p-4 sm:p-5 lg:p-7
@@ -140,7 +140,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
             <motion.div
               className={`
                 relative w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl flex items-center justify-center
-                bg-gradient-to-br ${feature.color}
+                bg-linear-to-br ${feature.color}
                 shadow-lg
               `}
               animate={isHovered ? {
@@ -199,7 +199,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
               transition={{ duration: 0.3 }}
             >
               <div
-                className={`absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl ${feature.color} rounded-full transform translate-x-1/2 translate-y-1/2 blur-sm`}
+                className={`absolute bottom-0 right-0 w-40 h-40 bg-linear-to-tl ${feature.color} rounded-full transform translate-x-1/2 translate-y-1/2 blur-sm`}
               />
             </motion.div>
           </div>
@@ -315,6 +315,15 @@ const itemVariants = {
     },
   },
 }
+
+// Pre-computed particle positions to avoid Math.random() during render
+const PARTICLES = Array.from({ length: 20 }, (_, i) => ({
+  left: `${((i * 37 + 13) % 100)}%`,
+  top: `${((i * 53 + 7) % 100)}%`,
+  xOffset: ((i * 31 + 11) % 50) - 25,
+  duration: 4 + ((i * 43 + 17) % 40) / 10,
+  delay: ((i * 29 + 3) % 50) / 10,
+}))
 
 export function Home() {
   const heroRef = useRef<HTMLElement>(null)
@@ -483,13 +492,13 @@ export function Home() {
 
         {/* 1. Particle System - floating magical particles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(20)].map((_, i) => (
+          {PARTICLES.map((p, i) => (
             <motion.div
               key={`particle-${i}`}
               className="absolute w-1 h-1 rounded-full"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: p.left,
+                top: p.top,
                 background: i % 2 === 0 ? 'rgba(251, 191, 36, 0.6)' : 'rgba(167, 139, 250, 0.6)',
                 boxShadow: i % 2 === 0
                   ? '0 0 6px rgba(251, 191, 36, 0.8)'
@@ -497,14 +506,14 @@ export function Home() {
               }}
               animate={{
                 y: [0, -100, 0],
-                x: [0, Math.random() * 50 - 25, 0],
+                x: [0, p.xOffset, 0],
                 opacity: [0, 1, 0],
                 scale: [0, 1.5, 0],
               }}
               transition={{
-                duration: 4 + Math.random() * 4,
+                duration: p.duration,
                 repeat: Infinity,
-                delay: Math.random() * 5,
+                delay: p.delay,
                 ease: 'easeInOut',
               }}
             />
@@ -582,7 +591,7 @@ export function Home() {
           }}
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
         >
-          <div className="relative w-[600px] h-[600px] md:w-[800px] md:h-[800px]">
+          <div className="relative w-150 h-150 md:w-200 md:h-200">
             {/* Outer rune ring */}
             {['ᚠ', 'ᚢ', 'ᚦ', 'ᚨ', 'ᚱ', 'ᚲ', 'ᚷ', 'ᚹ', 'ᚺ', 'ᚾ', 'ᛁ', 'ᛃ'].map((rune, i) => (
               <span

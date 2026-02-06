@@ -78,7 +78,7 @@ export function LoveReading() {
   const handleRequestAI = () => spread.requestAIInterpretation(positionLabels, 'love_reading')
 
   return (
-    <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '8rem', paddingBottom: '6rem' }}>
+    <div className="px-4 pt-8 md:pt-32 pb-24" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div style={{ width: '100%', maxWidth: '1024px' }}>
         {/* Header */}
         <motion.div
@@ -159,7 +159,7 @@ export function LoveReading() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             {/* Heart-shaped layout - Desktop */}
             <div className="hidden md:flex justify-center px-4" style={{ marginBottom: '5rem' }}>
-              <div className="relative w-[600px] h-[600px]">
+              <div className="relative w-150 h-150">
                 {spread.drawnRunes.map((drawn) => {
                   const positionStyles: Record<Position, React.CSSProperties> = {
                     you: { top: '25%', left: '15%', transform: 'translate(-50%, -50%)' },

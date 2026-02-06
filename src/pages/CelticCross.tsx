@@ -83,7 +83,7 @@ export function CelticCross() {
   const handleRequestAI = () => spread.requestAIInterpretation(positionLabels, 'celtic_cross')
 
   return (
-    <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '8rem', paddingBottom: '6rem' }}>
+    <div className="px-4 pt-8 md:pt-32 pb-24" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div style={{ width: '100%', maxWidth: '1200px' }}>
         {/* Header */}
         <motion.div

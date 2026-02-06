@@ -5,6 +5,7 @@ import { useAuth } from '../hooks/useAuth'
 import { useRunes, useDailyRune } from '../hooks/useRunes'
 import type { Rune } from '../types/database'
 import { Button } from '../components/common/Button'
+import { ReadingDisclaimer } from '../components/common/ReadingDisclaimer'
 import { useToast } from '../components/common/Toast'
 import { RuneCard } from '../components/common/RuneCard'
 import { RuneLoader } from '../components/common/RuneLoader'
@@ -146,6 +147,9 @@ export function DailyRune() {
                 Traukti Runą
               </Button>
             </motion.div>
+            <div className="w-full max-w-lg mt-4">
+              <ReadingDisclaimer />
+            </div>
           </motion.div>
         )}
 

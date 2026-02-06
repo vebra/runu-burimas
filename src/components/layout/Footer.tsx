@@ -17,18 +17,18 @@ export function Footer() {
       <div className="h-px bg-linear-to-r from-transparent via-amber-600/30 to-transparent" />
 
       <div className="bg-gray-900/80 backdrop-blur-sm" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <div style={{ width: '100%', maxWidth: '1600px', padding: '1.5rem 1.5rem' }} className="md:px-12">
+        <div style={{ width: '100%', maxWidth: '1500px' }} className="px-4 py-3 md:px-12">
           {/* Main footer content */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 md:items-start">
             {/* Brand */}
             <div className="flex flex-col items-center text-center md:text-left md:items-start">
               <Link to="/" className="flex items-center gap-3 group mb-4">
-                <motion.span
-                  className="text-3xl"
+                <motion.img
+                  src={import.meta.env.BASE_URL + 'logo.png'}
+                  alt="Runų Būrimas"
+                  className="h-10 w-auto"
                   whileHover={{ rotate: 10, scale: 1.1 }}
-                >
-                  🔮
-                </motion.span>
+                />
                 <span className="font-cinzel font-bold text-2xl md:text-xl text-white group-hover:text-amber-200 transition-colors">
                   Runų Būrimas
                 </span>
@@ -120,6 +120,7 @@ export function Footer() {
 
       {/* Decorative gradient at bottom */}
       <div className="h-1 bg-linear-to-r from-purple-600 via-amber-500 to-purple-600" />
+      <div className="h-0.5" />
     </footer>
   )
 }

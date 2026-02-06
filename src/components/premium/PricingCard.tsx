@@ -54,7 +54,7 @@ export function PricingCard({
     >
       {isPopular && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-          <span className="bg-gradient-to-r from-amber-500 to-amber-400 text-gray-900 text-sm font-bold px-5 py-1.5 rounded-full">
+          <span className="bg-linear-to-r from-amber-500 to-amber-400 text-gray-900 text-sm font-bold px-5 py-1.5 rounded-full">
             POPULIARIAUSIAS
           </span>
         </div>
@@ -88,7 +88,7 @@ export function PricingCard({
       <ul className="space-y-4 mb-8">
         {features.map((feature, index) => (
           <li key={index} className="flex items-start gap-3">
-            <Check className={`w-5 h-5 sm:w-6 sm:h-6 mt-0.5 flex-shrink-0 ${isPopular ? 'text-amber-400' : 'text-purple-400'}`} />
+            <Check className={`w-5 h-5 sm:w-6 sm:h-6 mt-0.5 shrink-0 ${isPopular ? 'text-amber-400' : 'text-purple-400'}`} />
             <span className="text-gray-300 text-base sm:text-lg">{feature}</span>
           </li>
         ))}
@@ -101,8 +101,8 @@ export function PricingCard({
         disabled={loading}
         className={`w-full py-4 sm:py-5 px-6 rounded-xl font-semibold text-lg sm:text-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed ${
           isPopular
-            ? 'bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-gray-900 shadow-lg shadow-amber-500/30'
-            : 'bg-gradient-to-r from-purple-700 to-violet-600 hover:from-purple-600 hover:to-violet-500 text-white border border-purple-400/30'
+            ? 'bg-linear-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-gray-900 shadow-lg shadow-amber-500/30'
+            : 'bg-linear-to-r from-purple-700 to-violet-600 hover:from-purple-600 hover:to-violet-500 text-white border border-purple-400/30'
         }`}
       >
         {loading ? (

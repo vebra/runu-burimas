@@ -59,20 +59,21 @@ export function RuneCard({
   const [showRevealEffects, setShowRevealEffects] = useState(false)
   const [particles] = useState(() => generateParticles(16))
   const [sparkles] = useState(() => generateSparkles(8))
-  const [wasRevealed, setWasRevealed] = useState(revealed)
+  const wasRevealedRef = useRef(revealed)
 
   // Track when card gets revealed to trigger effects
   useEffect(() => {
-    if (revealed && !wasRevealed) {
-      setShowRevealEffects(true)
-      // Keep effects visible for duration of animation
-      const timer = setTimeout(() => {
-        setShowRevealEffects(false)
-      }, 1500)
-      return () => clearTimeout(timer)
+    if (revealed && !wasRevealedRef.current) {
+      wasRevealedRef.current = true
+      const showTimer = setTimeout(() => setShowRevealEffects(true), 0)
+      const hideTimer = setTimeout(() => setShowRevealEffects(false), 1500)
+      return () => {
+        clearTimeout(showTimer)
+        clearTimeout(hideTimer)
+      }
     }
-    setWasRevealed(revealed)
-  }, [revealed, wasRevealed])
+    wasRevealedRef.current = revealed
+  }, [revealed])
 
   // Mouse position for 3D tilt
   const mouseX = useMotionValue(0)
@@ -315,7 +316,7 @@ export function RuneCard({
             <motion.div
               className={`
                 absolute inset-0 ${sizeClasses.width} ${sizeClasses.height}
-                bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800
+                bg-linear-to-br from-gray-800 via-gray-900 to-gray-800
                 border-2 rounded-xl
                 flex items-center justify-center
                 overflow-hidden
@@ -390,7 +391,7 @@ export function RuneCard({
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className={`
                 absolute inset-0 ${sizeClasses.width} ${sizeClasses.height}
-                bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800
+                bg-linear-to-br from-gray-800 via-gray-900 to-gray-800
                 border-2 rounded-xl
                 flex flex-col items-center justify-center
                 overflow-hidden

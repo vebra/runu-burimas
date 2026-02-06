@@ -51,8 +51,25 @@ Jei turite rimtų gyvenimo, sveikatos ar finansinių klausimų, kreipkitės į a
 • Būti **ne jaunesniems nei 16 metų** amžiaus`
     },
     {
+      icon: Shield,
+      title: '4. Būrimo taisyklės ir etika',
+      content: `**Asmeninio būrimo principas:**
+
+Būrimas runomis gali būti atliekamas tik **registruoto asmens ir tik jam pačiam**. Registruotas naudotojas turi teisę kreiptis į runas **išskirtinai dėl savo asmeninių klausimų** ir savo gyvenimo situacijų.
+
+**Draudžiama:**
+• Būrti **kitiems asmenims** – interpretuoti runų žinutes trečiųjų asmenų vardu
+• Naudoti būrimą **kito asmens gyvenimo** atžvilgiu
+• Bandyti gauti informaciją apie **kitų žmonių** situacijas ar likimą
+
+**Kodėl tai svarbu:**
+Runų tradicija grindžiama **asmenine atsakomybe**, sąmoningu dalyvavimu ir individualiu ryšiu, kuris negali būti perduodamas ar naudojamas kito asmens reikmėms.
+
+Ši taisyklė užtikrina būrimo **aiškumą, etiką ir pagarbą** senajai runų išminčiai, išlaikant ją autentišką ir prasmingą kiekvienam, kuris renkasi šią patirtį.`
+    },
+    {
       icon: Ban,
-      title: '4. Draudžiama veikla',
+      title: '5. Draudžiama veikla',
       content: `Naudojantis paslauga draudžiama:
 
 • **Įsilaužimo bandymai** – bandyti gauti neautorizuotą prieigą
@@ -66,7 +83,7 @@ Pažeidus šias taisykles, paskyra gali būti **sustabdyta arba ištrinta**.`
     },
     {
       icon: Shield,
-      title: '5. Intelektinė nuosavybė',
+      title: '6. Intelektinė nuosavybė',
       content: `Visos teisės į paslaugą priklauso mums:
 
 • **Svetainės dizainas** – vizualiniai elementai, išdėstymas
@@ -84,7 +101,7 @@ Jūs **negalite**:
     },
     {
       icon: Crown,
-      title: '6. Premium prenumerata',
+      title: '7. Premium prenumerata',
       content: `**Prenumeratos planai:**
 • **Mėnesinis** – €9.99/mėn, atnaujinamas automatiškai
 • **Metinis** – €79.99/metai (sutaupote ~33%)
@@ -106,7 +123,7 @@ Jūs **negalite**:
     },
     {
       icon: CreditCard,
-      title: '7. Mokėjimai ir grąžinimai',
+      title: '8. Mokėjimai ir grąžinimai',
       content: `**Mokėjimų saugumas:**
 • Visi mokėjimai apdorojami per **Stripe** – PCI DSS sertifikuotą platformą
 • Mes **nesaugome** jūsų kortelės duomenų savo serveriuose
@@ -123,7 +140,7 @@ Jūs **negalite**:
     },
     {
       icon: RefreshCw,
-      title: '8. Paslaugos pakeitimai',
+      title: '9. Paslaugos pakeitimai',
       content: `Mes pasiliekame teisę:
 
 • **Keisti funkcijas** – pridėti, modifikuoti ar pašalinti funkcijas
@@ -135,7 +152,7 @@ Tęsdami naudojimąsi paslauga po pakeitimų, sutinkate su naujomis sąlygomis.`
     },
     {
       icon: Scale,
-      title: '9. Ginčų sprendimas',
+      title: '10. Ginčų sprendimas',
       content: `Ginčų sprendimo tvarka:
 
 • **Taikomas teisė** – Lietuvos Respublikos teisė
@@ -147,7 +164,7 @@ Jei nesutinkate su mūsų sprendimu, galite kreiptis į Valstybinę vartotojų t
     },
     {
       icon: ScrollText,
-      title: '10. Baigiamosios nuostatos',
+      title: '11. Baigiamosios nuostatos',
       content: `Papildoma informacija:
 
 • **Sąlygų galiojimas** – šios sąlygos galioja nuo pirmo paslaugos naudojimo
@@ -160,7 +177,7 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
   ]
 
   return (
-    <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '8rem', paddingBottom: '6rem' }}>
+    <div className="px-4 pt-8 md:pt-32 pb-24" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div style={{ width: '100%', maxWidth: '896px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -199,7 +216,7 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
           className="bg-amber-900/20 border border-amber-500/30 rounded-xl p-6 mb-8"
         >
           <div className="flex items-start gap-4">
-            <AlertTriangle className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" />
+            <AlertTriangle className="w-6 h-6 text-amber-400 shrink-0 mt-1" />
             <div>
               <h3 className="text-amber-300 font-semibold mb-2">Svarbus įspėjimas</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
@@ -221,7 +238,7 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
               className="bg-gray-900/40 backdrop-blur-sm border border-gray-800 rounded-xl p-6 md:p-8 hover:border-amber-500/30 transition-colors"
             >
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-amber-900/50 border border-amber-500/30 flex items-center justify-center">
+                <div className="shrink-0 w-10 h-10 rounded-lg bg-amber-900/50 border border-amber-500/30 flex items-center justify-center">
                   <section.icon className="w-5 h-5 text-amber-400" />
                 </div>
                 <div className="flex-1">
@@ -244,10 +261,10 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="mt-12 bg-gradient-to-r from-amber-900/40 to-purple-900/20 border border-amber-500/30 rounded-2xl p-6 md:p-8"
+          className="mt-12 bg-linear-to-r from-amber-900/40 to-purple-900/20 border border-amber-500/30 rounded-2xl p-6 md:p-8"
         >
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center">
+            <div className="shrink-0 w-12 h-12 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center">
               <Mail className="w-6 h-6 text-purple-400" />
             </div>
             <div>
