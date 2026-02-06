@@ -4,7 +4,12 @@ import { Sparkles, Calendar, BookOpen, Type, ArrowRight, Crown, Compass, Trendin
 import { useRef, useState, useEffect } from 'react'
 
 function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768 || /Android/i.test(navigator.userAgent)
+    }
+    return false
+  })
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768 || /Android/i.test(navigator.userAgent))
     check()
@@ -419,7 +424,7 @@ export function Home() {
   const innerRingRotate = useTransform(scrollYProgress, [0, 1], [0, -120])
 
   return (
-    <div className="min-h-screen w-full" style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
+    <div className="min-h-screen w-full" style={{ display: 'flex', flexDirection: 'column', gap: '4rem', overflowX: 'hidden', maxWidth: '100vw' }}>
       {/* Mobile: static hero. Desktop: full animated hero */}
       {isMobile ? <MobileHero /> : (
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
