@@ -63,56 +63,60 @@ export function AnimatedBackground() {
     return () => window.removeEventListener('resize', check)
   }, [])
 
-  // Mobile: fewer elements, no animations. Desktop: full experience.
-  const stars = isMobile ? allStars.slice(0, 10) : allStars.slice(0, 30)
-  const floatingRunes = isMobile ? [] : allFloatingRunes.slice(0, 4)
-  const skipAnimations = prefersReducedMotion || isMobile
+  const stars = allStars.slice(0, 30)
+  const floatingRunes = allFloatingRunes.slice(0, 4)
+  const skipAnimations = !!prefersReducedMotion
+
+  // Mobile: only render a simple CSS gradient background — no JS animations
+  if (isMobile) {
+    return (
+      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse at 20% 20%, rgba(147, 51, 234, 0.12) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 80%, rgba(217, 119, 6, 0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%)
+            `,
+          }}
+        />
+      </div>
+    )
+  }
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0, transform: 'translateZ(0)' }}>
-      {/* Gradient orbs - static, GPU-accelerated */}
+    <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+      {/* Gradient orbs - static */}
       <div
-        className="absolute rounded-full"
+        className="absolute w-[600px] h-[600px] rounded-full"
         style={{
-          width: isMobile ? 300 : 600,
-          height: isMobile ? 300 : 600,
           background: 'radial-gradient(circle, rgba(147, 51, 234, 0.15) 0%, transparent 70%)',
           top: '10%',
           left: '20%',
-          filter: isMobile ? 'blur(40px)' : 'blur(60px)',
-          transform: 'translateZ(0)',
-          willChange: 'auto',
+          filter: 'blur(60px)',
         }}
       />
 
       <div
-        className="absolute rounded-full"
+        className="absolute w-[500px] h-[500px] rounded-full"
         style={{
-          width: isMobile ? 250 : 500,
-          height: isMobile ? 250 : 500,
           background: 'radial-gradient(circle, rgba(217, 119, 6, 0.1) 0%, transparent 70%)',
           bottom: '20%',
           right: '10%',
-          filter: isMobile ? 'blur(40px)' : 'blur(60px)',
-          transform: 'translateZ(0)',
-          willChange: 'auto',
+          filter: 'blur(60px)',
         }}
       />
 
-      {!isMobile && (
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: 400,
-            height: 400,
-            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%)',
-            top: '50%',
-            left: '60%',
-            filter: 'blur(50px)',
-            transform: 'translateZ(0)',
-          }}
-        />
-      )}
+      <div
+        className="absolute w-[400px] h-[400px] rounded-full"
+        style={{
+          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%)',
+          top: '50%',
+          left: '60%',
+          filter: 'blur(50px)',
+        }}
+      />
 
       {/* Stars */}
       {stars.map((star) =>
@@ -152,7 +156,7 @@ export function AnimatedBackground() {
         )
       )}
 
-      {/* Floating runes - desktop only */}
+      {/* Floating runes */}
       {floatingRunes.map((rune) => (
         <motion.span
           key={rune.id}
@@ -176,19 +180,17 @@ export function AnimatedBackground() {
         </motion.span>
       ))}
 
-      {/* Subtle grid pattern - desktop only */}
-      {!isMobile && (
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '100px 100px',
-          }}
-        />
-      )}
+      {/* Subtle grid pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '100px 100px',
+        }}
+      />
 
       {/* Vignette effect */}
       <div
