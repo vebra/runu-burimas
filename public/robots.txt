@@ -1,8 +1,8 @@
 # Robots.txt for Runų Būrimas
-# https://runes.vercel.app/
+# https://runu-burimas.vercel.app/
 
 User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://runes.vercel.app/sitemap.xml
+Sitemap: https://runu-burimas.vercel.app/sitemap.xml

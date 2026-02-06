@@ -1,79 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://runes.vercel.app/</loc>
+    <loc>https://runu-burimas.vercel.app/</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://runes.vercel.app/daily</loc>
+    <loc>https://runu-burimas.vercel.app/daily</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://runes.vercel.app/three-rune</loc>
+    <loc>https://runu-burimas.vercel.app/three-rune</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://runes.vercel.app/five-rune-cross</loc>
+    <loc>https://runu-burimas.vercel.app/five-rune-cross</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://runes.vercel.app/seven-rune-map</loc>
+    <loc>https://runu-burimas.vercel.app/seven-rune-map</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://runes.vercel.app/celtic-cross</loc>
+    <loc>https://runu-burimas.vercel.app/celtic-cross</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://runes.vercel.app/love-reading</loc>
+    <loc>https://runu-burimas.vercel.app/love-reading</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://runes.vercel.app/yes-no</loc>
+    <loc>https://runu-burimas.vercel.app/yes-no</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://runes.vercel.app/library</loc>
+    <loc>https://runu-burimas.vercel.app/library</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://runes.vercel.app/converter</loc>
+    <loc>https://runu-burimas.vercel.app/converter</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://runes.vercel.app/premium</loc>
+    <loc>https://runu-burimas.vercel.app/premium</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://runes.vercel.app/privacy</loc>
+    <loc>https://runu-burimas.vercel.app/privacy</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://runes.vercel.app/terms</loc>
+    <loc>https://runu-burimas.vercel.app/terms</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
