@@ -3,8 +3,9 @@ import { Shield } from 'lucide-react'
 export function ReadingDisclaimer() {
   return (
     <div
-      className="rounded-xl px-4 py-3 sm:px-5 sm:py-4 mt-6"
+      className="rounded-xl px-4 py-3 sm:px-5 sm:py-4"
       style={{
+        marginTop: '45px',
         background: 'linear-gradient(135deg, rgba(88, 28, 135, 0.1) 0%, rgba(147, 51, 234, 0.06) 100%)',
         border: '1px solid rgba(147, 51, 234, 0.15)',
       }}
