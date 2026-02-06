@@ -177,7 +177,7 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
   ]
 
   return (
-    <div className="px-4 pt-8 md:pt-32 pb-24" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div className="px-4 pt-20 md:pt-32 pb-24" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div style={{ width: '100%', maxWidth: '896px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -228,7 +228,7 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
           </div>
         </motion.div>
 
-        <div className="space-y-8">
+        <div className="space-y-12">
           {sections.map((section, index) => (
             <motion.div
               key={index}
@@ -261,7 +261,7 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="mt-12 bg-linear-to-r from-amber-900/40 to-purple-900/20 border border-amber-500/30 rounded-2xl p-6 md:p-8"
+          className="mt-16 bg-linear-to-r from-amber-900/40 to-purple-900/20 border border-amber-500/30 rounded-2xl p-6 md:p-8"
         >
           <div className="flex items-start gap-4">
             <div className="shrink-0 w-12 h-12 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center">
@@ -295,6 +295,8 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
           Naudodamiesi „Runų Būrimas" paslaugomis, jūs patvirtinate, kad perskaitėte ir sutinkate su šiomis sąlygomis.
         </motion.p>
       </div>
+      {/* Spacer before footer */}
+      <div style={{ height: '76px' }} />
     </div>
   )
 }
