@@ -468,6 +468,8 @@ export function Premium() {
           </motion.div>
         )}
       </div>
+      {/* Spacer before footer */}
+      <div style={{ height: '76px' }} />
     </div>
   )
 }
