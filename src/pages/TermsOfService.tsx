@@ -228,7 +228,7 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
           </div>
         </motion.div>
 
-        <div className="space-y-12">
+        <div className="space-y-12" style={{ marginTop: '48px' }}>
           {sections.map((section, index) => (
             <motion.div
               key={index}
