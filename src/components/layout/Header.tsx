@@ -234,31 +234,13 @@ export function Header({ user, onSignOut }: HeaderProps) {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-expanded={mobileMenuOpen}
               aria-label="Meniu"
-              className="lg:hidden p-2 text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-lg transition-all duration-300"
+              className="lg:hidden p-3 text-white hover:bg-gray-800/50 rounded-lg"
             >
-              <AnimatePresence mode="wait">
-                {mobileMenuOpen ? (
-                  <motion.div
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <X className="w-6 h-6" aria-hidden="true" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="menu"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Menu className="w-6 h-6" aria-hidden="true" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {mobileMenuOpen ? (
+                <X className="w-9 h-9" aria-hidden="true" />
+              ) : (
+                <Menu className="w-9 h-9" aria-hidden="true" />
+              )}
             </button>
           </div>
         </div>
