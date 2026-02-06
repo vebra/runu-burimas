@@ -228,14 +228,14 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
           </div>
         </motion.div>
 
-        <div className="space-y-12" style={{ marginTop: '48px' }}>
+        <div style={{ marginTop: '48px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
           {sections.map((section, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 + index * 0.05 }}
-              className="bg-gray-900/40 backdrop-blur-sm border border-gray-800 rounded-xl p-6 md:p-8 hover:border-amber-500/30 transition-colors"
+              className="bg-gray-900/60 border border-amber-600/20 rounded-xl p-6 md:p-8"
             >
               <div className="flex items-start gap-4">
                 <div className="shrink-0 w-10 h-10 rounded-lg bg-amber-900/50 border border-amber-500/30 flex items-center justify-center">
