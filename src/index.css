@@ -182,13 +182,8 @@ body {
   }
 }
 
-/* Disable all CSS animations on mobile to prevent Samsung 120Hz flickering */
+/* Disable heavy GPU effects on mobile to prevent Samsung 120Hz flickering */
 @media (max-width: 767px) {
-  *, *::before, *::after {
-    animation-duration: 0.001s !important;
-    animation-delay: 0s !important;
-    transition-duration: 0.1s !important;
-  }
   .glass, .glass-light, .glass-gold, .glass-purple,
   .feature-card, .rune-card {
     backdrop-filter: none !important;
