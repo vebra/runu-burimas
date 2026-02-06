@@ -67,8 +67,8 @@ export function Header({ user, onSignOut }: HeaderProps) {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-gray-900/95 backdrop-blur-xl border-b border-amber-600/20 shadow-lg shadow-black/20'
-          : 'bg-gray-900/80 backdrop-blur-md'
+          ? 'bg-gray-900/95 md:backdrop-blur-xl border-b border-amber-600/20 shadow-lg shadow-black/20'
+          : 'bg-gray-900/95 md:bg-gray-900/80 md:backdrop-blur-md'
       }`}
     >
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>

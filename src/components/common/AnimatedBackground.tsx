@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 
 interface Star {
   id: number
@@ -47,72 +48,111 @@ const generateStars = (): Star[] => {
   }))
 }
 
-// Pre-generate data once on module load - reduced for performance
-const initialStars = generateStars().slice(0, 30) // Only 30 stars instead of 100
-const initialFloatingRunes = generateFloatingRunes().slice(0, 4) // Only 4 runes instead of 8
+// Pre-generate data once on module load
+const allStars = generateStars()
+const allFloatingRunes = generateFloatingRunes()
 
 export function AnimatedBackground() {
-  const stars = initialStars
-  const floatingRunes = initialFloatingRunes
+  const prefersReducedMotion = useReducedMotion()
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  // Mobile: fewer elements, no animations. Desktop: full experience.
+  const stars = isMobile ? allStars.slice(0, 10) : allStars.slice(0, 30)
+  const floatingRunes = isMobile ? [] : allFloatingRunes.slice(0, 4)
+  const skipAnimations = prefersReducedMotion || isMobile
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
-      {/* Gradient orbs - static, no animation for better performance */}
+    <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0, transform: 'translateZ(0)' }}>
+      {/* Gradient orbs - static, GPU-accelerated */}
       <div
-        className="absolute w-[600px] h-[600px] rounded-full"
+        className="absolute rounded-full"
         style={{
+          width: isMobile ? 300 : 600,
+          height: isMobile ? 300 : 600,
           background: 'radial-gradient(circle, rgba(147, 51, 234, 0.15) 0%, transparent 70%)',
           top: '10%',
           left: '20%',
-          filter: 'blur(60px)',
+          filter: isMobile ? 'blur(40px)' : 'blur(60px)',
+          transform: 'translateZ(0)',
+          willChange: 'auto',
         }}
       />
 
       <div
-        className="absolute w-[500px] h-[500px] rounded-full"
+        className="absolute rounded-full"
         style={{
+          width: isMobile ? 250 : 500,
+          height: isMobile ? 250 : 500,
           background: 'radial-gradient(circle, rgba(217, 119, 6, 0.1) 0%, transparent 70%)',
           bottom: '20%',
           right: '10%',
-          filter: 'blur(60px)',
+          filter: isMobile ? 'blur(40px)' : 'blur(60px)',
+          transform: 'translateZ(0)',
+          willChange: 'auto',
         }}
       />
 
-      <div
-        className="absolute w-[400px] h-[400px] rounded-full"
-        style={{
-          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%)',
-          top: '50%',
-          left: '60%',
-          filter: 'blur(50px)',
-        }}
-      />
-
-      {/* Stars - reduced count and simpler animation */}
-      {stars.map((star) => (
-        <motion.div
-          key={star.id}
-          className="absolute rounded-full bg-white"
+      {!isMobile && (
+        <div
+          className="absolute rounded-full"
           style={{
-            left: `${star.x}%`,
-            top: `${star.y}%`,
-            width: star.size,
-            height: star.size,
-            opacity: star.opacity,
-          }}
-          animate={{
-            opacity: [star.opacity * 0.5, star.opacity, star.opacity * 0.5],
-          }}
-          transition={{
-            duration: star.duration,
-            delay: star.delay,
-            repeat: Infinity,
-            ease: 'easeInOut',
+            width: 400,
+            height: 400,
+            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%)',
+            top: '50%',
+            left: '60%',
+            filter: 'blur(50px)',
+            transform: 'translateZ(0)',
           }}
         />
-      ))}
+      )}
 
-      {/* Floating runes - reduced count */}
+      {/* Stars */}
+      {stars.map((star) =>
+        skipAnimations ? (
+          <div
+            key={star.id}
+            className="absolute rounded-full bg-white"
+            style={{
+              left: `${star.x}%`,
+              top: `${star.y}%`,
+              width: star.size,
+              height: star.size,
+              opacity: star.opacity,
+            }}
+          />
+        ) : (
+          <motion.div
+            key={star.id}
+            className="absolute rounded-full bg-white"
+            style={{
+              left: `${star.x}%`,
+              top: `${star.y}%`,
+              width: star.size,
+              height: star.size,
+              opacity: star.opacity,
+            }}
+            animate={{
+              opacity: [star.opacity * 0.5, star.opacity, star.opacity * 0.5],
+            }}
+            transition={{
+              duration: star.duration,
+              delay: star.delay,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+        )
+      )}
+
+      {/* Floating runes - desktop only */}
       {floatingRunes.map((rune) => (
         <motion.span
           key={rune.id}
@@ -136,17 +176,19 @@ export function AnimatedBackground() {
         </motion.span>
       ))}
 
-      {/* Subtle grid pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '100px 100px',
-        }}
-      />
+      {/* Subtle grid pattern - desktop only */}
+      {!isMobile && (
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '100px 100px',
+          }}
+        />
+      )}
 
       {/* Vignette effect */}
       <div
