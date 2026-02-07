@@ -341,11 +341,11 @@ const PARTICLES = Array.from({ length: 20 }, (_, i) => ({
   delay: ((i * 29 + 3) % 50) / 10,
 }))
 
-// Lite animated Hero for mobile — lightweight effects, no heavy GPU layers
+// Lite animated Hero for mobile — CSS-only animations, no Framer Motion
 function MobileHero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Static gradient background — no blur, no filter */}
+      {/* Static gradient background */}
       <div
         className="absolute inset-0"
         style={{
@@ -359,67 +359,34 @@ function MobileHero() {
       />
       <div className="absolute inset-0 bg-linear-to-b from-purple-900/30 via-transparent to-transparent" />
 
-      {/* Lite glow pulse — single soft orb */}
-      <motion.div
-        className="absolute top-1/4 left-1/2 w-64 h-64 rounded-full pointer-events-none"
+      {/* Glow pulse — CSS animation */}
+      <div
+        className="absolute top-1/4 left-1/2 w-64 h-64 rounded-full pointer-events-none mobile-glow-pulse"
         style={{
           background: 'radial-gradient(circle, rgba(147, 51, 234, 0.15) 0%, transparent 70%)',
           transform: 'translateX(-50%)',
         }}
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
       />
 
-      {/* Lite ambient glow — warm accent */}
-      <motion.div
-        className="absolute bottom-1/3 right-1/4 w-40 h-40 rounded-full pointer-events-none"
+      {/* Warm glow — CSS animation */}
+      <div
+        className="absolute bottom-1/3 right-1/4 w-40 h-40 rounded-full pointer-events-none mobile-glow-warm"
         style={{
           background: 'radial-gradient(circle, rgba(251, 191, 36, 0.1) 0%, transparent 70%)',
         }}
-        animate={{
-          scale: [1, 1.3, 1],
-          opacity: [0.2, 0.4, 0.2],
-        }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
       />
 
-      {/* Floating rune symbols — lightweight, only 3 */}
-      <motion.span
-        className="absolute top-24 left-8 text-4xl text-amber-500/15 pointer-events-none"
-        animate={{ y: [0, -12, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        ᚠ
-      </motion.span>
-      <motion.span
-        className="absolute top-36 right-10 text-3xl text-purple-400/15 pointer-events-none"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-      >
-        ᛟ
-      </motion.span>
-      <motion.span
-        className="absolute bottom-44 left-12 text-3xl text-amber-400/12 pointer-events-none"
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-      >
-        ᚱ
-      </motion.span>
+      {/* Floating rune symbols — CSS animation */}
+      <span className="absolute top-24 left-8 text-4xl text-amber-500/15 pointer-events-none mobile-float-1">ᚠ</span>
+      <span className="absolute top-36 right-10 text-3xl text-purple-400/15 pointer-events-none mobile-float-2">ᛟ</span>
+      <span className="absolute bottom-44 left-12 text-3xl text-amber-400/10 pointer-events-none mobile-float-3">ᚱ</span>
 
-      {/* Content with fade-in */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 py-20"
-      >
-        {/* Crystal ball with soft glow + float */}
+      {/* Content with CSS fade-in */}
+      <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 py-20 mobile-fade-in">
+        {/* Crystal ball with float */}
         <div className="relative">
-          <motion.div
-            className="absolute inset-0 rounded-full pointer-events-none"
+          <div
+            className="absolute rounded-full pointer-events-none mobile-glow-pulse"
             style={{
               background: 'radial-gradient(circle, rgba(147, 51, 234, 0.2) 0%, transparent 70%)',
               width: '150%',
@@ -427,52 +394,23 @@ function MobileHero() {
               left: '-25%',
               top: '-25%',
             }}
-            animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
           />
-          <motion.span
-            className="text-7xl block relative z-10"
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            🔮
-          </motion.span>
+          <span className="text-7xl block relative z-10 mobile-float-crystal">🔮</span>
         </div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
-          className="display-xl text-white tracking-tight"
-          style={{ marginTop: '32px' }}
-        >
+        <h1 className="display-xl text-white tracking-tight" style={{ marginTop: '32px' }}>
           <span className="inline-block text-gradient-mystic">Runų Būrimas</span>
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="subheading-lg max-w-2xl text-center"
-          style={{ marginTop: '24px' }}
-        >
+        <p className="subheading-lg max-w-2xl text-center" style={{ marginTop: '24px' }}>
           Atraskite senovės išmintį per <span className="text-amber-400 font-semibold not-italic">Elder Futhark</span> runas
-        </motion.p>
+        </p>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.45 }}
-          className="overline"
-          style={{ marginTop: '16px' }}
-        >
+        <p className="overline" style={{ marginTop: '16px' }}>
           Kasdienės runos • Būrimai • Išmintis
-        </motion.p>
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+        <div
           className="flex flex-col items-stretch justify-center gap-4 w-full max-w-xl px-4"
           style={{ marginTop: '32px' }}
         >
@@ -492,8 +430,8 @@ function MobileHero() {
             <BookOpen className="w-6 h-6" />
             Runų Biblioteka
           </Link>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   )
 }
