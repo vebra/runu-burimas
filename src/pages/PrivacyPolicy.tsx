@@ -133,11 +133,11 @@ Jei esate tėvas/motina ir manote, kad jūsų vaikas pateikė mums asmens duomen
               transition={{ delay: 0.1 + index * 0.05 }}
               className="bg-gray-900/40 backdrop-blur-sm border border-gray-800 rounded-xl p-6 md:p-8 hover:border-purple-500/30 transition-colors"
             >
-              <div className="flex items-start gap-4">
+              <div className="flex flex-col md:flex-row items-start gap-3 md:gap-4">
                 <div className="shrink-0 w-10 h-10 rounded-lg bg-purple-900/50 border border-purple-500/30 flex items-center justify-center">
                   <section.icon className="w-5 h-5 text-purple-400" />
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 min-w-0 w-full">
                   <h2 className="text-xl font-cinzel font-semibold text-white mb-4">
                     {section.title}
                   </h2>
@@ -159,11 +159,11 @@ Jei esate tėvas/motina ir manote, kad jūsų vaikas pateikė mums asmens duomen
           transition={{ delay: 0.5 }}
           className="mt-12 bg-linear-to-r from-purple-900/40 to-amber-900/20 border border-purple-500/30 rounded-2xl p-6 md:p-8"
         >
-          <div className="flex items-start gap-4">
+          <div className="flex flex-col md:flex-row items-start gap-3 md:gap-4">
             <div className="shrink-0 w-12 h-12 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
               <Mail className="w-6 h-6 text-amber-400" />
             </div>
-            <div>
+            <div className="min-w-0 w-full">
               <h2 className="text-xl font-cinzel font-semibold text-white mb-2">
                 Susisiekite su mumis
               </h2>
