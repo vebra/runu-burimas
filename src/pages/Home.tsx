@@ -116,6 +116,8 @@ function FeatureCard({ feature }: { feature: Feature }) {
               height: '100%',
               display: 'flex',
               flexDirection: 'column',
+              alignItems: 'center',
+              textAlign: 'center',
               transform: 'translateZ(0)',
             }}
           >
@@ -195,7 +197,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
 
             {/* Arrow indicator */}
             <motion.div
-              className="flex items-center gap-2 text-purple-400 transition-colors mt-3 sm:mt-4 lg:mt-5"
+              className="flex items-center justify-center gap-2 text-purple-400 transition-colors mt-3 sm:mt-4 lg:mt-5"
               animate={{ color: isHovered ? '#fbbf24' : '#a78bfa' }}
               transition={{ duration: 0.3 }}
             >
