@@ -215,9 +215,9 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
           transition={{ delay: 0.15 }}
           className="bg-amber-900/20 border border-amber-500/30 rounded-xl p-6 mb-8"
         >
-          <div className="flex items-start gap-4">
+          <div className="flex flex-col md:flex-row items-start gap-3 md:gap-4">
             <AlertTriangle className="w-6 h-6 text-amber-400 shrink-0 mt-1" />
-            <div>
+            <div className="min-w-0 w-full">
               <h3 className="text-amber-300 font-semibold mb-2">Svarbus įspėjimas</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
                 Runų būrimai yra senovinė simbolinė praktika, skirta savirefleksijai ir pramogai.
@@ -237,11 +237,11 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
               transition={{ delay: 0.1 + index * 0.05 }}
               className="bg-gray-900/60 border border-amber-600/20 rounded-xl p-6 md:p-8"
             >
-              <div className="flex items-start gap-4">
+              <div className="flex flex-col md:flex-row items-start gap-3 md:gap-4">
                 <div className="shrink-0 w-10 h-10 rounded-lg bg-amber-900/50 border border-amber-500/30 flex items-center justify-center">
                   <section.icon className="w-5 h-5 text-amber-400" />
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 min-w-0 w-full">
                   <h2 className="text-xl font-cinzel font-semibold text-white mb-4">
                     {section.title}
                   </h2>
@@ -263,11 +263,11 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
           transition={{ delay: 0.5 }}
           className="mt-16 bg-linear-to-r from-amber-900/40 to-purple-900/20 border border-amber-500/30 rounded-2xl p-6 md:p-8"
         >
-          <div className="flex items-start gap-4">
+          <div className="flex flex-col md:flex-row items-start gap-3 md:gap-4">
             <div className="shrink-0 w-12 h-12 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center">
               <Mail className="w-6 h-6 text-purple-400" />
             </div>
-            <div>
+            <div className="min-w-0 w-full">
               <h2 className="text-xl font-cinzel font-semibold text-white mb-2">
                 Turite klausimų?
               </h2>
@@ -291,12 +291,11 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
           className="text-center text-gray-500 text-sm mt-8"
+          style={{ marginBottom: '120px' }}
         >
           Naudodamiesi „Runų Būrimas" paslaugomis, jūs patvirtinate, kad perskaitėte ir sutinkate su šiomis sąlygomis.
         </motion.p>
       </div>
-      {/* Spacer before footer */}
-      <div style={{ height: '76px' }} />
     </div>
   )
 }
