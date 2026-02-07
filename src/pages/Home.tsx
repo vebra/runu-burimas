@@ -1102,11 +1102,12 @@ export function Home() {
               >
                 <div
                   className={`
-                    relative overflow-hidden rounded-2xl p-8 md:p-10 text-center
+                    relative overflow-hidden rounded-2xl p-8 md:p-10
                     bg-gray-900/60 backdrop-blur-sm
                     border ${stat.borderClass}
                     transition-all duration-300
                   `}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
                 >
                   {/* Glow effect */}
                   <div
