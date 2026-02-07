@@ -1,13 +1,17 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Home, Search, BookOpen, Sparkles } from 'lucide-react'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 import { Button } from '../components/common/Button'
 
 const MYSTERY_RUNES = ['ᚠ', 'ᚢ', 'ᚦ', 'ᚨ', 'ᚱ', 'ᚲ', 'ᚷ', 'ᚹ']
 
 export function NotFound() {
-  usePageTitle('Puslapis Nerastas')
+  useSEO({
+    title: 'Puslapis Nerastas',
+    description: 'Puslapis nerastas. Grįžkite į Runų Būrimo pradžią.',
+    noindex: true,
+  })
   return (
     <div className="px-4" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '4rem', paddingBottom: '6rem' }}>
       <div style={{ width: '100%', maxWidth: '600px' }}>

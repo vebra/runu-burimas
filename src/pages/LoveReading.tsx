@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Heart } from 'lucide-react'
 import { usePremium } from '../hooks/usePremium'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 import { useSpread, type PositionLabel } from '../hooks/useSpread'
 import { RuneCard } from '../components/common/RuneCard'
 import { AuthGate } from '../components/common/AuthGate'
@@ -28,7 +28,17 @@ const positionLabels: Record<Position, PositionLabel> = {
 const POSITIONS: Position[] = ['you', 'partner', 'foundation', 'challenges', 'potential']
 
 export function LoveReading() {
-  usePageTitle('Meilės Būrimas')
+  useSEO({
+    title: 'Meilės Būrimas',
+    description: 'Meilės runų būrimas — sužinokite apie savo santykius, partnerio energiją ir meilės potencialą per Elder Futhark runas.',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'Meilės Būrimas',
+      description: 'Sužinokite apie savo santykius ir meilės potencialą per Elder Futhark runas.',
+      isPartOf: { '@type': 'WebApplication', name: 'Runų Būrimas' },
+    },
+  })
   const { isPremium, loading: premiumLoading } = usePremium()
 
   const spread = useSpread<Position>({

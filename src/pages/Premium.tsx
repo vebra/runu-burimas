@@ -4,7 +4,7 @@ import { Crown, Check, X, ArrowRight, Key, ChevronDown } from 'lucide-react'
 import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { usePremium } from '../hooks/usePremium'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 import { useToast } from '../components/common/Toast'
 import { PricingCard } from '../components/premium/PricingCard'
 
@@ -39,7 +39,23 @@ const premiumFeatures = [
 ]
 
 export function Premium() {
-  usePageTitle('Premium')
+  useSEO({
+    title: 'Premium Narystė',
+    description: 'Atrakinkite visas Runų Būrimo funkcijas — Keltų Kryžius, Meilės Būrimas, AI interpretacijos ir daugiau. Premium narystė nuo 2.99€/mėn.',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: 'Runų Būrimas Premium',
+      description: 'Premium narystė su visais būrimo metodais ir AI interpretacijomis.',
+      offers: {
+        '@type': 'AggregateOffer',
+        priceCurrency: 'EUR',
+        lowPrice: '2.99',
+        highPrice: '24.99',
+        offerCount: 2,
+      },
+    },
+  })
   const { user } = useAuth()
   const { isPremium, subscription, createCheckout, openCustomerPortal, activateWithCode, verifySession, loading } = usePremium()
   const toast = useToast()

@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion'
 import { Shield, Mail, Database, Cookie, UserCheck, Trash2, Lock } from 'lucide-react'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 
 export function PrivacyPolicy() {
-  usePageTitle('Privatumo Politika')
+  useSEO({
+    title: 'Privatumo Politika',
+    description: 'Runų Būrimo privatumo politika — kaip renkame, saugome ir naudojame jūsų duomenis.',
+  })
   const sections = [
     {
       icon: Database,

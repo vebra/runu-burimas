@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Sparkles } from 'lucide-react'
 import { usePremium } from '../hooks/usePremium'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 import { useSpread, type PositionLabel } from '../hooks/useSpread'
 import { RuneCard } from '../components/common/RuneCard'
 import { AuthGate } from '../components/common/AuthGate'
@@ -33,7 +33,17 @@ const positionLabels: Record<Position, PositionLabel> = {
 const POSITIONS: Position[] = ['present', 'challenge', 'past', 'future', 'above', 'below', 'advice', 'external', 'hopes', 'outcome']
 
 export function CelticCross() {
-  usePageTitle('Keltų Kryžius')
+  useSEO({
+    title: 'Keltų Kryžius',
+    description: 'Keltų kryžiaus runų būrimas — vienas išsamiausių būrimo metodų su 10 pozicijų. Premium Elder Futhark runų būrimas.',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'Keltų Kryžius',
+      description: 'Išsamiausias runų būrimo metodas su 10 pozicijų per Elder Futhark runas.',
+      isPartOf: { '@type': 'WebApplication', name: 'Runų Būrimas' },
+    },
+  })
   const { isPremium, loading: premiumLoading } = usePremium()
 
   const spread = useSpread<Position>({

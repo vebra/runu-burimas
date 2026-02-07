@@ -1,11 +1,23 @@
 import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Copy, Check, Download, Type } from 'lucide-react'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 import { textToRunes, getRuneString, getUniqueRunes } from '../utils/runeConverter'
 
 export function RuneConverter() {
-  usePageTitle('Runų Konverteris')
+  useSEO({
+    title: 'Runų Konverteris',
+    description: 'Konvertuokite tekstą į Elder Futhark runas. Įveskite savo vardą ar žinutę ir pamatykite ją runų simboliais.',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: 'Runų Konverteris',
+      description: 'Konvertuokite tekstą į Elder Futhark runų simbolius.',
+      applicationCategory: 'UtilityApplication',
+      operatingSystem: 'Web',
+      inLanguage: 'lt',
+    },
+  })
   const [text, setText] = useState('')
   const [copied, setCopied] = useState(false)
 

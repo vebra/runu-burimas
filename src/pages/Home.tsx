@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
+import { useSEO } from '../hooks/useSEO'
 import { Sparkles, Calendar, BookOpen, Type, ArrowRight, Crown, Compass, TrendingUp, Zap, Star, Moon, HelpCircle, Heart } from 'lucide-react'
 import { useRef, useState, useEffect } from 'react'
 
@@ -403,6 +404,52 @@ function MobileHero() {
 }
 
 export function Home() {
+  useSEO({
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebApplication',
+        name: 'Runų Būrimas',
+        url: 'https://rune-app-delta.vercel.app/',
+        description: 'Atraskite senovės išmintį per Elder Futhark runas. Kasdienės runos, būrimai, runų biblioteka ir dienoraštis.',
+        applicationCategory: 'LifestyleApplication',
+        operatingSystem: 'Web',
+        inLanguage: 'lt',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+        author: { '@type': 'Organization', name: 'Runų Būrimas' },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'Kas yra Elder Futhark runos?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Elder Futhark yra seniausia žinoma runų abėcėlė, sudaryta iš 24 simbolių. Ji buvo naudojama germanų tautų nuo 2 iki 8 amžiaus rašymui, būrimui ir maginiams tikslams.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Kaip veikia runų būrimas?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Runų būrimas veikia traukiant runas atsitiktine tvarka ir interpretuojant jų reikšmes pagal poziciją ir orientaciją (tiesi arba apversta). Kiekviena runa turi unikalią reikšmę.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Ar runų būrimas yra nemokamas?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Taip! Kasdienė runa, trijų runų būrimas ir Taip/Ne būrimas yra visiškai nemokami. Premium narystė atrakiną papildomus būrimo metodus ir AI interpretacijas.',
+            },
+          },
+        ],
+      },
+    ],
+  })
   const isMobile = useIsMobile()
   const heroRef = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({

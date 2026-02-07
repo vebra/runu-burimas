@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Crown } from 'lucide-react'
 import { usePremium } from '../hooks/usePremium'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 import { useSpread, type PositionLabel } from '../hooks/useSpread'
 import { RuneCard } from '../components/common/RuneCard'
 import { AuthGate } from '../components/common/AuthGate'
@@ -29,7 +29,17 @@ const positionLabels: Record<Position, PositionLabel> = {
 const POSITIONS: Position[] = ['center', 'top', 'bottom', 'left', 'right']
 
 export function FiveRuneCross() {
-  usePageTitle('Penkių Runų Kryžius')
+  useSEO({
+    title: 'Penkių Runų Kryžius',
+    description: 'Penkių runų kryžiaus būrimas — gilesnė situacijos analizė per Elder Futhark runas. Premium būrimas su centrine runa ir keturiomis kryptimis.',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'Penkių Runų Kryžius',
+      description: 'Gilesnė situacijos analizė per penkių Elder Futhark runų kryžiaus išdėstymą.',
+      isPartOf: { '@type': 'WebApplication', name: 'Runų Būrimas' },
+    },
+  })
   const { isPremium, loading: premiumLoading } = usePremium()
 
   const spread = useSpread<Position>({

@@ -5,13 +5,17 @@ import { Mail } from 'lucide-react'
 import { LoginForm } from '../components/auth/LoginForm'
 import { SignupForm } from '../components/auth/SignupForm'
 import { useAuth } from '../hooks/useAuth'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 import { Button } from '../components/common/Button'
 import { Input } from '../components/common/Input'
 import { useToast } from '../components/common/Toast'
 
 export function Auth() {
-  usePageTitle('Prisijungimas')
+  useSEO({
+    title: 'Prisijungimas',
+    description: 'Prisijunkite prie Runų Būrimo — išsaugokite savo būrimus, kasdienę runą ir mėgstamas runas.',
+    noindex: true,
+  })
   const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>('login')
   const { signIn, signUp, resetPassword } = useAuth()
   const navigate = useNavigate()

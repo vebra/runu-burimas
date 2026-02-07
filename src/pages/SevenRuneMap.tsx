@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Compass } from 'lucide-react'
 import { usePremium } from '../hooks/usePremium'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 import { useSpread, type PositionLabel } from '../hooks/useSpread'
 import { RuneCard } from '../components/common/RuneCard'
 import { AuthGate } from '../components/common/AuthGate'
@@ -30,7 +30,17 @@ const positionLabels: Record<Position, PositionLabel> = {
 const POSITIONS: Position[] = ['self', 'foundation', 'past', 'future', 'obstacles', 'help', 'outcome']
 
 export function SevenRuneMap() {
-  usePageTitle('Septynių Runų Žemėlapis')
+  useSEO({
+    title: 'Septynių Runų Žemėlapis',
+    description: 'Septynių runų žemėlapio būrimas — išsamus gyvenimo situacijos žemėlapis per Elder Futhark runas. Premium būrimas su 7 pozicijomis.',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'Septynių Runų Žemėlapis',
+      description: 'Išsamus gyvenimo situacijos žemėlapis per 7 Elder Futhark runas.',
+      isPartOf: { '@type': 'WebApplication', name: 'Runų Būrimas' },
+    },
+  })
   const { isPremium, loading: premiumLoading } = usePremium()
 
   const spread = useSpread<Position>({

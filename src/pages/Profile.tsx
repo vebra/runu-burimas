@@ -4,7 +4,7 @@ import { User, LogOut, Calendar, Sparkles, Heart, Trophy, Trash2, AlertTriangle,
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { usePremium } from '../hooks/usePremium'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 import { useFavorites, useDivinations } from '../hooks/useRunes'
 import { supabase } from '../lib/supabase'
 import { Button } from '../components/common/Button'
@@ -19,7 +19,11 @@ interface Stats {
 }
 
 export function Profile() {
-  usePageTitle('Profilis')
+  useSEO({
+    title: 'Profilis',
+    description: 'Jūsų Runų Būrimo profilis — statistika, pasiekimai, būrimų istorija ir mėgstamos runos.',
+    noindex: true,
+  })
   const { user, signOut } = useAuth()
   const { isPremium, subscription, openCustomerPortal, loading: premiumLoading } = usePremium()
   const { favorites, fetchFavorites } = useFavorites()

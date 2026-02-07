@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion'
 import { ScrollText, AlertTriangle, UserCheck, Ban, Scale, RefreshCw, Mail, Shield, Crown, CreditCard } from 'lucide-react'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 
 export function TermsOfService() {
-  usePageTitle('Naudojimo Sąlygos')
+  useSEO({
+    title: 'Naudojimo Sąlygos',
+    description: 'Runų Būrimo naudojimo sąlygos — paslaugos taisyklės, atsakomybės ir vartotojo teisės.',
+  })
   const sections = [
     {
       icon: UserCheck,

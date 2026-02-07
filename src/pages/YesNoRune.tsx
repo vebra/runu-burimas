@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Sparkles, RotateCcw, ThumbsUp, ThumbsDown, Minus } from 'lucide-react'
 import { useRunes } from '../hooks/useRunes'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 import type { Rune } from '../types/database'
 import { Button } from '../components/common/Button'
 import { ReadingDisclaimer } from '../components/common/ReadingDisclaimer'
@@ -71,7 +71,17 @@ function getAnswerConfig(answer: Answer) {
 }
 
 export function YesNoRune() {
-  usePageTitle('Taip arba Ne')
+  useSEO({
+    title: 'Taip arba Ne Būrimas',
+    description: 'Užduokite klausimą ir gaukite atsakymą Taip arba Ne per Elder Futhark runą. Paprastas ir greitas runų būrimas.',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'Taip/Ne Runų Būrimas',
+      description: 'Užduokite klausimą ir gaukite atsakymą per Elder Futhark runą.',
+      isPartOf: { '@type': 'WebApplication', name: 'Runų Būrimas' },
+    },
+  })
   const { runes, loading: runesLoading, getRandomRune, getRandomOrientation } = useRunes()
 
   const [question, setQuestion] = useState('')

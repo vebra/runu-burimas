@@ -2,13 +2,28 @@ import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Loader2, ChevronDown, BookOpen } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 import { EmptySearchResults } from '../components/common/EmptyState'
 import { useRunes, useFavorites } from '../hooks/useRunes'
 import type { Rune } from '../types/database'
 
 export function RuneLibrary() {
-  usePageTitle('Runų Biblioteka')
+  useSEO({
+    title: 'Runų Biblioteka',
+    description: 'Pilna Elder Futhark runų biblioteka — 24 runos su reikšmėmis, interpretacijomis, raktiniais žodžiais ir elementais. Išmokite runų simbolius.',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: 'Elder Futhark Runų Biblioteka',
+      description: 'Pilna 24 Elder Futhark runų kolekcija su reikšmėmis ir interpretacijomis.',
+      isPartOf: { '@type': 'WebApplication', name: 'Runų Būrimas' },
+      about: {
+        '@type': 'Thing',
+        name: 'Elder Futhark',
+        description: 'Seniausia žinoma runų abėcėlė, naudota nuo 2-8 amžiaus.',
+      },
+    },
+  })
   const { user } = useAuth()
   const { runes, loading } = useRunes()
   const { fetchFavorites, toggleFavorite, isFavorite } = useFavorites()

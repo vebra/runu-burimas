@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Sparkles, RotateCcw, BookOpen, Save, Loader2 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { useRunes, useDivinations } from '../hooks/useRunes'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 import type { Rune, RuneSpread } from '../types/database'
 import { Button } from '../components/common/Button'
 import { ReadingDisclaimer } from '../components/common/ReadingDisclaimer'
@@ -27,7 +27,17 @@ const positionLabels = {
 }
 
 export function ThreeRune() {
-  usePageTitle('Trijų Runų Būrimas')
+  useSEO({
+    title: 'Trijų Runų Būrimas',
+    description: 'Trijų runų būrimas — praeitis, dabartis ir ateitis. Gaukite įžvalgas apie savo gyvenimą per Elder Futhark runų išmintį.',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'Trijų Runų Būrimas',
+      description: 'Trijų runų būrimas atskleidžia praeitį, dabartis ir ateitį per Elder Futhark runas.',
+      isPartOf: { '@type': 'WebApplication', name: 'Runų Būrimas' },
+    },
+  })
   const { user } = useAuth()
   const { runes, loading: runesLoading, getRandomOrientation } = useRunes()
   const { saveThreeRuneSpread, updateDivinationNotes } = useDivinations()

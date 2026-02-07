@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { History, ChevronDown, ChevronUp, Sparkles, MessageCircle, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 import { useRunes } from '../hooks/useRunes'
 import { supabase } from '../lib/supabase'
 import { useToast } from '../components/common/Toast'
@@ -56,7 +56,11 @@ function formatDate(dateStr: string): string {
 }
 
 export function ReadingHistory() {
-  usePageTitle('Būrimų Istorija')
+  useSEO({
+    title: 'Būrimų Istorija',
+    description: 'Jūsų visų atliktų Elder Futhark runų būrimų ir kasdienių runų istorija.',
+    noindex: true,
+  })
   const { user } = useAuth()
   const { runes } = useRunes()
   const toast = useToast()

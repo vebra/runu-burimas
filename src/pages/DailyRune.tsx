@@ -10,7 +10,7 @@ import { AIPremiumBanner } from '../components/common/AIPremiumBanner'
 import { useToast } from '../components/common/Toast'
 import { RuneCard } from '../components/common/RuneCard'
 import { RuneLoader } from '../components/common/RuneLoader'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSEO } from '../hooks/useSEO'
 
 export function DailyRune() {
   const { user } = useAuth()
@@ -26,7 +26,17 @@ export function DailyRune() {
   const [savingNotes, setSavingNotes] = useState(false)
   const [isRevealed, setIsRevealed] = useState(false)
 
-  usePageTitle('Kasdienė Runa')
+  useSEO({
+    title: 'Kasdienė Runa',
+    description: 'Traukite savo kasdienę Elder Futhark runą ir gaukite asmeninę dvasinę žinutę dienai. Atraskite runų išmintį kiekvieną dieną.',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'Kasdienė Runa',
+      description: 'Traukite savo kasdienę Elder Futhark runą ir gaukite asmeninę dvasinę žinutę dienai.',
+      isPartOf: { '@type': 'WebApplication', name: 'Runų Būrimas' },
+    },
+  })
 
 
   useEffect(() => {
