@@ -186,7 +186,8 @@ Jei esate tėvas/motina ir manote, kad jūsų vaikas pateikė mums asmens duomen
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-center text-gray-500 text-sm mt-8 mb-16"
+          className="text-center text-gray-500 text-sm mt-8"
+          style={{ marginBottom: '120px' }}
         >
           Ši privatumo politika gali būti atnaujinama. Apie esminius pakeitimus informuosime el. paštu arba svetainėje.
         </motion.p>
