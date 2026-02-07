@@ -440,9 +440,17 @@ export function Profile() {
             className="bg-gray-800/50 border border-gray-700 rounded-xl"
             style={{ padding: '1.5rem', marginBottom: '2.5rem' }}
           >
-            <h3 className="text-lg font-cinzel font-semibold text-white" style={{ marginBottom: '1rem' }}>
-              Paskutiniai Būrimai
-            </h3>
+            <div className="flex items-center justify-between" style={{ marginBottom: '1rem' }}>
+              <h3 className="text-lg font-cinzel font-semibold text-white">
+                Paskutiniai Būrimai
+              </h3>
+              <Link
+                to="/history"
+                className="text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors"
+              >
+                Visa istorija →
+              </Link>
+            </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {divinations.slice(0, 5).map((div) => (
                 <div
@@ -451,7 +459,13 @@ export function Profile() {
                 >
                   <div>
                     <span className="text-white">
-                      {div.divination_type === 'three_rune' ? '3 Runų Būrimas' : div.divination_type}
+                      {div.divination_type === 'three_rune' ? '3 Runų Būrimas'
+                        : div.divination_type === 'yes_no' ? 'Taip/Ne Būrimas'
+                        : div.divination_type === 'five_rune_cross' ? '5 Runų Kryžius'
+                        : div.divination_type === 'seven_rune_map' ? '7 Runų Žemėlapis'
+                        : div.divination_type === 'love_reading' ? 'Meilės Būrimas'
+                        : div.divination_type === 'celtic_cross' ? 'Keltų Kryžius'
+                        : div.divination_type}
                     </span>
                     {div.question && (
                       <p className="text-gray-500 text-sm truncate max-w-xs">
