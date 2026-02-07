@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build && node -e \"require('fs').copyFileSync('dist/index.html','dist/404.html')\"",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "generate-icons": "node scripts/generate-icons.js"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.91.1",
