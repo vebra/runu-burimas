@@ -93,7 +93,7 @@ Jei esate tėvas/motina ir manote, kad jūsų vaikas pateikė mums asmens duomen
   ]
 
   return (
-    <div className="px-4 pt-8 md:pt-32 pb-24" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div className="px-4 pt-8 md:pt-32 pb-40" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div style={{ width: '100%', maxWidth: '896px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
