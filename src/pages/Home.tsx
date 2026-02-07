@@ -341,7 +341,7 @@ const PARTICLES = Array.from({ length: 20 }, (_, i) => ({
   delay: ((i * 29 + 3) % 50) / 10,
 }))
 
-// Lite animated Hero for mobile — CSS-only animations, no Framer Motion
+// Static Hero for mobile — zero JS animations, zero flickering
 function MobileHero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -359,44 +359,8 @@ function MobileHero() {
       />
       <div className="absolute inset-0 bg-linear-to-b from-purple-900/30 via-transparent to-transparent" />
 
-      {/* Glow pulse — CSS animation */}
-      <div
-        className="absolute top-1/4 left-1/2 w-64 h-64 rounded-full pointer-events-none mobile-glow-pulse"
-        style={{
-          background: 'radial-gradient(circle, rgba(147, 51, 234, 0.15) 0%, transparent 70%)',
-          transform: 'translateX(-50%)',
-        }}
-      />
-
-      {/* Warm glow — CSS animation */}
-      <div
-        className="absolute bottom-1/3 right-1/4 w-40 h-40 rounded-full pointer-events-none mobile-glow-warm"
-        style={{
-          background: 'radial-gradient(circle, rgba(251, 191, 36, 0.1) 0%, transparent 70%)',
-        }}
-      />
-
-      {/* Floating rune symbols — CSS animation */}
-      <span className="absolute top-24 left-8 text-4xl text-amber-500/15 pointer-events-none mobile-float-1">ᚠ</span>
-      <span className="absolute top-36 right-10 text-3xl text-purple-400/15 pointer-events-none mobile-float-2">ᛟ</span>
-      <span className="absolute bottom-44 left-12 text-3xl text-amber-400/10 pointer-events-none mobile-float-3">ᚱ</span>
-
-      {/* Content with CSS fade-in */}
-      <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 py-20 mobile-fade-in">
-        {/* Crystal ball with float */}
-        <div className="relative">
-          <div
-            className="absolute rounded-full pointer-events-none mobile-glow-pulse"
-            style={{
-              background: 'radial-gradient(circle, rgba(147, 51, 234, 0.2) 0%, transparent 70%)',
-              width: '150%',
-              height: '150%',
-              left: '-25%',
-              top: '-25%',
-            }}
-          />
-          <span className="text-7xl block relative z-10 mobile-float-crystal">🔮</span>
-        </div>
+      <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 py-20">
+        <span className="text-7xl block">🔮</span>
 
         <h1 className="display-xl text-white tracking-tight" style={{ marginTop: '32px' }}>
           <span className="inline-block text-gradient-mystic">Runų Būrimas</span>
