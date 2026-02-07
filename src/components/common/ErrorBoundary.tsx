@@ -30,7 +30,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   handleGoHome = () => {
-    window.location.href = '/runu-burimas/'
+    window.location.href = '/'
   }
 
   render() {
