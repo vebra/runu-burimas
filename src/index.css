@@ -182,18 +182,84 @@ body {
   }
 }
 
-/* Disable all CSS animations on mobile to prevent Samsung 120Hz flickering */
+/* Disable heavy GPU effects on mobile to prevent Samsung 120Hz flickering */
 @media (max-width: 767px) {
-  *, *::before, *::after {
-    animation-duration: 0.001s !important;
-    animation-delay: 0s !important;
-    transition-duration: 0.1s !important;
-  }
   .glass, .glass-light, .glass-gold, .glass-purple,
   .feature-card, .rune-card {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
+}
+
+/* ===== GLOWING RING ANIMATION ===== */
+@keyframes glowRingSpin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes glowRingPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.glow-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.glow-ring-gradient {
+  animation: glowRingSpin 8s linear infinite;
+  background: conic-gradient(
+    from 0deg,
+    rgba(147, 51, 234, 0.9),
+    rgba(236, 72, 153, 0.8),
+    rgba(251, 146, 60, 0.9),
+    rgba(147, 51, 234, 0.3),
+    rgba(99, 102, 241, 0.8),
+    rgba(168, 85, 247, 0.9),
+    rgba(236, 72, 153, 0.8),
+    rgba(251, 146, 60, 0.7),
+    rgba(147, 51, 234, 0.9)
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #fff calc(100% - 5px), #fff calc(100% - 1px), transparent 100%);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #fff calc(100% - 5px), #fff calc(100% - 1px), transparent 100%);
+}
+
+.glow-ring-blur {
+  animation: glowRingSpin 8s linear infinite;
+  background: conic-gradient(
+    from 0deg,
+    rgba(147, 51, 234, 0.6),
+    rgba(236, 72, 153, 0.5),
+    rgba(251, 146, 60, 0.6),
+    rgba(147, 51, 234, 0.2),
+    rgba(99, 102, 241, 0.5),
+    rgba(168, 85, 247, 0.6),
+    rgba(236, 72, 153, 0.5),
+    rgba(251, 146, 60, 0.4),
+    rgba(147, 51, 234, 0.6)
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 20px), #fff calc(100% - 18px), #fff calc(100% - 2px), transparent 100%);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 20px), #fff calc(100% - 18px), #fff calc(100% - 2px), transparent 100%);
+  filter: blur(15px);
+}
+
+.glow-ring-outer {
+  animation: glowRingPulse 4s ease-in-out infinite;
+  background: conic-gradient(
+    from 180deg,
+    rgba(147, 51, 234, 0.3),
+    rgba(236, 72, 153, 0.2),
+    rgba(251, 146, 60, 0.3),
+    transparent,
+    rgba(99, 102, 241, 0.2),
+    rgba(147, 51, 234, 0.3)
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 30px), #fff calc(100% - 28px), #fff calc(100% - 2px), transparent 100%);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 30px), #fff calc(100% - 28px), #fff calc(100% - 2px), transparent 100%);
+  filter: blur(25px);
 }
 
 /* ===== TYPOGRAPHY ===== */
