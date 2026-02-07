@@ -417,24 +417,24 @@ export function Home() {
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(30, 10, 60, 0.8) 0%, transparent 70%)' }} />
 
         {/* Glowing Ring — 3 layers for depth */}
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           {/* Outer glow pulse */}
           <motion.div
-            className="glow-ring glow-ring-outer"
+            className="absolute rounded-full glow-ring-outer"
             style={{ width: '600px', height: '600px' }}
             animate={{ scale: [1, 1.06, 1], opacity: [0.5, 0.8, 0.5] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
           />
           {/* Blur glow layer */}
           <motion.div
-            className="glow-ring glow-ring-blur"
+            className="absolute rounded-full glow-ring-blur"
             style={{ width: '560px', height: '560px' }}
             animate={{ rotate: 360 }}
             transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
           />
           {/* Sharp ring */}
           <motion.div
-            className="glow-ring glow-ring-gradient"
+            className="absolute rounded-full glow-ring-gradient"
             style={{ width: '520px', height: '520px' }}
             animate={{ rotate: 360 }}
             transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
