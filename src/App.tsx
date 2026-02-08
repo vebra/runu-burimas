@@ -28,6 +28,7 @@ const Premium = lazy(() => import('./pages/Premium').then(m => ({ default: m.Pre
 const CelticCross = lazy(() => import('./pages/CelticCross').then(m => ({ default: m.CelticCross })))
 const LoveReading = lazy(() => import('./pages/LoveReading').then(m => ({ default: m.LoveReading })))
 const ReadingHistory = lazy(() => import('./pages/ReadingHistory').then(m => ({ default: m.ReadingHistory })))
+const RuneHoroscope = lazy(() => import('./pages/RuneHoroscope').then(m => ({ default: m.RuneHoroscope })))
 
 // Magical loading fallback component
 function PageLoader() {
@@ -96,6 +97,7 @@ function AnimatedRoutes() {
         <Route path="/celtic-cross" element={<PageTransition><ErrorBoundary><CelticCross /></ErrorBoundary></PageTransition>} />
         <Route path="/love-reading" element={<PageTransition><ErrorBoundary><LoveReading /></ErrorBoundary></PageTransition>} />
         <Route path="/history" element={<PageTransition><ErrorBoundary><ReadingHistory /></ErrorBoundary></PageTransition>} />
+        <Route path="/horoscope" element={<PageTransition><ErrorBoundary><RuneHoroscope /></ErrorBoundary></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>

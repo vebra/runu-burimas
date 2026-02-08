@@ -12,6 +12,7 @@ interface HeaderProps {
 const navLinks = [
   { path: '/', label: 'Pradžia', icon: '🏠' },
   { path: '/daily', label: 'Kasdienė Runa', icon: '📅' },
+  { path: '/horoscope', label: 'Horoskopas', icon: '🔮' },
   { path: '/yes-no', label: 'Taip/Ne', icon: '🎱' },
   { path: '/three-rune', label: '3 Runos', icon: '✨' },
   { path: '/library', label: 'Biblioteka', icon: '📚' },

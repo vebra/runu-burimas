@@ -257,6 +257,15 @@ const features = [
     premium: false,
   },
   {
+    icon: Moon,
+    title: 'Rūnų Horoskopas',
+    description: 'Sužinokite savo gimimo rūną ir gaukite asmenines prognozes',
+    path: '/horoscope',
+    color: 'from-indigo-600 to-blue-500',
+    glowColor: 'rgba(99, 102, 241, 0.4)',
+    premium: false,
+  },
+  {
     icon: Crown,
     title: '5 Runų Kryžius',
     description: 'Situacijos analizė su praktiniais veiksmais',
