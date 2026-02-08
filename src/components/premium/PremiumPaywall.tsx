@@ -16,6 +16,8 @@ export function PremiumPaywall({
     'Neriboti 7 Runų Gyvenimo žemėlapio būrimai',
     'Meilės Būrimas (5 runų)',
     'Keltų Kryžius (10 runų)',
+    'Rūnų Horoskopas - savaitinės ir mėnesinės prognozės',
+    'Rūnų Dienoraštis - neriboti įrašai',
     'AI interpretacijos',
     'Pilna būrimų istorija',
   ],

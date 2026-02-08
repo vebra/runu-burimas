@@ -33,6 +33,8 @@ const premiumFeatures = [
   '7 Runų Gyvenimo Žemėlapis - gilus kelias',
   'Meilės Būrimas - santykių įžvalgos',
   'Keltų Kryžius - išsamus 10 runų būrimas',
+  'Rūnų Horoskopas - savaitinės ir mėnesinės prognozės',
+  'Rūnų Dienoraštis - neriboti įrašai',
   'AI interpretacijos kiekvienam būrimui',
   'Neribota būrimų istorija',
   'Prioritetinė pagalba',

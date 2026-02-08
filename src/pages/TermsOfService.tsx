@@ -19,12 +19,15 @@ export function TermsOfService() {
 • **Taip/Ne būrimas** – greitas atsakymas į klausimą
 • **Runų Biblioteka** – informacija apie Elder Futhark runas
 • **Runų Konverteris** – teksto konvertavimas į runas
+• **Rūnų Horoskopas** – gimimo rūnos apskaičiavimas (nemokamai)
 
 **Premium funkcijos (mokama prenumerata):**
 • **5 Runų Kryžius** – situacijos analizė
 • **7 Runų Gyvenimo Žemėlapis** – gilus dvasinis kelias
 • **Meilės Būrimas** – 5 runų santykių analizė
 • **Keltų Kryžius** – išsamus 10 runų būrimas
+• **Rūnų Horoskopas** – savaitinės ir mėnesinės prognozės
+• **Rūnų Dienoraštis** – neriboti asmeniniai įrašai
 • **AI interpretacijos** – išsamios būrimų analizės
 
 Paslauga teikiama **pramogos ir savirefleksijos** tikslais. Runų būrimai nėra ir neturėtų būti laikomi profesionalia konsultacija.`
