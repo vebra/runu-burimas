@@ -344,11 +344,11 @@ const PARTICLES = Array.from({ length: 20 }, (_, i) => ({
   delay: ((i * 29 + 3) % 50) / 10,
 }))
 
-// Static Hero for mobile — zero JS animations, zero flickering
+// Animated Hero for mobile — CSS-only animations, no Framer Motion (avoids blank screen)
 function MobileHero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Static gradient background */}
+      {/* Static gradient background — no transform animations to avoid flickering */}
       <div
         className="absolute inset-0"
         style={{
@@ -362,23 +362,47 @@ function MobileHero() {
       />
       <div className="absolute inset-0 bg-linear-to-b from-purple-900/30 via-transparent to-transparent" />
 
-      <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 py-20">
-        <span className="text-7xl block">🔮</span>
+      {/* Static rune decorations */}
+      <span className="absolute text-4xl pointer-events-none" style={{ top: '8%', left: '6%', color: 'rgba(245,158,11,0.15)' }}>ᚠ</span>
+      <span className="absolute text-3xl pointer-events-none" style={{ top: '14%', right: '8%', color: 'rgba(167,139,250,0.15)' }}>ᛟ</span>
+      <span className="absolute text-2xl pointer-events-none" style={{ top: '22%', left: '18%', color: 'rgba(252,211,77,0.12)' }}>ᚢ</span>
+      <span className="absolute text-3xl pointer-events-none" style={{ top: '30%', right: '15%', color: 'rgba(196,181,253,0.10)' }}>ᚦ</span>
+      <span className="absolute text-2xl pointer-events-none" style={{ top: '38%', left: '4%', color: 'rgba(168,85,247,0.12)' }}>ᚨ</span>
+      <span className="absolute text-3xl pointer-events-none" style={{ top: '46%', right: '5%', color: 'rgba(251,191,36,0.10)' }}>ᚱ</span>
+      <span className="absolute text-2xl pointer-events-none" style={{ top: '54%', left: '10%', color: 'rgba(167,139,250,0.12)' }}>ᚲ</span>
+      <span className="absolute text-4xl pointer-events-none" style={{ top: '60%', right: '12%', color: 'rgba(245,158,11,0.10)' }}>ᚷ</span>
+      <span className="absolute text-2xl pointer-events-none" style={{ top: '68%', left: '16%', color: 'rgba(196,181,253,0.12)' }}>ᚹ</span>
+      <span className="absolute text-3xl pointer-events-none" style={{ top: '74%', right: '6%', color: 'rgba(168,85,247,0.10)' }}>ᛗ</span>
+      <span className="absolute text-2xl pointer-events-none" style={{ top: '80%', left: '7%', color: 'rgba(252,211,77,0.12)' }}>ᛊ</span>
+      <span className="absolute text-3xl pointer-events-none" style={{ top: '86%', right: '18%', color: 'rgba(167,139,250,0.10)' }}>ᛏ</span>
 
-        <h1 className="display-xl text-white tracking-tight" style={{ marginTop: '32px' }}>
+      <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 py-20">
+        {/* Crystal ball with static glow */}
+        <div className="mobile-hero-fade relative">
+          <div
+            className="absolute rounded-full"
+            style={{
+              width: '150%', height: '150%', left: '-25%', top: '-25%',
+              background: 'radial-gradient(circle, rgba(147, 51, 234, 0.25) 0%, transparent 70%)',
+            }}
+          />
+          <span className="text-7xl block relative z-10">🔮</span>
+        </div>
+
+        <h1 className="display-xl text-white tracking-tight mobile-hero-fade-d1" style={{ marginTop: '32px' }}>
           <span className="inline-block text-gradient-mystic">Runų Būrimas</span>
         </h1>
 
-        <p className="subheading-lg max-w-2xl text-center" style={{ marginTop: '24px' }}>
+        <p className="subheading-lg max-w-2xl text-center mobile-hero-fade-d2" style={{ marginTop: '24px' }}>
           Atraskite senovės išmintį per <span className="text-amber-400 font-semibold not-italic">Elder Futhark</span> runas
         </p>
 
-        <p className="overline" style={{ marginTop: '16px' }}>
+        <p className="overline mobile-hero-fade-d3" style={{ marginTop: '16px' }}>
           Kasdienės runos • Būrimai • Išmintis
         </p>
 
         <div
-          className="flex flex-col items-stretch justify-center gap-4 w-full max-w-xl px-4"
+          className="flex flex-col items-stretch justify-center gap-4 w-full max-w-xl px-4 mobile-hero-fade-d4"
           style={{ marginTop: '32px' }}
         >
           <Link
