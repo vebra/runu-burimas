@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { User, LogOut, Calendar, Sparkles, Heart, Trophy, Trash2, AlertTriangle, Crown, Settings } from 'lucide-react'
+import { User, LogOut, Calendar, Sparkles, Heart, Trophy, Trash2, AlertTriangle, Crown, Settings, Bell, BellOff } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { usePremium } from '../hooks/usePremium'
 import { useSEO } from '../hooks/useSEO'
+import { useNotifications } from '../hooks/useNotifications'
 import { useFavorites, useDivinations } from '../hooks/useRunes'
 import { supabase } from '../lib/supabase'
 import { Button } from '../components/common/Button'
@@ -28,6 +29,7 @@ export function Profile() {
   const { isPremium, subscription, openCustomerPortal, loading: premiumLoading } = usePremium()
   const { favorites, fetchFavorites } = useFavorites()
   const { divinations, fetchDivinations } = useDivinations()
+  const { supported: notifSupported, enabled: notifEnabled, permission: notifPermission, toggle: toggleNotif } = useNotifications()
   const navigate = useNavigate()
   const hasFetched = useRef(false)
   const [portalLoading, setPortalLoading] = useState(false)
@@ -435,6 +437,53 @@ export function Profile() {
             </motion.div>
           </div>
         </motion.div>
+
+        {/* Pranešimų nustatymai */}
+        {notifSupported && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.27 }}
+            className="bg-gray-800/50 border border-purple-500/30 rounded-xl"
+            style={{ padding: '1.5rem', marginBottom: '2.5rem' }}
+          >
+            <h3 className="text-lg font-cinzel font-semibold text-white flex items-center gap-2" style={{ marginBottom: '1rem' }}>
+              <Bell className="w-5 h-5 text-amber-400" />
+              Pranešimai
+            </h3>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-300 text-sm">Kasdienės runos priminimas</p>
+                <p className="text-gray-500 text-xs mt-1">
+                  {notifPermission === 'denied'
+                    ? 'Pranešimai užblokuoti naršyklėje'
+                    : 'Kiekvieną dieną 9:00 priminsime traukti runą'}
+                </p>
+              </div>
+              <button
+                onClick={toggleNotif}
+                disabled={notifPermission === 'denied'}
+                className={`relative w-14 h-8 rounded-full transition-all duration-300 ${
+                  notifEnabled && notifPermission !== 'denied'
+                    ? 'bg-amber-500'
+                    : 'bg-gray-700'
+                } ${notifPermission === 'denied' ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+              >
+                <div
+                  className={`absolute top-1 w-6 h-6 rounded-full bg-white shadow-md transition-transform duration-300 flex items-center justify-center ${
+                    notifEnabled && notifPermission !== 'denied' ? 'translate-x-7' : 'translate-x-1'
+                  }`}
+                >
+                  {notifEnabled && notifPermission !== 'denied' ? (
+                    <Bell className="w-3.5 h-3.5 text-amber-500" />
+                  ) : (
+                    <BellOff className="w-3.5 h-3.5 text-gray-400" />
+                  )}
+                </div>
+              </button>
+            </div>
+          </motion.div>
+        )}
 
         {divinations.length > 0 ? (
           <motion.div

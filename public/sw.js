@@ -34,6 +34,37 @@ self.addEventListener('activate', (event) => {
   self.clients.claim()
 })
 
+// Push notification event
+self.addEventListener('push', (event) => {
+  const data = event.data ? event.data.json() : {}
+  const title = data.title || 'Runų Būrimas 🔮'
+  const options = {
+    body: data.body || 'Laikas traukti šios dienos runą!',
+    icon: BASE_PATH + 'icons/icon-192x192.png',
+    badge: BASE_PATH + 'icons/icon-72x72.png',
+    tag: 'daily-rune-reminder',
+    renotify: true,
+    data: { url: data.url || '/' },
+  }
+  event.waitUntil(self.registration.showNotification(title, options))
+})
+
+// Notification click — open the app
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close()
+  const url = event.notification.data?.url || '/'
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
+      for (const client of clients) {
+        if (client.url.includes(self.location.origin) && 'focus' in client) {
+          return client.focus()
+        }
+      }
+      return self.clients.openWindow(url)
+    })
+  )
+})
+
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', (event) => {
   // Skip cross-origin requests
