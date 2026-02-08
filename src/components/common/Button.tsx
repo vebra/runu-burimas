@@ -52,10 +52,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     }
 
     const sizes = {
-      sm: 'px-4 py-2 text-sm gap-2',
-      md: 'px-6 py-3 text-base gap-2.5',
-      lg: 'px-8 py-4 text-lg gap-3',
-      xl: 'px-12 py-5 text-xl md:text-2xl gap-3',
+      sm: 'text-sm gap-2',
+      md: 'text-base gap-3',
+      lg: 'text-lg gap-3',
+      xl: 'text-xl md:text-2xl gap-4',
+    }
+
+    const sizeStyles = {
+      sm: { padding: '5px 18px 5px 18px', paddingRight: '28px' },
+      md: { padding: '9px 28px 9px 28px', paddingRight: '38px' },
+      lg: { padding: '12px 34px 12px 34px', paddingRight: '44px' },
+      xl: { padding: '16px 44px 16px 44px', paddingRight: '54px' },
     }
 
     return (
@@ -65,6 +72,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         aria-busy={loading}
         className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
         {...props}
+        style={{ ...sizeStyles[size], ...props.style }}
       >
         {loading && (
           <Loader2 
