@@ -120,6 +120,20 @@ export interface Divination {
   created_at: string
 }
 
+export interface JournalEntry {
+  id: string
+  user_id: string
+  date: string
+  content: string
+  mood: string | null
+  rune_id: string | null
+  rune_name: string | null
+  rune_symbol: string | null
+  tags: string[] | null
+  created_at: string
+  updated_at: string
+}
+
 export interface Subscription {
   id: string
   user_id: string

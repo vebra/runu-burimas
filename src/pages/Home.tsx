@@ -266,6 +266,15 @@ const features = [
     premium: false,
   },
   {
+    icon: BookOpen,
+    title: 'Rūnų Dienoraštis',
+    description: 'Asmeninis mistinis dienoraštis su dienos rūna ir nuotaikų sekimu',
+    path: '/journal',
+    color: 'from-violet-600 to-purple-500',
+    glowColor: 'rgba(139, 92, 246, 0.4)',
+    premium: false,
+  },
+  {
     icon: Crown,
     title: '5 Runų Kryžius',
     description: 'Situacijos analizė su praktiniais veiksmais',
