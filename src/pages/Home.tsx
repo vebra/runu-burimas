@@ -1251,7 +1251,7 @@ export function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="relative py-24 md:py-36 lg:py-48 px-6" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <section className="relative py-24 md:py-36 lg:py-48 px-6" style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: isMobile ? '57px' : '0' }}>
         <div style={{ width: '100%', maxWidth: '1024px' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
