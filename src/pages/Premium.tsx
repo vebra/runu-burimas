@@ -7,6 +7,7 @@ import { usePremium } from '../hooks/usePremium'
 import { useSEO } from '../hooks/useSEO'
 import { useToast } from '../components/common/Toast'
 import { PricingCard } from '../components/premium/PricingCard'
+import { trackPremiumPageView, trackCheckoutStarted } from '../lib/analytics'
 
 // Stripe Price IDs - these should match your Stripe dashboard
 const STRIPE_PRICES = {
@@ -69,6 +70,8 @@ export function Premium() {
   const [adminCode, setAdminCode] = useState('')
   const [activating, setActivating] = useState(false)
 
+  useEffect(() => { trackPremiumPageView() }, [])
+
   // Handle checkout result - verify session with Stripe and activate subscription
   useEffect(() => {
     const checkoutStatus = searchParams.get('checkout')
@@ -100,6 +103,7 @@ export function Premium() {
       return
     }
 
+    trackCheckoutStarted(priceId.includes('yearly') ? 'yearly' : 'monthly')
     const url = await createCheckout(priceId)
     if (url) {
       window.location.href = url

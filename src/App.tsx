@@ -9,6 +9,7 @@ import { ErrorBoundary } from './components/common/ErrorBoundary'
 import { CookieConsent } from './components/common/CookieConsent'
 import { PageTransition } from './components/common/PageTransition'
 import { useAuth, AuthProvider } from './hooks/useAuth'
+import { usePageTracking } from './hooks/useAnalytics'
 
 // Lazy load pages for better performance
 const Home = lazy(() => import('./pages/Home').then(m => ({ default: m.Home })))
@@ -108,6 +109,7 @@ function AnimatedRoutes() {
 
 function AppContent() {
   const { user, signOut } = useAuth()
+  usePageTracking()
 
   return (
     <div className="min-h-screen bg-gray-950 text-white flex flex-col relative">

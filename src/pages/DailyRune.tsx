@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Sparkles, Save, BookOpen } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { useRunes, useDailyRune } from '../hooks/useRunes'
+import { trackDailyRune } from '../lib/analytics'
 import type { Rune } from '../types/database'
 import { Button } from '../components/common/Button'
 import { ReadingDisclaimer } from '../components/common/ReadingDisclaimer'
@@ -74,6 +75,7 @@ export function DailyRune() {
     if (rune) {
       setDrawnRune(rune)
       setOrientation(orient)
+      trackDailyRune(rune.name)
       if (user) {
         try {
           await saveDailyRune(user.id, rune.id, orient)

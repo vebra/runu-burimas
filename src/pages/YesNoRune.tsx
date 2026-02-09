@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Sparkles, RotateCcw, ThumbsUp, ThumbsDown, Minus } from 'lucide-react'
 import { useRunes } from '../hooks/useRunes'
+import { trackYesNo } from '../lib/analytics'
 import { useSEO } from '../hooks/useSEO'
 import type { Rune } from '../types/database'
 import { Button } from '../components/common/Button'
@@ -104,6 +105,7 @@ export function YesNoRune() {
     if (rune) {
       const answer = getAnswer(rune, orientation)
       setResult({ rune, orientation, answer })
+      trackYesNo(answer)
     }
 
     setIsDrawing(false)

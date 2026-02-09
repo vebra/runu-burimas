@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { useRunes } from '../hooks/useRunes'
 import { usePremium } from '../hooks/usePremium'
 import { useSEO } from '../hooks/useSEO'
+import { trackHoroscopeCalculation } from '../lib/analytics'
 import { Button } from '../components/common/Button'
 import { RuneLoader } from '../components/common/RuneLoader'
 import type { Rune } from '../types/database'
@@ -122,7 +123,10 @@ export function RuneHoroscope() {
   }, [birthDate, runes])
 
   const handleCalculate = () => {
-    if (birthDate) setShowResults(true)
+    if (birthDate) {
+      setShowResults(true)
+      if (results?.birthRune) trackHoroscopeCalculation(results.birthRune.name)
+    }
   }
 
   if (loading) return <RuneLoader symbol="ᛊ" />

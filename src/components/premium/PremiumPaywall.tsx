@@ -1,6 +1,8 @@
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Crown, Sparkles, Lock } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { trackPaywallView } from '../../lib/analytics'
 
 interface PremiumPaywallProps {
   title?: string
@@ -22,6 +24,10 @@ export function PremiumPaywall({
     'Pilna būrimų istorija',
   ],
 }: PremiumPaywallProps) {
+  useEffect(() => {
+    trackPaywallView(title)
+  }, [title])
+
   return (
     <div
       className="min-h-screen px-4 sm:px-6 pt-8 md:pt-32 pb-16"

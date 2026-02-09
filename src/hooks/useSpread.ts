@@ -3,6 +3,7 @@ import { useAuth } from './useAuth'
 import { useRunes, useDivinations } from './useRunes'
 import { useToast } from '../components/common/Toast'
 import { useAIInterpretation } from './useAIInterpretation'
+import { trackDivination } from '../lib/analytics'
 import type { Rune } from '../types/database'
 
 export interface DrawnRune<P extends string = string> {
@@ -55,6 +56,7 @@ export function useSpread<P extends string>(config: SpreadConfig<P>) {
   useEffect(() => {
     if (drawnRunes.length === runeCount && revealedPositions.size === runeCount) {
       setSpreadComplete(true)
+      trackDivination(divinationType, true)
       if (user) {
         saveDivinationToDb()
       }

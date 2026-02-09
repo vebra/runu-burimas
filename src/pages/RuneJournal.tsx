@@ -7,6 +7,7 @@ import { useJournal } from '../hooks/useJournal'
 import type { JournalStats } from '../hooks/useJournal'
 import { usePremium } from '../hooks/usePremium'
 import { useRunes } from '../hooks/useRunes'
+import { trackJournalEntry } from '../lib/analytics'
 import { useSEO } from '../hooks/useSEO'
 import { Button } from '../components/common/Button'
 import { useToast } from '../components/common/Toast'
@@ -138,6 +139,7 @@ export function RuneJournal() {
 
     if (result) {
       setCurrentEntry(result)
+      trackJournalEntry(mood, !!selectedRune)
       toast.success('Dienoraštis išsaugotas!')
       loadMonthEntries()
       getStats(user.id).then(setStats)

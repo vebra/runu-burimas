@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Sparkles, RotateCcw, BookOpen, Save, Loader2 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { useRunes, useDivinations } from '../hooks/useRunes'
+import { trackThreeRune } from '../lib/analytics'
 import { useSEO } from '../hooks/useSEO'
 import type { Rune, RuneSpread } from '../types/database'
 import { Button } from '../components/common/Button'
@@ -83,6 +84,7 @@ export function ThreeRune() {
     )
     if (allRevealed) {
       setSpreadComplete(true)
+      trackThreeRune()
       saveSpread()
     }
   }
