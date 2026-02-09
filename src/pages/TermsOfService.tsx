@@ -13,22 +13,26 @@ export function TermsOfService() {
       title: '1. Paslaugos aprašymas',
       content: `„Runų Būrimas" yra internetinė platforma, skirta:
 
-**Nemokamos funkcijos:**
+**Nemokamos funkcijos (be apribojimų):**
 • **Kasdienė Runa** – viena runa kiekvienai dienai
 • **Trys Runos** – praeitis, dabartis, ateitis
 • **Taip/Ne būrimas** – greitas atsakymas į klausimą
 • **Runų Biblioteka** – informacija apie Elder Futhark runas
 • **Runų Konverteris** – teksto konvertavimas į runas
-• **Rūnų Horoskopas** – gimimo rūnos apskaičiavimas (nemokamai)
+• **Rūnų Horoskopas** – gimimo rūnos apskaičiavimas
 
-**Premium funkcijos (mokama prenumerata):**
+**Premium funkcijos (3 nemokami būrimai per mėnesį / neribotai su prenumerata):**
 • **5 Runų Kryžius** – situacijos analizė
 • **7 Runų Gyvenimo Žemėlapis** – gilus dvasinis kelias
 • **Meilės Būrimas** – 5 runų santykių analizė
 • **Keltų Kryžius** – išsamus 10 runų būrimas
+
+**Tik su Premium prenumerata:**
 • **Rūnų Horoskopas** – savaitinės ir mėnesinės prognozės
 • **Rūnų Dienoraštis** – neriboti asmeniniai įrašai
 • **AI interpretacijos** – išsamios būrimų analizės
+
+Nemokamų premium būrimų limitas (3 per mėnesį) yra bendras visiems premium būrimų tipams ir atsinaujina kiekvieno kalendorinio mėnesio pradžioje.
 
 Paslauga teikiama **pramogos ir savirefleksijos** tikslais. Runų būrimai nėra ir neturėtų būti laikomi profesionalia konsultacija.`
     },
@@ -108,9 +112,16 @@ Jūs **negalite**:
     {
       icon: Crown,
       title: '7. Premium prenumerata',
-      content: `**Prenumeratos planai:**
+      content: `**Nemokamas planas (Freemium):**
+• **3 premium būrimai per mėnesį** – 5 Runų Kryžius, 7 Runų Žemėlapis, Meilės Būrimas, Keltų Kryžius
+• Limitas atsinaujina kiekvieno **kalendorinio mėnesio 1 d.**
+• Limitas yra bendras visiems premium būrimų tipams
+• Nepanaudoti būrimai **neperkeliami** į kitą mėnesį
+
+**Prenumeratos planai:**
 • **Mėnesinis** – €9.99/mėn, atnaujinamas automatiškai
 • **Metinis** – €79.99/metai (sutaupote ~33%)
+• Prenumerata suteikia **neribotą** prieigą prie visų premium funkcijų
 
 **Mokėjimas:**
 • Mokėjimai apdorojami per **Stripe** – saugų mokėjimų tinklą
@@ -120,6 +131,7 @@ Jūs **negalite**:
 **Atšaukimas:**
 • Galite atšaukti prenumeratą **bet kuriuo metu**
 • Po atšaukimo Premium prieiga išliks iki **mokėjimo periodo pabaigos**
+• Po periodo pabaigos grįšite prie nemokamo plano su **3 būrimais per mėnesį**
 • Pinigai už nepanaudotą laikotarpį **negrąžinami**
 
 **Automatinis atnaujinimas:**
@@ -150,6 +162,7 @@ Jūs **negalite**:
       content: `Mes pasiliekame teisę:
 
 • **Keisti funkcijas** – pridėti, modifikuoti ar pašalinti funkcijas
+• **Keisti nemokamų būrimų limitą** – padidinti ar sumažinti mėnesinį limitą
 • **Atnaujinti kainas** – pranešus iš anksto
 • **Sustabdyti paslaugą** – laikinai ar visam laikui, pranešus iš anksto
 • **Keisti šias sąlygas** – apie esminius pakeitimus informuosime el. paštu
@@ -198,7 +211,7 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
             Naudojimo Sąlygos
           </h1>
           <p className="text-gray-400 text-base">
-            Paskutinį kartą atnaujinta: 2026 m. vasario 3 d.
+            Paskutinį kartą atnaujinta: 2026 m. vasario 9 d.
           </p>
         </motion.div>
 
