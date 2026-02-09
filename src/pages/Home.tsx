@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import { useSEO } from '../hooks/useSEO'
 import { Sparkles, Calendar, BookOpen, Type, ArrowRight, Crown, Compass, TrendingUp, Zap, Star, Moon, HelpCircle, Heart } from 'lucide-react'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, memo } from 'react'
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(() => {
@@ -32,7 +32,7 @@ interface Feature {
 }
 
 // 3D Tilt Card Component
-function FeatureCard({ feature }: { feature: Feature }) {
+const FeatureCard = memo(function FeatureCard({ feature }: { feature: Feature }) {
   const cardRef = useRef<HTMLDivElement>(null)
   const [isHovered, setIsHovered] = useState(false)
 
@@ -226,7 +226,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
       </Link>
     </motion.div>
   )
-}
+})
 
 const features = [
   {
@@ -1004,11 +1004,17 @@ export function Home() {
       {/* Mobile Logo between Hero and About */}
       {isMobile && (
         <div className="flex justify-center" style={{ paddingTop: '8px', marginBottom: '76px' }}>
-          <img
-            src="/logo.png"
-            alt="Runų Būrimas - Elder Futhark"
-            style={{ width: '300px', height: '300px', borderRadius: '50%' }}
-          />
+          <picture>
+            <source srcSet="/logo.webp" type="image/webp" />
+            <img
+              src="/logo.png"
+              alt="Runų Būrimas - Elder Futhark"
+              width={300}
+              height={300}
+              loading="lazy"
+              style={{ width: '300px', height: '300px', borderRadius: '50%' }}
+            />
+          </picture>
         </div>
       )}
 

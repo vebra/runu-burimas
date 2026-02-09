@@ -52,13 +52,15 @@ export function useRunes() {
 export function useDailyRune() {
   const [todayRune, setTodayRune] = useState<DailyRune | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   const fetchTodayRune = async (userId: string) => {
     try {
       setLoading(true)
+      setError(null)
       const today = new Date().toISOString().split('T')[0]
 
-      const { data, error } = await supabase
+      const { data, error: fetchError } = await supabase
         .from('daily_runes')
         .select(`
           *,
@@ -68,10 +70,10 @@ export function useDailyRune() {
         .eq('date', today)
         .maybeSingle()
 
-      if (error) throw error
+      if (fetchError) throw fetchError
       setTodayRune(data as DailyRune | null)
-    } catch {
-      // Error handled silently
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Nepavyko gauti dienos runos')
     } finally {
       setLoading(false)
     }
@@ -128,6 +130,7 @@ export function useDailyRune() {
   return {
     todayRune,
     loading,
+    error,
     fetchTodayRune,
     saveDailyRune,
     updateReflection,
@@ -138,21 +141,23 @@ export function useDailyRune() {
 export function useDivinations() {
   const [divinations, setDivinations] = useState<Divination[]>([])
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const fetchDivinations = async (userId: string) => {
     try {
       setLoading(true)
-      const { data, error } = await supabase
+      setError(null)
+      const { data, error: fetchError } = await supabase
         .from('divinations')
         .select('*')
         .eq('user_id', userId)
         .order('created_at', { ascending: false })
         .limit(10)
 
-      if (error) throw error
+      if (fetchError) throw fetchError
       setDivinations(data || [])
-    } catch {
-      // Error handled silently
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Nepavyko gauti būrimų istorijos')
     } finally {
       setLoading(false)
     }
@@ -218,6 +223,7 @@ export function useDivinations() {
   return {
     divinations,
     loading,
+    error,
     fetchDivinations,
     saveThreeRuneSpread,
     saveDivination,
@@ -228,19 +234,21 @@ export function useDivinations() {
 export function useFavorites() {
   const [favorites, setFavorites] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const fetchFavorites = async (userId: string) => {
     try {
       setLoading(true)
-      const { data, error } = await supabase
+      setError(null)
+      const { data, error: fetchError } = await supabase
         .from('user_favorite_runes')
         .select('rune_id')
         .eq('user_id', userId)
 
-      if (error) throw error
+      if (fetchError) throw fetchError
       setFavorites(data?.map(f => f.rune_id) || [])
-    } catch {
-      // Error handled silently
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Nepavyko gauti mėgstamų runų')
     } finally {
       setLoading(false)
     }
@@ -271,6 +279,7 @@ export function useFavorites() {
   return {
     favorites,
     loading,
+    error,
     fetchFavorites,
     toggleFavorite,
     isFavorite: (runeId: string) => favorites.includes(runeId),

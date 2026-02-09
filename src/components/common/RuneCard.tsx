@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, memo } from 'react'
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion'
 import type { Rune } from '../../types/database'
 
@@ -43,7 +43,7 @@ const sizes = {
   lg: { width: 'w-32 md:w-40', height: 'h-48 md:h-56', symbol: 'text-6xl md:text-7xl', name: 'text-base md:text-lg' },
 }
 
-export function RuneCard({
+export const RuneCard = memo(function RuneCard({
   rune,
   orientation = 'upright',
   revealed,
@@ -559,7 +559,7 @@ export function RuneCard({
       </div>
     </div>
   )
-}
+})
 
 // Mini rune card for summaries
 export function MiniRuneCard({

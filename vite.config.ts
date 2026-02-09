@@ -1,11 +1,23 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { compression } from 'vite-plugin-compression2'
+import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    compression({ algorithms: ['gzip', 'brotliCompress'] }),
+  ],
   base: '/',
+  resolve: {
+    alias: {
+      // Stub unused Supabase modules to reduce bundle size (~96KB savings)
+      '@supabase/realtime-js': path.resolve(__dirname, 'src/lib/supabase-realtime-stub.ts'),
+    },
+  },
   build: {
     rollupOptions: {
       output: {

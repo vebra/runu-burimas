@@ -68,7 +68,8 @@ export function useJournal(): UseJournalResult {
 
       if (fetchError && fetchError.code !== 'PGRST116') throw fetchError
       return (data as JournalEntry) || null
-    } catch {
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Nepavyko gauti įrašo')
       return null
     }
   }, [])
@@ -159,7 +160,8 @@ export function useJournal(): UseJournalResult {
       if (deleteError) throw deleteError
       setEntries(prev => prev.filter(e => e.id !== entryId))
       return true
-    } catch {
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Nepavyko ištrinti įrašo')
       return false
     }
   }, [])
@@ -179,7 +181,8 @@ export function useJournal(): UseJournalResult {
 
       if (fetchError) throw fetchError
       return (data as JournalEntry[]) || []
-    } catch {
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Nepavyko gauti mėnesio įrašų')
       return []
     }
   }, [])
@@ -264,7 +267,8 @@ export function useJournal(): UseJournalResult {
         topMoods,
         topRunes,
       }
-    } catch {
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Nepavyko gauti statistikos')
       return null
     }
   }, [])

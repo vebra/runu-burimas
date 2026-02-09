@@ -80,7 +80,7 @@
       "name": "Kasdienė Runa",
       "short_name": "Kasdienė",
       "description": "Traukti šiandienos runą",
-      "url": "/daily",
+      "url": "/dienos-runa",
       "icons": [
         {
           "src": "/icons/icon-96x96.png",
@@ -92,7 +92,7 @@
       "name": "Runų Biblioteka",
       "short_name": "Biblioteka",
       "description": "Peržiūrėti visas runas",
-      "url": "/library",
+      "url": "/biblioteka",
       "icons": [
         {
           "src": "/icons/icon-96x96.png",
