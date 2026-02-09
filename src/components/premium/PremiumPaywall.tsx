@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Crown, Sparkles, Lock } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { trackPaywallView } from '../../lib/analytics'
+import { trackPaywallView, trackFreemiumQuotaExceeded } from '../../lib/analytics'
 
 interface PremiumPaywallProps {
   title?: string
@@ -28,7 +28,10 @@ export function PremiumPaywall({
 }: PremiumPaywallProps) {
   useEffect(() => {
     trackPaywallView(title)
-  }, [title])
+    if (quotaExceeded) {
+      trackFreemiumQuotaExceeded(title)
+    }
+  }, [title, quotaExceeded])
 
   return (
     <div

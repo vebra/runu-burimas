@@ -3,7 +3,7 @@ import { useAuth } from './useAuth'
 import { useRunes, useDivinations } from './useRunes'
 import { useToast } from '../components/common/Toast'
 import { useAIInterpretation } from './useAIInterpretation'
-import { trackDivination } from '../lib/analytics'
+import { trackDivination, trackFreemiumReading } from '../lib/analytics'
 import type { Rune } from '../types/database'
 
 export interface DrawnRune<P extends string = string> {
@@ -22,10 +22,11 @@ interface SpreadConfig<P extends string> {
   positions: P[]
   divinationType: string
   drawDelay?: number
+  freemium?: { usedCount: number; remainingCount: number }
 }
 
 export function useSpread<P extends string>(config: SpreadConfig<P>) {
-  const { positions, divinationType, drawDelay = 2000 } = config
+  const { positions, divinationType, drawDelay = 2000, freemium } = config
 
   const { user } = useAuth()
   const { runes, loading: runesLoading, getRandomOrientation } = useRunes()
@@ -57,6 +58,9 @@ export function useSpread<P extends string>(config: SpreadConfig<P>) {
     if (drawnRunes.length === runeCount && revealedPositions.size === runeCount) {
       setSpreadComplete(true)
       trackDivination(divinationType, true)
+      if (freemium) {
+        trackFreemiumReading(divinationType, freemium.usedCount + 1, freemium.remainingCount - 1)
+      }
       if (user) {
         saveDivinationToDb()
       }

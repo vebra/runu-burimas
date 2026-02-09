@@ -48,6 +48,7 @@ export function SevenRuneMap() {
     positions: POSITIONS,
     divinationType: 'seven_rune_map',
     drawDelay: 2500,
+    freemium: !isPremium ? { usedCount: freemiumQuota.usedCount, remainingCount: freemiumQuota.remainingCount } : undefined,
   })
 
   if (!spread.user) {

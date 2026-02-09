@@ -46,6 +46,7 @@ export function LoveReading() {
     positions: POSITIONS,
     divinationType: 'love_reading',
     drawDelay: 2000,
+    freemium: !isPremium ? { usedCount: freemiumQuota.usedCount, remainingCount: freemiumQuota.remainingCount } : undefined,
   })
 
   if (!spread.user) {

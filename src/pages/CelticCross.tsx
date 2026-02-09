@@ -51,6 +51,7 @@ export function CelticCross() {
     positions: POSITIONS,
     divinationType: 'celtic_cross',
     drawDelay: 3000,
+    freemium: !isPremium ? { usedCount: freemiumQuota.usedCount, remainingCount: freemiumQuota.remainingCount } : undefined,
   })
 
   if (!spread.user) {

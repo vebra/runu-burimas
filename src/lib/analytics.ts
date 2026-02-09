@@ -93,6 +93,20 @@ export function trackPaywallView(source: string) {
   })
 }
 
+export function trackFreemiumQuotaExceeded(source: string) {
+  gtag('event', 'freemium_quota_exceeded', {
+    source,
+  })
+}
+
+export function trackFreemiumReading(divinationType: string, usedCount: number, remainingCount: number) {
+  gtag('event', 'freemium_reading_used', {
+    divination_type: divinationType,
+    used_count: usedCount,
+    remaining_count: remainingCount,
+  })
+}
+
 export function trackPremiumPageView() {
   gtag('event', 'premium_page_viewed')
 }

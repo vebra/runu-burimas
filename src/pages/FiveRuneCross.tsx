@@ -47,6 +47,7 @@ export function FiveRuneCross() {
     positions: POSITIONS,
     divinationType: 'five_rune_cross',
     drawDelay: 2000,
+    freemium: !isPremium ? { usedCount: freemiumQuota.usedCount, remainingCount: freemiumQuota.remainingCount } : undefined,
   })
 
   if (!spread.user) {
