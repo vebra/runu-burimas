@@ -997,11 +997,11 @@ export function Home() {
 
       {/* Mobile Logo between Hero and About */}
       {isMobile && (
-        <div className="flex justify-center" style={{ paddingTop: '8px', paddingBottom: '8px' }}>
+        <div className="flex justify-center" style={{ paddingTop: '8px', paddingBottom: '8px', marginBottom: '-76px', position: 'relative', zIndex: 1 }}>
           <img
             src="/logo.png"
             alt="Runų Būrimas - Elder Futhark"
-            style={{ width: '200px', height: '200px', borderRadius: '50%' }}
+            style={{ width: '300px', height: '300px', borderRadius: '50%' }}
           />
         </div>
       )}
