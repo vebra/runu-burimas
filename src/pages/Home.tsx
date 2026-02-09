@@ -1007,7 +1007,7 @@ export function Home() {
       )}
 
       {/* About Runes Section */}
-      <section className="relative pt-4 pb-8 sm:py-24 md:py-32 px-4 w-full flex justify-center">
+      <section className="relative pt-4 pb-8 sm:py-24 md:py-32 px-4 w-full flex justify-center" style={{ marginBottom: isMobile ? '57px' : '0' }}>
         <div style={{ width: '100%', maxWidth: '1024px' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
