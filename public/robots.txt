@@ -1,8 +1,8 @@
 # Robots.txt for Runų Būrimas
-# https://rune-app-delta.vercel.app/
+# https://www.runes.lt/
 
 User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://rune-app-delta.vercel.app/sitemap.xml
+Sitemap: https://www.runes.lt/sitemap.xml

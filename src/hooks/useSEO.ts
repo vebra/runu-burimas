@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 const SITE_NAME = 'Runų Būrimas'
-const BASE_URL = 'https://rune-app-delta.vercel.app'
+const BASE_URL = 'https://www.runes.lt'
 const DEFAULT_TITLE = `${SITE_NAME} 🔮 | Elder Futhark Runų Aplikacija`
 const DEFAULT_DESCRIPTION = 'Atraskite senovės išmintį per Elder Futhark runas. Kasdienės runos, būrimai, runų biblioteka ir dienoraštis. Pradėkite savo dvasinį kelią šiandien!'
 const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`

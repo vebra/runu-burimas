@@ -452,7 +452,7 @@ export function Home() {
         '@context': 'https://schema.org',
         '@type': 'WebApplication',
         name: 'Runų Būrimas',
-        url: 'https://rune-app-delta.vercel.app/',
+        url: 'https://www.runes.lt/',
         description: 'Atraskite senovės išmintį per Elder Futhark runas. Kasdienės runos, būrimai, runų biblioteka ir dienoraštis.',
         applicationCategory: 'LifestyleApplication',
         operatingSystem: 'Web',
