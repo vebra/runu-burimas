@@ -89,15 +89,15 @@ export function SignupForm({ onSubmit, onSwitchToLogin }: SignupFormProps) {
       animate={{ opacity: 1, y: 0 }}
       className="w-full max-w-md mx-auto"
     >
-      <div className="bg-gray-900/80 backdrop-blur-sm border border-amber-600/20 rounded-2xl p-8 shadow-2xl">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-cinzel font-bold text-white mb-2">
+      <div className="bg-gray-900/80 backdrop-blur-sm border border-amber-600/20 rounded-2xl p-6 sm:p-8 shadow-2xl">
+        <div className="text-center mb-6 sm:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-cinzel font-bold text-white mb-2">
             Sukurti paskyrą
           </h2>
-          <p className="text-gray-400">Pradėkite savo runų kelionę</p>
+          <p className="text-gray-400 text-sm sm:text-base">Pradėkite savo runų kelionę</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
           {error && (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -115,6 +115,7 @@ export function SignupForm({ onSubmit, onSwitchToLogin }: SignupFormProps) {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="jusu@email.lt"
             leftIcon={<Mail className="w-5 h-5" />}
+            inputSize="lg"
             required
           />
 
@@ -126,6 +127,7 @@ export function SignupForm({ onSubmit, onSwitchToLogin }: SignupFormProps) {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               leftIcon={<Lock className="w-5 h-5" />}
+              inputSize="lg"
               rightIcon={
                 <button
                   type="button"
@@ -170,7 +172,7 @@ export function SignupForm({ onSubmit, onSwitchToLogin }: SignupFormProps) {
                 type={showPassword ? 'text' : 'password'}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`w-full bg-gray-800/50 border rounded-lg py-3 pl-11 pr-12 text-white placeholder-gray-500 focus:outline-none focus:ring-1 transition-colors ${
+                className={`w-full bg-gray-800/50 border rounded-xl p-4 pl-11 pr-12 text-lg text-white placeholder-gray-500 focus:outline-none focus:ring-1 transition-colors ${
                   confirmPassword.length > 0
                     ? passwordsMatch
                       ? 'border-green-500 focus:border-green-500 focus:ring-green-500'

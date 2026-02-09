@@ -38,7 +38,7 @@ export function Auth() {
 
   return (
     <div className="min-h-screen py-12 px-4" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <div style={{ width: '100%', maxWidth: '448px' }}>
+      <div style={{ width: '100%', maxWidth: '500px' }}>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
