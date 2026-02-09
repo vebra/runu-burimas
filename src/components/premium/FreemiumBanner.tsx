@@ -15,26 +15,30 @@ export function FreemiumBanner({ usedCount, monthlyLimit }: FreemiumBannerProps)
     <motion.div
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="w-full max-w-2xl mx-auto mb-6"
+      className="w-full mt-2 mb-2 mx-auto"
+      style={{ maxWidth: '672px' }}
     >
-      <div className="bg-purple-900/30 border border-amber-500/40 rounded-xl p-4 sm:p-5">
-        <div className="flex items-center justify-between mb-3">
+      <div className="bg-purple-900/30 border border-amber-500/40 rounded-xl p-4 sm:p-5 text-center">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-200 text-sm sm:text-base font-medium">
-              Liko {remaining}/{monthlyLimit} nemokami premium burimai si menesi
+            <span
+              className="text-amber-200 font-medium"
+              style={{ fontSize: 'clamp(0.85rem, 2.5vw, 1.15rem)' }}
+            >
+              Liko {remaining}/{monthlyLimit} nemokami būrimai
             </span>
           </div>
           <Link
             to="/premium"
-            className="flex items-center gap-1.5 text-amber-400 hover:text-amber-300 text-sm font-semibold transition-colors"
+            className="flex items-center gap-1.5 text-amber-400 hover:text-amber-300 font-semibold transition-colors text-sm sm:text-base"
           >
-            <Crown className="w-4 h-4" />
-            <span className="hidden sm:inline">Premium</span>
+            <Crown className="w-4 h-4 sm:w-5 sm:h-5" />
+            Premium
           </Link>
         </div>
 
-        <div className="w-full bg-purple-900/50 rounded-full h-2.5 overflow-hidden">
+        <div className="w-full bg-purple-900/50 rounded-full h-2 sm:h-2.5 overflow-hidden">
           <motion.div
             className="h-full rounded-full"
             style={{
@@ -51,8 +55,8 @@ export function FreemiumBanner({ usedCount, monthlyLimit }: FreemiumBannerProps)
         </div>
 
         {remaining <= 1 && remaining > 0 && (
-          <p className="text-amber-300/80 text-xs mt-2">
-            Paskutinis nemokamas burimas! Prenumeruok Premium neribotam naudojimui.
+          <p className="text-amber-300/80 text-xs sm:text-sm mt-2.5 sm:mt-3">
+            Paskutinis nemokamas būrimas! Prenumeruok Premium neribotam naudojimui.
           </p>
         )}
       </div>

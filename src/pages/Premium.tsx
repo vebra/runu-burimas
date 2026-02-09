@@ -17,25 +17,25 @@ const STRIPE_PRICES = {
 
 const freeFeatures = [
   { name: 'Kasdienė Runa', included: true },
-  { name: 'Trys Runos (3 runų būrimas)', included: true },
-  { name: 'Taip/Ne (1 runos būrimas)', included: true },
+  { name: 'Trys Runos', included: true },
+  { name: 'Taip/Ne Būrimas', included: true },
   { name: 'Runų Biblioteka', included: true },
   { name: 'Runų Konverteris', included: true },
   { name: '5 Runų Kryžius', included: false },
-  { name: '7 Runų Gyvenimo Žemėlapis', included: false },
-  { name: 'Meilės Būrimas (5 runų)', included: false },
-  { name: 'Keltų Kryžius (10 runų)', included: false },
-  { name: 'AI interpretacijos', included: false },
+  { name: '7 Runų Žemėlapis', included: false },
+  { name: 'Meilės Būrimas', included: false },
+  { name: 'Keltų Kryžius', included: false },
+  { name: 'AI Interpretacijos', included: false },
 ]
 
 const premiumFeatures = [
   'Visi FREE funkcionalumai',
-  '5 Runų Kryžius - situacijos analizė',
-  '7 Runų Gyvenimo Žemėlapis - gilus kelias',
-  'Meilės Būrimas - santykių įžvalgos',
-  'Keltų Kryžius - išsamus 10 runų būrimas',
-  'Rūnų Horoskopas - savaitinės ir mėnesinės prognozės',
-  'Rūnų Dienoraštis - neriboti įrašai',
+  '5 Runų Kryžius — situacijos analizė',
+  '7 Runų Gyvenimo Žemėlapis',
+  'Meilės Būrimas — santykių įžvalgos',
+  'Keltų Kryžius — 10 runų būrimas',
+  'Rūnų Horoskopas',
+  'Rūnų Dienoraštis — neriboti įrašai',
   'AI interpretacijos kiekvienam būrimui',
   'Neribota būrimų istorija',
   'Prioritetinė pagalba',
@@ -157,34 +157,25 @@ export function Premium() {
   // If user already has premium, show management UI
   if (isPremium && subscription) {
     return (
-      <div
-        className="px-4 sm:px-6 pt-8 md:pt-32 pb-32"
-        style={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <div style={{ width: '100%', maxWidth: '600px' }}>
+      <div className="px-4 sm:px-6 pt-6 sm:pt-8 md:pt-32 pb-32 w-full flex flex-col items-center">
+        <div className="w-full" style={{ maxWidth: '600px' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center"
-            style={{ marginBottom: '3rem', marginTop: '2rem' }}
+            className="text-center mt-6 sm:mt-8 mb-8 sm:mb-12"
           >
             <div className="flex justify-center mb-4">
               <motion.div
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <Crown className="w-16 h-16 text-amber-400" />
+                <Crown className="w-12 h-12 sm:w-16 sm:h-16 text-amber-400" />
               </motion.div>
             </div>
-            <h1 className="text-4xl font-cinzel font-bold text-white mb-4">
+            <h1 className="text-3xl sm:text-4xl font-cinzel font-bold text-white mb-3">
               Jūs esate Premium narys!
             </h1>
-            <p className="text-gray-400 text-lg">
+            <p className="font-cormorant text-lg sm:text-xl text-gray-300 italic">
               Džiaukitės visomis Premium funkcijomis
             </p>
           </motion.div>
@@ -193,12 +184,14 @@ export function Premium() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="bg-gray-800/50 border-2 border-amber-500/40 rounded-2xl p-6"
+            className="bg-gray-800/50 border-2 border-amber-500/40 rounded-2xl p-5 sm:p-6"
             style={{ boxShadow: '0 0 40px rgba(217, 119, 6, 0.3)' }}
           >
-            <h3 className="text-xl font-semibold text-amber-300 mb-4">Prenumeratos informacija</h3>
+            <h3 className="text-lg sm:text-xl font-cinzel font-semibold text-amber-300 mb-4">
+              Prenumeratos informacija
+            </h3>
 
-            <div className="space-y-3 text-gray-300">
+            <div className="space-y-3 text-gray-300 text-sm sm:text-base">
               <div className="flex justify-between">
                 <span>Planas:</span>
                 <span className="text-white font-semibold">
@@ -230,7 +223,7 @@ export function Premium() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleManageSubscription}
-              className="w-full mt-6 py-3 px-6 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-medium transition-all"
+              className="w-full mt-5 sm:mt-6 py-3 px-6 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-medium transition-all text-sm sm:text-base"
             >
               Valdyti prenumeratą
             </motion.button>
@@ -240,35 +233,35 @@ export function Premium() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="mt-8 grid grid-cols-2 gap-4"
+            className="mt-6 sm:mt-8 grid grid-cols-2 gap-3 sm:gap-4"
           >
             <Link
               to="/five-rune-cross"
-              className="p-4 bg-purple-900/30 border border-purple-500/30 rounded-xl hover:border-purple-500/50 transition-all text-center"
+              className="p-3.5 sm:p-4 bg-purple-900/30 border border-purple-500/30 rounded-xl hover:border-purple-500/50 transition-all text-center"
             >
-              <span className="text-2xl mb-2 block">✨</span>
-              <span className="text-white text-sm">5 Runų Kryžius</span>
+              <span className="text-xl sm:text-2xl mb-1.5 sm:mb-2 block">✨</span>
+              <span className="text-white text-xs sm:text-sm font-medium">5 Runų Kryžius</span>
             </Link>
             <Link
               to="/seven-rune-map"
-              className="p-4 bg-purple-900/30 border border-purple-500/30 rounded-xl hover:border-purple-500/50 transition-all text-center"
+              className="p-3.5 sm:p-4 bg-purple-900/30 border border-purple-500/30 rounded-xl hover:border-purple-500/50 transition-all text-center"
             >
-              <span className="text-2xl mb-2 block">🗺️</span>
-              <span className="text-white text-sm">7 Runų Žemėlapis</span>
+              <span className="text-xl sm:text-2xl mb-1.5 sm:mb-2 block">🗺️</span>
+              <span className="text-white text-xs sm:text-sm font-medium">7 Runų Žemėlapis</span>
             </Link>
             <Link
               to="/love-reading"
-              className="p-4 bg-pink-900/30 border border-pink-500/30 rounded-xl hover:border-pink-500/50 transition-all text-center"
+              className="p-3.5 sm:p-4 bg-pink-900/30 border border-pink-500/30 rounded-xl hover:border-pink-500/50 transition-all text-center"
             >
-              <span className="text-2xl mb-2 block">💕</span>
-              <span className="text-white text-sm">Meilės Būrimas</span>
+              <span className="text-xl sm:text-2xl mb-1.5 sm:mb-2 block">💕</span>
+              <span className="text-white text-xs sm:text-sm font-medium">Meilės Būrimas</span>
             </Link>
             <Link
               to="/celtic-cross"
-              className="p-4 bg-amber-900/30 border border-amber-500/30 rounded-xl hover:border-amber-500/50 transition-all text-center"
+              className="p-3.5 sm:p-4 bg-amber-900/30 border border-amber-500/30 rounded-xl hover:border-amber-500/50 transition-all text-center"
             >
-              <span className="text-2xl mb-2 block">🔮</span>
-              <span className="text-white text-sm">Keltų Kryžius</span>
+              <span className="text-xl sm:text-2xl mb-1.5 sm:mb-2 block">🔮</span>
+              <span className="text-white text-xs sm:text-sm font-medium">Keltų Kryžius</span>
             </Link>
           </motion.div>
         </div>
@@ -278,29 +271,29 @@ export function Premium() {
 
   // Non-premium view - pricing page
   return (
-    <div
-      className="px-4 sm:px-6 pt-8 md:pt-32 pb-32"
-      style={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <div style={{ width: '100%', maxWidth: '1100px' }}>
+    <div className="px-4 sm:px-6 pt-6 sm:pt-8 md:pt-32 pb-32 w-full flex flex-col items-center">
+      <div className="w-full" style={{ maxWidth: '1100px' }}>
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center"
-          style={{ marginBottom: '4rem' }}
+          className="flex flex-col items-center mb-8 sm:mb-12 md:mb-16"
         >
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <Crown className="w-14 h-14 text-amber-400" />
-            <h1 className="text-5xl sm:text-6xl font-cinzel font-bold text-white tracking-wide">Premium</h1>
-            <Crown className="w-14 h-14 text-amber-400" />
+          {/* Mobile: smaller crown, stacked layout */}
+          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 sm:mb-5">
+            <Crown className="w-8 h-8 sm:w-12 sm:h-12 md:w-14 md:h-14 text-amber-400" />
+            <h1
+              className="font-cinzel font-bold text-white tracking-wide text-gradient-gold"
+              style={{ fontSize: 'clamp(1.75rem, 6vw, 3.75rem)' }}
+            >
+              Premium
+            </h1>
+            <Crown className="w-8 h-8 sm:w-12 sm:h-12 md:w-14 md:h-14 text-amber-400" />
           </div>
-          <p className="text-gray-300 text-xl sm:text-2xl max-w-2xl leading-relaxed text-center">
+          <p
+            className="font-cormorant italic text-gray-300 max-w-2xl leading-relaxed text-center"
+            style={{ fontSize: 'clamp(1.05rem, 3vw, 1.5rem)' }}
+          >
             Atrakinkite visas runų išminties paslaptis su Premium prenumerata
           </p>
         </motion.div>
@@ -310,45 +303,55 @@ export function Premium() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="bg-gray-800/30 border border-gray-700/50 rounded-2xl p-6 sm:p-8 lg:p-10"
-          style={{ marginBottom: '4rem' }}
+          className="bg-gray-800/30 border border-gray-700/50 rounded-2xl p-4 sm:p-6 lg:p-10 mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-2xl sm:text-3xl font-cinzel font-semibold text-white text-center mb-8">
+          <h2
+            className="font-cinzel font-semibold text-white text-center mb-5 sm:mb-8"
+            style={{ fontSize: 'clamp(1.15rem, 3.5vw, 1.875rem)' }}
+          >
             Funkcijų palyginimas
           </h2>
-          <div className="grid gap-3 sm:gap-4">
+
+          {/* Column headers - mobile visible */}
+          <div className="flex items-center justify-end gap-2 sm:gap-6 mb-3 px-2 sm:px-6">
+            <span className="w-14 sm:w-20 text-center text-gray-400 text-xs sm:text-base font-semibold uppercase tracking-wider">Free</span>
+            <span className="w-14 sm:w-20 text-center text-amber-400 text-xs sm:text-base font-semibold uppercase tracking-wider">Premium</span>
+          </div>
+
+          <div className="grid gap-1.5 sm:gap-3">
             {freeFeatures.map((feature, index) => (
               <motion.div
                 key={feature.name}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className="flex items-center justify-between py-3 sm:py-4 px-4 sm:px-6 rounded-lg bg-gray-800/30"
+                className="flex items-center justify-between py-2.5 sm:py-3.5 px-3 sm:px-6 rounded-lg bg-gray-800/30"
               >
-                <span className="text-gray-200 text-base sm:text-lg">{feature.name}</span>
-                <div className="flex gap-6 sm:gap-10">
-                  <span className="w-16 sm:w-20 text-center">
+                <span
+                  className="text-gray-200 font-medium flex-1 pr-2"
+                  style={{ fontSize: 'clamp(0.8rem, 2.5vw, 1.125rem)' }}
+                >
+                  {feature.name}
+                </span>
+                <div className="flex gap-2 sm:gap-6 shrink-0">
+                  <span className="w-14 sm:w-20 flex justify-center">
                     {feature.included ? (
-                      <Check className="w-5 h-5 sm:w-6 sm:h-6 text-green-400 mx-auto" />
+                      <Check className="w-4 h-4 sm:w-6 sm:h-6 text-green-400" />
                     ) : (
-                      <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 mx-auto" />
+                      <X className="w-4 h-4 sm:w-6 sm:h-6 text-gray-600" />
                     )}
                   </span>
-                  <span className="w-16 sm:w-20 text-center">
-                    <Check className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400 mx-auto" />
+                  <span className="w-14 sm:w-20 flex justify-center">
+                    <Check className="w-4 h-4 sm:w-6 sm:h-6 text-amber-400" />
                   </span>
                 </div>
               </motion.div>
             ))}
-            <div className="flex items-center justify-end gap-6 sm:gap-10 mt-4 px-4 sm:px-6">
-              <span className="w-16 sm:w-20 text-center text-gray-400 text-base sm:text-lg font-medium">Free</span>
-              <span className="w-16 sm:w-20 text-center text-amber-400 text-base sm:text-lg font-semibold">Premium</span>
-            </div>
           </div>
         </motion.div>
 
         {/* Pricing cards */}
-        <div className="grid md:grid-cols-2 gap-6 sm:gap-8" style={{ marginBottom: '5rem' }}>
+        <div className="grid md:grid-cols-2 gap-5 sm:gap-8" style={{ marginBottom: '1.5cm' }}>
           <PricingCard
             name="Mėnesinis"
             price="€9.99"
@@ -366,7 +369,7 @@ export function Premium() {
             features={premiumFeatures}
             priceId={STRIPE_PRICES.yearly}
             isPopular
-            savings="Sutaupyk 33%"
+            savings="−33%"
             onSubscribe={handleSubscribe}
           />
         </div>
@@ -376,29 +379,48 @@ export function Premium() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="bg-gray-800/30 border border-gray-700/50 rounded-2xl p-6 sm:p-8"
+          className="bg-gray-800/30 border border-gray-700/50 rounded-2xl p-5 sm:p-8"
         >
-          <h2 className="text-xl sm:text-2xl font-bold text-white text-center" style={{ marginBottom: '1rem' }}>
+          <h2
+            className="font-cinzel font-bold text-white text-center mb-2"
+            style={{ fontSize: 'clamp(1.1rem, 3vw, 1.5rem)' }}
+          >
             Dažnai užduodami klausimai
           </h2>
-          <div className="w-full h-0.5 bg-amber-500/30" style={{ marginBottom: '1.5rem' }}></div>
-          <div className="space-y-6 max-w-3xl mx-auto">
-            <div className="border-b border-gray-700/50 pb-6">
-              <h3 className="text-amber-300 text-base sm:text-lg font-semibold mb-2">Kaip veikia prenumerata?</h3>
+          <div className="w-12 sm:w-16 h-0.5 bg-amber-500/40 mx-auto mb-5 sm:mb-6 rounded-full" />
+
+          <div className="space-y-5 sm:space-y-6 max-w-3xl mx-auto">
+            <div className="border-b border-gray-700/50 pb-5 sm:pb-6">
+              <h3
+                className="text-amber-300 font-cinzel font-semibold mb-2"
+                style={{ fontSize: 'clamp(0.9rem, 2.5vw, 1.125rem)' }}
+              >
+                Kaip veikia prenumerata?
+              </h3>
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
                 Premium prenumerata suteikia prieigą prie visų išplėstinių būrimų ir AI interpretacijų.
                 Mokėjimas apdorojamas per saugų Stripe mokėjimų tinklą.
               </p>
             </div>
-            <div className="border-b border-gray-700/50 pb-6">
-              <h3 className="text-amber-300 text-base sm:text-lg font-semibold mb-2">Ar galiu atšaukti bet kada?</h3>
+            <div className="border-b border-gray-700/50 pb-5 sm:pb-6">
+              <h3
+                className="text-amber-300 font-cinzel font-semibold mb-2"
+                style={{ fontSize: 'clamp(0.9rem, 2.5vw, 1.125rem)' }}
+              >
+                Ar galiu atšaukti bet kada?
+              </h3>
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
                 Taip! Galite atšaukti prenumeratą bet kuriuo metu. Jūsų Premium prieiga išliks iki
                 dabartinio mokėjimo periodo pabaigos.
               </p>
             </div>
             <div>
-              <h3 className="text-amber-300 text-base sm:text-lg font-semibold mb-2">Kokie mokėjimo būdai priimami?</h3>
+              <h3
+                className="text-amber-300 font-cinzel font-semibold mb-2"
+                style={{ fontSize: 'clamp(0.9rem, 2.5vw, 1.125rem)' }}
+              >
+                Kokie mokėjimo būdai priimami?
+              </h3>
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
                 Priimame visas pagrindines kredito/debeto korteles (Visa, Mastercard, American Express)
                 ir kai kurias vietines mokėjimo sistemas per Stripe.
@@ -413,7 +435,7 @@ export function Premium() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            style={{ marginTop: '2rem' }}
+            style={{ marginTop: '1.5cm' }}
           >
             <button
               onClick={() => setShowAdminCode(!showAdminCode)}
@@ -429,7 +451,7 @@ export function Premium() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="mt-4 p-4 bg-gray-800/30 border border-gray-700/50 rounded-xl"
+                className="mt-3 p-4 bg-gray-800/30 border border-gray-700/50 rounded-xl"
               >
                 <div className="flex flex-col sm:flex-row gap-3">
                   <input
@@ -438,14 +460,14 @@ export function Premium() {
                     onChange={(e) => setAdminCode(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleActivateCode()}
                     placeholder="Įveskite kodą..."
-                    className="flex-1 bg-gray-900/50 border border-gray-700 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500"
+                    className="flex-1 bg-gray-900/50 border border-gray-700 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 text-sm sm:text-base"
                   />
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handleActivateCode}
                     disabled={activating || !adminCode.trim()}
-                    className="py-3 px-6 bg-amber-600 hover:bg-amber-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+                    className="py-3 px-6 bg-amber-600 hover:bg-amber-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 text-sm sm:text-base"
                   >
                     {activating ? (
                       <motion.div
@@ -471,10 +493,9 @@ export function Premium() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="text-center"
-            style={{ marginTop: '3rem' }}
+            className="text-center mt-8 sm:mt-10"
           >
-            <p className="text-gray-300 text-lg sm:text-xl mb-5">
+            <p className="text-gray-300 text-base sm:text-lg mb-4">
               Jau turite paskyrą?{' '}
               <Link to="/auth" className="text-amber-400 hover:text-amber-300 font-semibold">
                 Prisijunkite
@@ -483,7 +504,7 @@ export function Premium() {
             </p>
             <Link
               to="/auth"
-              className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors text-lg"
+              className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors text-base sm:text-lg"
             >
               Sukurti paskyrą <ArrowRight className="w-5 h-5" />
             </Link>

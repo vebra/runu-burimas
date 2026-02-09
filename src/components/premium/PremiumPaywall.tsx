@@ -20,8 +20,8 @@ export function PremiumPaywall({
     'Neriboti 7 Runų Gyvenimo žemėlapio būrimai',
     'Meilės Būrimas (5 runų)',
     'Keltų Kryžius (10 runų)',
-    'Rūnų Horoskopas - savaitinės ir mėnesinės prognozės',
-    'Rūnų Dienoraštis - neriboti įrašai',
+    'Rūnų Horoskopas',
+    'Rūnų Dienoraštis — neriboti įrašai',
     'AI interpretacijos',
     'Pilna būrimų istorija',
   ],
@@ -34,22 +34,12 @@ export function PremiumPaywall({
   }, [title, quotaExceeded])
 
   return (
-    <div
-      className="min-h-screen px-4 sm:px-6 pt-8 md:pt-32 pb-16"
-      style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-    >
+    <div className="min-h-screen px-4 sm:px-6 pt-6 sm:pt-8 md:pt-32 pb-16 w-full flex justify-center items-center">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="text-center"
-        style={{
-          width: '100%',
-          maxWidth: '600px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '2rem',
-        }}
+        className="text-center w-full flex flex-col items-center gap-6 sm:gap-8"
+        style={{ maxWidth: '600px' }}
       >
         <motion.div
           animate={{
@@ -63,64 +53,81 @@ export function PremiumPaywall({
           }}
           className="relative"
         >
-          <div className="w-24 h-24 sm:w-28 sm:h-28 bg-linear-to-br from-amber-500/20 to-purple-500/20 rounded-full flex items-center justify-center border-2 border-amber-500/40">
-            <Crown className="w-12 h-12 sm:w-14 sm:h-14 text-amber-400" />
+          <div className="w-20 h-20 sm:w-28 sm:h-28 bg-linear-to-br from-amber-500/20 to-purple-500/20 rounded-full flex items-center justify-center border-2 border-amber-500/40">
+            <Crown className="w-10 h-10 sm:w-14 sm:h-14 text-amber-400" />
           </div>
           <motion.div
             className="absolute -top-1 -right-1"
             animate={{ scale: [1, 1.2, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <Lock className="w-7 h-7 sm:w-8 sm:h-8 text-purple-400" />
+            <Lock className="w-6 h-6 sm:w-8 sm:h-8 text-purple-400" />
           </motion.div>
         </motion.div>
 
-        <h2 className="text-4xl sm:text-5xl font-cinzel font-bold text-white">{title}</h2>
+        <h2
+          className="font-cinzel font-bold text-white"
+          style={{ fontSize: 'clamp(1.5rem, 5vw, 3rem)' }}
+        >
+          {title}
+        </h2>
 
-        <p className="text-gray-300 text-xl sm:text-2xl leading-relaxed">
+        <p
+          className="font-cormorant italic text-gray-300 leading-relaxed"
+          style={{ fontSize: 'clamp(1rem, 3vw, 1.35rem)' }}
+        >
           {quotaExceeded
-            ? 'Isnaudojote 3 nemokamus premium burimus si menesi. Prenumeruokite Premium neribotam naudojimui.'
+            ? 'Išnaudojote 3 nemokamus premium būrimus šį mėnesį. Prenumeruokite Premium neribotam naudojimui.'
             : description}
         </p>
 
         <div
-          className="bg-purple-900/30 border-2 border-amber-500/40 rounded-xl p-6 sm:p-8 w-full"
+          className="bg-purple-900/30 border-2 border-amber-500/40 rounded-xl p-5 sm:p-8 w-full"
           style={{ boxShadow: '0 0 30px rgba(217, 119, 6, 0.2)' }}
         >
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <Sparkles className="w-6 h-6 text-amber-400" />
-            <h3 className="text-amber-300 font-semibold text-lg sm:text-xl">Premium privalumai:</h3>
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" />
+            <h3
+              className="text-amber-300 font-cinzel font-semibold"
+              style={{ fontSize: 'clamp(0.95rem, 2.5vw, 1.2rem)' }}
+            >
+              Premium privalumai
+            </h3>
           </div>
-          <ul className="text-gray-200 text-left space-y-3 sm:space-y-4">
+          <ul className="text-gray-200 text-left space-y-2.5 sm:space-y-4">
             {features.map((feature, index) => (
               <motion.li
                 key={index}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="flex items-center gap-3 text-base sm:text-lg"
+                className="flex items-center gap-2.5 sm:gap-3"
+                style={{ fontSize: 'clamp(0.8rem, 2.5vw, 1.05rem)' }}
               >
-                <span className="text-amber-400">✨</span>
+                <span className="text-amber-400 shrink-0">✨</span>
                 {feature}
               </motion.li>
             ))}
           </ul>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 w-full">
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
+        <div className="w-full">
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Link
               to="/premium"
-              className="w-full bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold py-4 sm:py-5 px-8 text-lg sm:text-xl rounded-xl transition-all duration-300 shadow-lg inline-flex items-center justify-center gap-3"
-              style={{ boxShadow: '0 0 25px rgba(217, 119, 6, 0.4)' }}
+              className="w-full bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold py-3.5 sm:py-4 px-8 rounded-xl transition-all duration-300 shadow-lg inline-flex items-center justify-center gap-2.5"
+              style={{
+                boxShadow: '0 0 25px rgba(217, 119, 6, 0.4)',
+                fontSize: 'clamp(0.95rem, 2.5vw, 1.2rem)',
+              }}
             >
-              <Crown className="w-6 h-6 sm:w-7 sm:h-7" />
+              <Crown className="w-5 h-5 sm:w-6 sm:h-6" />
               Gauti Premium
             </Link>
           </motion.div>
         </div>
 
-        <p className="text-gray-400 text-base sm:text-lg">
+        <p className="text-gray-400 text-sm sm:text-base">
           Tik <span className="text-amber-400 font-semibold">€9.99/mėn</span> arba{' '}
           <span className="text-green-400 font-semibold">€79.99/metams</span>
         </p>

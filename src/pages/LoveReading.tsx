@@ -91,24 +91,25 @@ export function LoveReading() {
   const handleRequestAI = () => spread.requestAIInterpretation(positionLabels, 'love_reading')
 
   return (
-    <div className="px-4 pt-8 md:pt-32 pb-24" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <div style={{ width: '100%', maxWidth: '1024px' }}>
+    <div className="px-4 pb-24 w-full flex flex-col items-center" style={{ paddingTop: 'clamp(5rem, 12vw, 100px)' }}>
+      <div className="w-full flex flex-col items-center" style={{ maxWidth: '1024px' }}>
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center"
-          style={{ marginBottom: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
+          className="w-full text-center flex flex-col items-center"
+          style={{ marginBottom: 'clamp(1.5rem, 4vw, 3rem)', gap: 'clamp(0.5rem, 2vw, 1rem)' }}
         >
           <div className="flex items-center justify-center gap-4">
             <motion.div
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 0.8, repeat: Infinity, ease: "easeInOut" }}
             >
-              <Heart className="w-10 h-10 text-pink-400 fill-pink-400/30" />
+              <Heart className="w-7 h-7 sm:w-10 sm:h-10 text-pink-400 fill-pink-400/30" />
             </motion.div>
             <motion.h1
-              className="text-4xl sm:text-5xl font-cinzel font-bold text-white tracking-wide uppercase"
+              className="font-cinzel font-bold text-white tracking-wide uppercase"
+              style={{ fontSize: 'clamp(1.6rem, 6vw, 3rem)' }}
               animate={{
                 textShadow: [
                   "0 0 20px rgba(236, 72, 153, 0.3)",
@@ -124,13 +125,13 @@ export function LoveReading() {
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 0.8, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
             >
-              <Heart className="w-10 h-10 text-pink-400 fill-pink-400/30" />
+              <Heart className="w-7 h-7 sm:w-10 sm:h-10 text-pink-400 fill-pink-400/30" />
             </motion.div>
           </div>
-          <p className="text-gray-300 text-lg sm:text-xl italic">
+          <p className="font-cormorant italic text-gray-300" style={{ fontSize: 'clamp(1rem, 3vw, 1.75rem)' }}>
             5 runų įžvalgos apie santykius ir meilę
           </p>
-          <p className="text-pink-300 text-base sm:text-lg">
+          <p className="text-pink-300" style={{ fontSize: 'clamp(0.8rem, 2.2vw, 1.05rem)' }}>
             Tu + Partneris + Pagrindas + Iššūkiai + Potencialas
           </p>
         </motion.div>
@@ -229,7 +230,7 @@ export function LoveReading() {
             </div>
 
             {spread.spreadComplete && (
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {/* Individual interpretations */}
                 {spread.drawnRunes.map((drawn) => (
                   <SpreadInterpretationCard
@@ -243,22 +244,23 @@ export function LoveReading() {
                 ))}
 
                 {/* Overall interpretation - Meilės Istorija */}
-                <div className="bg-linear-to-br from-pink-900/20 to-purple-900/20 border-2 border-pink-500/40 rounded-xl shadow-lg" style={{ padding: '3rem', boxShadow: '0 0 50px rgba(236, 72, 153, 0.4)' }}>
-                  <div className="flex items-center gap-4 mb-8">
-                    <Heart className="w-8 h-8 text-pink-400" />
-                    <h3 className="text-3xl font-cinzel font-bold text-pink-300">
+                <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+                <div className="bg-linear-to-br from-pink-900/20 to-purple-900/20 border-2 border-pink-500/40 rounded-xl shadow-lg" style={{ padding: 'clamp(1.25rem, 3vw, 2.5rem)', boxShadow: '0 0 30px rgba(236, 72, 153, 0.4)' }}>
+                  <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                    <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-pink-400" />
+                    <h3 className="font-cinzel font-bold text-pink-300" style={{ fontSize: 'clamp(1.1rem, 3vw, 1.75rem)' }}>
                       Meilės Istorija
                     </h3>
                   </div>
 
                   {spread.question && (
-                    <div className="bg-purple-900/30 border border-purple-500/30 rounded-lg mb-8" style={{ padding: '1.5rem' }}>
-                      <p className="text-purple-300 text-lg font-semibold mb-2">Tavo klausimas:</p>
-                      <p className="text-white italic text-xl">"{spread.question}"</p>
+                    <div className="bg-purple-900/30 border border-purple-500/30 rounded-lg mb-4 sm:mb-6" style={{ padding: 'clamp(0.75rem, 2vw, 1.25rem)' }}>
+                      <p className="text-purple-300 text-sm sm:text-base font-semibold mb-2">Tavo klausimas:</p>
+                      <p className="text-white italic text-sm sm:text-lg">"{spread.question}"</p>
                     </div>
                   )}
 
-                  <div className="space-y-5 text-gray-200 text-xl leading-relaxed">
+                  <div className="space-y-3 sm:space-y-4 text-gray-200 text-sm sm:text-base leading-relaxed">
                     <p>
                       <strong className="text-purple-300">Tu</strong> santykiuose atstovaujamas <strong className="text-pink-300">{getRuneText(spread.drawnRunes, 'you').name}</strong> energija - {getRuneText(spread.drawnRunes, 'you').text}
                     </p>
@@ -276,11 +278,12 @@ export function LoveReading() {
                     </p>
                   </div>
 
-                  <div className="mt-8 pt-8 border-t border-pink-500/30">
-                    <p className="text-pink-300 text-lg text-center italic font-medium">
+                  <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-pink-500/30">
+                    <p className="text-pink-300 text-sm sm:text-base text-center italic font-medium">
                       💕 Meilė yra kelionė, ne tikslas. Leiskite runoms vesti jus abiem. 💕
                     </p>
                   </div>
+                </div>
                 </div>
 
                 <SpreadBottomSection

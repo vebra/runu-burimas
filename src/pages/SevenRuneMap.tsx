@@ -72,7 +72,7 @@ export function SevenRuneMap() {
   if (!isPremium && freemiumQuota.isQuotaExceeded) {
     return (
       <PremiumPaywall
-        title="7 Runų Gyvenimo Žemėlapis"
+        title="7 Runų Žemėlapis"
         description="7 Runų Gyvenimo Žemėlapis yra premium funkcija, skirta giliam dvasiniam augimui."
         features={[
           'Tu centre + 6 aspektai',
@@ -93,24 +93,28 @@ export function SevenRuneMap() {
   const handleRequestAI = () => spread.requestAIInterpretation(positionLabels, 'seven_rune')
 
   return (
-    <div className="px-4 pt-8 md:pt-32 pb-24" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <div style={{ width: '100%', maxWidth: '1152px' }}>
+    <div
+      className="px-4 pb-24 w-full flex flex-col items-center"
+      style={{ paddingTop: 'clamp(5rem, 12vw, 100px)' }}
+    >
+      <div className="w-full flex flex-col items-center" style={{ maxWidth: '1152px' }}>
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center"
-          style={{ marginBottom: '3rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
+          className="w-full text-center flex flex-col items-center"
+          style={{ marginBottom: 'clamp(1.5rem, 4vw, 3rem)', gap: 'clamp(0.5rem, 2vw, 1rem)' }}
         >
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-2 sm:gap-4">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
             >
-              <Compass className="w-10 h-10 text-purple-400" />
+              <Compass className="w-7 h-7 sm:w-10 sm:h-10 text-purple-400" />
             </motion.div>
             <motion.h1
-              className="text-4xl sm:text-5xl font-cinzel font-bold text-white tracking-wide uppercase"
+              className="font-cinzel font-bold text-white tracking-wide uppercase whitespace-nowrap"
+              style={{ fontSize: 'clamp(1.6rem, 6vw, 3rem)' }}
               animate={{
                 textShadow: [
                   "0 0 20px rgba(168, 85, 247, 0.3)",
@@ -126,13 +130,19 @@ export function SevenRuneMap() {
               animate={{ rotate: -360 }}
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
             >
-              <Compass className="w-10 h-10 text-purple-400" />
+              <Compass className="w-7 h-7 sm:w-10 sm:h-10 text-purple-400" />
             </motion.div>
           </div>
-          <p className="text-gray-300 text-lg sm:text-xl italic">
+          <p
+            className="font-cormorant italic text-gray-300"
+            style={{ fontSize: 'clamp(1rem, 3vw, 1.75rem)' }}
+          >
             Gilus dvasinis kelias su 7 aspektais
           </p>
-          <p className="text-purple-300 text-base sm:text-lg">
+          <p
+            className="text-purple-300"
+            style={{ fontSize: 'clamp(0.8rem, 2.2vw, 1.05rem)' }}
+          >
             Tu centre + 6 aspektai (pagrindas, praeitis, ateitis, kliūtys, pagalba, tikslas)
           </p>
         </motion.div>
@@ -152,7 +162,7 @@ export function SevenRuneMap() {
             description="Suformuluok klausimą apie savo gyvenimo kelią, tikslą ar dvasinį augimą. 7 Runų Gyvenimo Žemėlapis atskleis gilias įžvalgas apie tavo kelionę."
             placeholder="Pvz.: Koks yra mano tikrasis kelias ir tikslas gyvenime?"
             buttonText="Traukti 7 Runas"
-            buttonIcon={<Compass className="w-6 h-6 md:w-7 md:h-7" />}
+            buttonIcon={<Compass className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />}
             buttonVariant="gradient"
             borderColor="border-purple-500/30"
             glowColor="rgba(147, 51, 234, 0.3)"
@@ -223,7 +233,7 @@ export function SevenRuneMap() {
             </div>
 
             {/* Stacked layout - Mobile */}
-            <div className="md:hidden flex flex-col items-center gap-4 px-4" style={{ marginBottom: '3rem' }}>
+            <div className="md:hidden flex flex-col items-center gap-3 sm:gap-4 px-2" style={{ marginBottom: '2rem' }}>
               {/* Centras - Tu */}
               {spread.drawnRunes.find(r => r.position === 'self') && (
                 <RuneCard
@@ -236,7 +246,7 @@ export function SevenRuneMap() {
                 />
               )}
               {/* 6 aplinkinės runos - po 2 eilutėje */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 {(['foundation', 'past', 'future', 'obstacles', 'help', 'outcome'] as Position[]).map((pos) => {
                   const drawn = spread.drawnRunes.find(r => r.position === pos)
                   if (!drawn) return null
@@ -260,7 +270,7 @@ export function SevenRuneMap() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+                style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}
               >
                 {/* Individual interpretations */}
                 {spread.drawnRunes.map((drawn) => (
@@ -275,56 +285,61 @@ export function SevenRuneMap() {
                 ))}
 
                 {/* Overall interpretation */}
-                <div className="bg-linear-to-br from-purple-900/30 to-pink-900/20 border-2 border-purple-500/50 rounded-xl shadow-lg" style={{ padding: '1.5rem', boxShadow: '0 0 30px rgba(147, 51, 234, 0.3)' }}>
-                  <div className="flex items-center gap-2" style={{ marginBottom: '1rem' }}>
+                <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+                <div
+                  className="bg-linear-to-br from-purple-900/30 to-pink-900/20 border-2 border-purple-500/50 rounded-xl shadow-lg"
+                  style={{ padding: 'clamp(1rem, 3vw, 1.5rem)', boxShadow: '0 0 30px rgba(147, 51, 234, 0.3)' }}
+                >
+                  <div className="flex items-center gap-2" style={{ marginBottom: '0.75rem' }}>
                     <Compass className="w-5 h-5 text-purple-400" />
-                    <h3 className="text-xl font-cinzel font-bold text-purple-300">
+                    <h3
+                      className="font-cinzel font-bold text-purple-300"
+                      style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)' }}
+                    >
                       Tavo Gyvenimo Kelias
                     </h3>
                   </div>
 
                   {spread.question && (
-                    <div className="bg-purple-900/40 border border-purple-500/40 rounded-lg" style={{ padding: '0.75rem', marginBottom: '1rem' }}>
+                    <div className="bg-purple-900/40 border border-purple-500/40 rounded-lg" style={{ padding: '0.75rem', marginBottom: '0.75rem' }}>
                       <p className="text-purple-300 text-xs font-semibold mb-1">Tavo klausimas:</p>
-                      <p className="text-white italic text-sm">"{spread.question}"</p>
+                      <p className="text-white italic text-xs sm:text-sm">"{spread.question}"</p>
                     </div>
                   )}
 
-                  <div className="text-gray-200 text-sm leading-relaxed" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  <div
+                    className="text-gray-200 text-xs sm:text-sm leading-relaxed"
+                    style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}
+                  >
                     <p>
-                      <strong className="text-purple-300">Tavo esmė</strong> šiuo metu yra <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'self').name}</strong> - {getRuneText(spread.drawnRunes, 'self').text} Tai yra tavo dabartinė vidinė būsena.
+                      <strong className="text-purple-300">Tavo esmė</strong> šiuo metu yra <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'self').name}</strong> — {getRuneText(spread.drawnRunes, 'self').text} Tai yra tavo dabartinė vidinė būsena.
                     </p>
-
                     <p>
-                      <strong className="text-amber-300">Pagrindas</strong>, ant kurio stovi, yra <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'foundation').name}</strong> - {getRuneText(spread.drawnRunes, 'foundation').text} Tai tave palaiko ir duoda jėgų.
+                      <strong className="text-amber-300">Pagrindas</strong>, ant kurio stovi, yra <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'foundation').name}</strong> — {getRuneText(spread.drawnRunes, 'foundation').text} Tai tave palaiko ir duoda jėgų.
                     </p>
-
                     <p>
-                      <strong className="text-blue-300">Praeitis</strong> atskleidžia <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'past').name}</strong> - {getRuneText(spread.drawnRunes, 'past').text} Tai formavo tavo kelią iki šiol.
+                      <strong className="text-blue-300">Praeitis</strong> atskleidžia <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'past').name}</strong> — {getRuneText(spread.drawnRunes, 'past').text} Tai formavo tavo kelią iki šiol.
                     </p>
-
                     <p>
-                      <strong className="text-red-300">Kliūtys</strong> pasirodo kaip <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'obstacles').name}</strong> - {getRuneText(spread.drawnRunes, 'obstacles').text} Tai yra tavo augimo galimybė.
+                      <strong className="text-red-300">Kliūtys</strong> pasirodo kaip <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'obstacles').name}</strong> — {getRuneText(spread.drawnRunes, 'obstacles').text} Tai yra tavo augimo galimybė.
                     </p>
-
                     <p>
-                      <strong className="text-green-300">Pagalba</strong> ateina per <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'help').name}</strong> - {getRuneText(spread.drawnRunes, 'help').text} Tai yra tavo stiprybė ir resursai.
+                      <strong className="text-green-300">Pagalba</strong> ateina per <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'help').name}</strong> — {getRuneText(spread.drawnRunes, 'help').text} Tai yra tavo stiprybė ir resursai.
                     </p>
-
                     <p>
-                      <strong className="text-pink-300">Ateitis</strong> rodo <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'future').name}</strong> energiją - {getRuneText(spread.drawnRunes, 'future').text} Tai yra tavo kelias į priekį.
+                      <strong className="text-pink-300">Ateitis</strong> rodo <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'future').name}</strong> energiją — {getRuneText(spread.drawnRunes, 'future').text} Tai yra tavo kelias į priekį.
                     </p>
-
-                    <p style={{ paddingTop: '0.75rem', borderTop: '1px solid rgba(147, 51, 234, 0.3)' }}>
-                      <strong className="text-amber-300">Tavo tikslas</strong> yra <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'outcome').name}</strong> - {getRuneText(spread.drawnRunes, 'outcome').text} Tai yra tavo aukščiausias potencialas ir siekis.
+                    <p style={{ paddingTop: '0.5rem', borderTop: '1px solid rgba(147, 51, 234, 0.3)' }}>
+                      <strong className="text-amber-300">Tavo tikslas</strong> yra <strong className="text-amber-300">{getRuneText(spread.drawnRunes, 'outcome').name}</strong> — {getRuneText(spread.drawnRunes, 'outcome').text} Tai yra tavo aukščiausias potencialas ir siekis.
                     </p>
                   </div>
 
-                  <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid rgba(147, 51, 234, 0.4)' }}>
+                  <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid rgba(147, 51, 234, 0.4)' }}>
                     <p className="text-purple-300 text-xs text-center italic font-medium">
                       Tavo kelias yra unikalus. Pasitikėk procesu ir leisk runoms tave vesti.
                     </p>
                   </div>
+                </div>
                 </div>
 
                 <SpreadBottomSection
