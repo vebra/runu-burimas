@@ -997,7 +997,7 @@ export function Home() {
 
       {/* Mobile Logo between Hero and About */}
       {isMobile && (
-        <div className="flex justify-center" style={{ paddingTop: '8px', paddingBottom: '8px', marginBottom: '-76px', position: 'relative', zIndex: 1 }}>
+        <div className="flex justify-center" style={{ paddingTop: '8px', marginBottom: '76px' }}>
           <img
             src="/logo.png"
             alt="Runų Būrimas - Elder Futhark"
@@ -1007,7 +1007,7 @@ export function Home() {
       )}
 
       {/* About Runes Section */}
-      <section className="relative py-8 sm:py-24 md:py-32 px-4 w-full flex justify-center">
+      <section className="relative pt-4 pb-8 sm:py-24 md:py-32 px-4 w-full flex justify-center">
         <div style={{ width: '100%', maxWidth: '1024px' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
