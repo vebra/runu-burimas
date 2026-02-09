@@ -221,7 +221,7 @@ export function Profile() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
-          style={{ marginBottom: '2.5rem', marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
+          style={{ marginBottom: '57px', marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
         >
           <div className="w-20 h-20 bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 rounded-full flex items-center justify-center shadow-lg shadow-purple-900/40 border border-amber-600/30">
             <User className="w-10 h-10 text-white" />
@@ -237,7 +237,7 @@ export function Profile() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
           className="grid grid-cols-1 sm:grid-cols-3"
-          style={{ gap: '1rem', marginBottom: '2.5rem' }}
+          style={{ gap: '1rem', marginBottom: '57px' }}
         >
           <motion.div 
             whileHover={{ scale: 1.05, y: -5 }}
@@ -266,7 +266,7 @@ export function Profile() {
         </motion.div>
 
         {stats.currentStreak > 0 && (
-          <div className="flex justify-center" style={{ marginBottom: '2.5rem' }}>
+          <div className="flex justify-center" style={{ marginBottom: '57px' }}>
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -298,7 +298,7 @@ export function Profile() {
               ? 'bg-linear-to-r from-amber-900/20 to-purple-900/20 border-amber-500/40'
               : 'bg-gray-800/50 border-gray-700'
           }`}
-          style={{ padding: '1.5rem', marginBottom: '2.5rem', boxShadow: isPremium ? '0 0 30px rgba(217, 119, 6, 0.2)' : 'none' }}
+          style={{ padding: '1.5rem', marginBottom: '57px', boxShadow: isPremium ? '0 0 30px rgba(217, 119, 6, 0.2)' : 'none' }}
         >
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
@@ -380,7 +380,7 @@ export function Profile() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.25 }}
           className="bg-gray-800/50 border border-purple-500/30 rounded-xl"
-          style={{ padding: '1.5rem', marginBottom: '2.5rem' }}
+          style={{ padding: '1.5rem', marginBottom: '57px' }}
         >
           <h3 className="text-lg font-cinzel font-semibold text-white flex items-center gap-2" style={{ marginBottom: '1rem' }}>
             <Trophy className="w-5 h-5 text-amber-400" />
@@ -445,7 +445,7 @@ export function Profile() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.27 }}
             className="bg-gray-800/50 border border-purple-500/30 rounded-xl"
-            style={{ padding: '1.5rem', marginBottom: '2.5rem' }}
+            style={{ padding: '1.5rem', marginBottom: '57px' }}
           >
             <h3 className="text-lg font-cinzel font-semibold text-white flex items-center gap-2" style={{ marginBottom: '1rem' }}>
               <Bell className="w-5 h-5 text-amber-400" />
@@ -491,7 +491,7 @@ export function Profile() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
             className="bg-gray-800/50 border border-gray-700 rounded-xl"
-            style={{ padding: '1.5rem', marginBottom: '2.5rem' }}
+            style={{ padding: '1.5rem', marginBottom: '57px' }}
           >
             <div className="flex items-center justify-between" style={{ marginBottom: '1rem' }}>
               <h3 className="text-lg font-cinzel font-semibold text-white">
@@ -539,7 +539,7 @@ export function Profile() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
             className="bg-gray-800/50 border border-gray-700 rounded-xl"
-            style={{ marginBottom: '2.5rem' }}
+            style={{ marginBottom: '57px' }}
           >
             <EmptyDivinations />
           </motion.div>

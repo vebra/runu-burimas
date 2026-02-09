@@ -221,7 +221,7 @@ export function RuneHoroscope() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '57px' }}
           >
             {/* Change date button */}
             <div className="text-center">
