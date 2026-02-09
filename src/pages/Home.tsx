@@ -440,6 +440,33 @@ function MobileHero() {
             Runų Biblioteka
           </Link>
         </div>
+
+        {/* Scroll indicator */}
+        <div className="flex flex-col items-center gap-2 text-gray-500 mobile-hero-fade-d5" style={{ marginTop: '40px' }}>
+          <span className="text-sm">Žemyn</span>
+          <div
+            style={{
+              width: '24px',
+              height: '40px',
+              borderRadius: '9999px',
+              border: '2px solid rgba(75, 85, 99, 1)',
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'center',
+              padding: '8px',
+            }}
+          >
+            <div
+              style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                backgroundColor: '#fbbf24',
+                animation: 'scroll-dot-bounce 1.5s ease-in-out infinite',
+              }}
+            />
+          </div>
+        </div>
       </div>
     </section>
   )
