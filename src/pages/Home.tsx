@@ -1090,7 +1090,7 @@ export function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="relative pt-16 sm:pt-20 md:pt-32 lg:pt-40 pb-12 sm:pb-20 md:pb-32 lg:pb-40 px-3 sm:px-4 w-full flex justify-center">
+      <section className="relative pt-14 sm:pt-20 md:pt-32 lg:pt-40 pb-12 sm:pb-20 md:pb-32 lg:pb-40 px-3 sm:px-4 w-full flex justify-center">
         <div style={{ width: '100%', maxWidth: '1152px' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
