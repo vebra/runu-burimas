@@ -1,11 +1,21 @@
 import { useEffect, useState, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from './useAuth'
+import { useFreemiumQuota, FREE_MONTHLY_LIMIT } from './useFreemiumQuota'
 import type { Subscription } from '../types/database'
 
 // Obfuscated admin code - validate via hash comparison
 const _k = [82,85,78,79,83,65,68,77,73,78,50,48,50,54]
 const _c = () => _k.map(c => String.fromCharCode(c)).join('')
+
+interface FreemiumQuota {
+  usedCount: number
+  remainingCount: number
+  isQuotaExceeded: boolean
+  monthlyLimit: number
+  loading: boolean
+  refetch: () => Promise<void>
+}
 
 interface UsePremiumResult {
   isPremium: boolean
@@ -17,6 +27,8 @@ interface UsePremiumResult {
   openCustomerPortal: () => Promise<string | null>
   activateWithCode: (code: string) => Promise<boolean>
   verifySession: (sessionId: string) => Promise<boolean>
+  canAccessPremiumReading: boolean
+  freemiumQuota: FreemiumQuota
 }
 
 export function usePremium(): UsePremiumResult {
@@ -24,6 +36,7 @@ export function usePremium(): UsePremiumResult {
   const [subscription, setSubscription] = useState<Subscription | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const quota = useFreemiumQuota()
 
   const fetchSubscription = useCallback(async () => {
     if (!user) {
@@ -207,6 +220,16 @@ export function usePremium(): UsePremiumResult {
 
   // Check if user has active premium
   const isPremium = subscription?.status === 'active'
+  const canAccessPremiumReading = isPremium || !quota.isQuotaExceeded
+
+  const freemiumQuota: FreemiumQuota = {
+    usedCount: quota.usedCount,
+    remainingCount: quota.remainingCount,
+    isQuotaExceeded: quota.isQuotaExceeded,
+    monthlyLimit: FREE_MONTHLY_LIMIT,
+    loading: quota.loading,
+    refetch: quota.refetch,
+  }
 
   return {
     isPremium,
@@ -218,5 +241,7 @@ export function usePremium(): UsePremiumResult {
     openCustomerPortal,
     activateWithCode,
     verifySession,
+    canAccessPremiumReading,
+    freemiumQuota,
   }
 }

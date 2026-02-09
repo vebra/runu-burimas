@@ -8,11 +8,13 @@ interface PremiumPaywallProps {
   title?: string
   description?: string
   features?: string[]
+  quotaExceeded?: boolean
 }
 
 export function PremiumPaywall({
   title = 'Premium Funkcija',
   description = 'Ši funkcija yra prieinama tik Premium nariams.',
+  quotaExceeded = false,
   features = [
     'Neriboti 5 Runų Kryžiaus būrimai',
     'Neriboti 7 Runų Gyvenimo žemėlapio būrimai',
@@ -72,7 +74,11 @@ export function PremiumPaywall({
 
         <h2 className="text-4xl sm:text-5xl font-cinzel font-bold text-white">{title}</h2>
 
-        <p className="text-gray-300 text-xl sm:text-2xl leading-relaxed">{description}</p>
+        <p className="text-gray-300 text-xl sm:text-2xl leading-relaxed">
+          {quotaExceeded
+            ? 'Isnaudojote 3 nemokamus premium burimus si menesi. Prenumeruokite Premium neribotam naudojimui.'
+            : description}
+        </p>
 
         <div
           className="bg-purple-900/30 border-2 border-amber-500/40 rounded-xl p-6 sm:p-8 w-full"

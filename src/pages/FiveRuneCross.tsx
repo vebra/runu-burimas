@@ -7,6 +7,7 @@ import { RuneCard } from '../components/common/RuneCard'
 import { AuthGate } from '../components/common/AuthGate'
 import { RuneLoader } from '../components/common/RuneLoader'
 import { PremiumPaywall } from '../components/premium/PremiumPaywall'
+import { FreemiumBanner } from '../components/premium/FreemiumBanner'
 import {
   SpreadQuestionForm,
   SpreadDrawingAnimation,
@@ -40,7 +41,7 @@ export function FiveRuneCross() {
       isPartOf: { '@type': 'WebApplication', name: 'Runų Būrimas' },
     },
   })
-  const { isPremium, loading: premiumLoading } = usePremium()
+  const { isPremium, loading: premiumLoading, freemiumQuota } = usePremium()
 
   const spread = useSpread<Position>({
     positions: POSITIONS,
@@ -66,7 +67,7 @@ export function FiveRuneCross() {
     )
   }
 
-  if (!isPremium) {
+  if (!isPremium && freemiumQuota.isQuotaExceeded) {
     return (
       <PremiumPaywall
         title="5 Runų Kryžius"
@@ -78,6 +79,7 @@ export function FiveRuneCross() {
           'AI interpretacijos',
           'Pilna būrimų istorija',
         ]}
+        quotaExceeded
       />
     )
   }
@@ -116,6 +118,11 @@ export function FiveRuneCross() {
           <p className="text-gray-300 text-lg sm:text-xl italic">Situacijos analizė su praktiniais veiksmais</p>
           <p className="text-purple-300 text-base sm:text-lg">Centro runa + 4 aspektai (praeitis, ateitis, kliūtys, pagalba)</p>
         </motion.div>
+
+        {/* Freemium Banner */}
+        {!isPremium && !freemiumQuota.loading && (
+          <FreemiumBanner usedCount={freemiumQuota.usedCount} monthlyLimit={freemiumQuota.monthlyLimit} />
+        )}
 
         {/* Question Form */}
         {spread.drawnRunes.length === 0 && !spread.isDrawing && (

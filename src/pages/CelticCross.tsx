@@ -7,6 +7,7 @@ import { RuneCard } from '../components/common/RuneCard'
 import { AuthGate } from '../components/common/AuthGate'
 import { RuneLoader } from '../components/common/RuneLoader'
 import { PremiumPaywall } from '../components/premium/PremiumPaywall'
+import { FreemiumBanner } from '../components/premium/FreemiumBanner'
 import {
   SpreadQuestionForm,
   SpreadDrawingAnimation,
@@ -44,7 +45,7 @@ export function CelticCross() {
       isPartOf: { '@type': 'WebApplication', name: 'Runų Būrimas' },
     },
   })
-  const { isPremium, loading: premiumLoading } = usePremium()
+  const { isPremium, loading: premiumLoading, freemiumQuota } = usePremium()
 
   const spread = useSpread<Position>({
     positions: POSITIONS,
@@ -70,7 +71,7 @@ export function CelticCross() {
     )
   }
 
-  if (!isPremium) {
+  if (!isPremium && freemiumQuota.isQuotaExceeded) {
     return (
       <PremiumPaywall
         title="Keltų Kryžius"
@@ -82,6 +83,7 @@ export function CelticCross() {
           'Viltys, baimės ir galutinis rezultatas',
           'AI interpretacijos',
         ]}
+        quotaExceeded
       />
     )
   }
@@ -138,6 +140,11 @@ export function CelticCross() {
             Praeitis, dabartis, ateitis + 7 papildomi aspektai
           </p>
         </motion.div>
+
+        {/* Freemium Banner */}
+        {!isPremium && !freemiumQuota.loading && (
+          <FreemiumBanner usedCount={freemiumQuota.usedCount} monthlyLimit={freemiumQuota.monthlyLimit} />
+        )}
 
         {/* Question Form */}
         {spread.drawnRunes.length === 0 && !spread.isDrawing && (

@@ -7,6 +7,7 @@ import { RuneCard } from '../components/common/RuneCard'
 import { AuthGate } from '../components/common/AuthGate'
 import { RuneLoader } from '../components/common/RuneLoader'
 import { PremiumPaywall } from '../components/premium/PremiumPaywall'
+import { FreemiumBanner } from '../components/premium/FreemiumBanner'
 import {
   SpreadQuestionForm,
   SpreadDrawingAnimation,
@@ -41,7 +42,7 @@ export function SevenRuneMap() {
       isPartOf: { '@type': 'WebApplication', name: 'Runų Būrimas' },
     },
   })
-  const { isPremium, loading: premiumLoading } = usePremium()
+  const { isPremium, loading: premiumLoading, freemiumQuota } = usePremium()
 
   const spread = useSpread<Position>({
     positions: POSITIONS,
@@ -67,7 +68,7 @@ export function SevenRuneMap() {
     )
   }
 
-  if (!isPremium) {
+  if (!isPremium && freemiumQuota.isQuotaExceeded) {
     return (
       <PremiumPaywall
         title="7 Runų Gyvenimo Žemėlapis"
@@ -79,6 +80,7 @@ export function SevenRuneMap() {
           'Gilus dvasinis kelias',
           'AI interpretacijos',
         ]}
+        quotaExceeded
       />
     )
   }
@@ -133,6 +135,11 @@ export function SevenRuneMap() {
             Tu centre + 6 aspektai (pagrindas, praeitis, ateitis, kliūtys, pagalba, tikslas)
           </p>
         </motion.div>
+
+        {/* Freemium Banner */}
+        {!isPremium && !freemiumQuota.loading && (
+          <FreemiumBanner usedCount={freemiumQuota.usedCount} monthlyLimit={freemiumQuota.monthlyLimit} />
+        )}
 
         {/* Question Form */}
         {spread.drawnRunes.length === 0 && !spread.isDrawing && (
