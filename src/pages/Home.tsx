@@ -1147,7 +1147,7 @@ export function Home() {
       </section>
 
       {/* Elder Futhark Section */}
-      <section className="relative py-20 md:py-32 lg:py-40 px-4 overflow-hidden w-full flex justify-center">
+      <section className="relative py-20 md:py-32 lg:py-40 px-4 overflow-hidden w-full flex justify-center" style={{ marginTop: isMobile ? '57px' : '0' }}>
         {/* Background decoration */}
         <div className="absolute inset-0 bg-linear-to-b from-purple-900/10 via-transparent to-purple-900/10" />
 
