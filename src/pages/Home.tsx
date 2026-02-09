@@ -515,7 +515,7 @@ export function Home() {
   const innerRingRotate = useTransform(scrollYProgress, [0, 1], [0, -120])
 
   return (
-    <div className="min-h-screen w-full" style={{ display: 'flex', flexDirection: 'column', gap: '4rem', overflowX: 'hidden', maxWidth: '100vw' }}>
+    <div className="min-h-screen w-full" style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '0' : '4rem', overflowX: 'hidden', maxWidth: '100vw' }}>
       {/* Mobile: static hero. Desktop: full animated hero */}
       {isMobile ? <MobileHero /> : (
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -996,7 +996,7 @@ export function Home() {
       )}
 
       {/* About Runes Section */}
-      <section className="relative py-16 sm:py-24 md:py-32 px-4 w-full flex justify-center">
+      <section className="relative py-8 sm:py-24 md:py-32 px-4 w-full flex justify-center">
         <div style={{ width: '100%', maxWidth: '1024px' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
