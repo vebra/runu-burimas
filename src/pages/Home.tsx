@@ -995,6 +995,100 @@ export function Home() {
       </section>
       )}
 
+      {/* About Runes Section */}
+      <section className="relative py-16 sm:py-24 md:py-32 px-4 w-full flex justify-center">
+        <div style={{ width: '100%', maxWidth: '1024px' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12 md:mb-16"
+          >
+            <span className="overline mb-4 block">Senovės Išmintis</span>
+            <h2 className="display-lg text-white">Kas yra Runos?</h2>
+            <div className="w-24 h-1 bg-linear-to-r from-transparent via-amber-500 to-transparent mx-auto mt-6" />
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            {/* Left column — main description */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="space-y-6"
+            >
+              <p className="text-gray-300 text-base md:text-lg leading-relaxed">
+                <span className="text-amber-400 font-semibold">Runos</span> — tai senovės germanų ir skandinavų rašto simboliai, naudoti nuo <span className="text-amber-400 font-semibold">II amžiaus</span>. Žodis „rūna" reiškia <span className="text-purple-400 italic">„paslaptis"</span> arba <span className="text-purple-400 italic">„šnabždesys"</span>.
+              </p>
+              <p className="text-gray-300 text-base md:text-lg leading-relaxed">
+                <span className="text-amber-400 font-semibold">Elder Futhark</span> — seniausia runų abėcėlė, sudaryta iš <span className="text-amber-400 font-semibold">24 simbolių</span>, suskirstytų į tris grupes po 8 (vadinamas <span className="text-purple-400 italic">aettir</span>). Kiekviena runa turi savo vardą, reikšmę ir energiją.
+              </p>
+              <p className="text-gray-300 text-base md:text-lg leading-relaxed">
+                Senovėje runos buvo naudojamos ne tik rašymui, bet ir <span className="text-amber-400 font-semibold">būrimui, apsaugai ir meditacijai</span>. Vikingai tikėjo, kad runas žmonėms padovanojo pats dievas <span className="text-purple-400 italic">Odinas</span>, kuris 9 dienas kabėjo ant Pasaulio medžio Yggdrasil, kad gautų šią išmintį.
+              </p>
+            </motion.div>
+
+            {/* Right column — what we offer */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="space-y-6"
+            >
+              <div
+                className="rounded-2xl p-6 md:p-8"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(88, 28, 135, 0.3) 0%, rgba(107, 33, 168, 0.2) 100%)',
+                  border: '1px solid rgba(147, 51, 234, 0.3)',
+                }}
+              >
+                <h3 className="text-xl font-cinzel font-semibold text-amber-300 mb-4">Kaip veikia runų būrimas?</h3>
+                <p className="text-gray-300 text-base leading-relaxed mb-4">
+                  Runų būrimas — tai intuityvus procesas, kurio metu atsitiktinai traukiamos runos ir interpretuojamos pagal jų <span className="text-amber-400 font-semibold">poziciją</span> ir <span className="text-amber-400 font-semibold">orientaciją</span> (tiesi arba apversta).
+                </p>
+                <p className="text-gray-300 text-base leading-relaxed">
+                  Kiekviena runa atspindi skirtingą gyvenimo aspektą — nuo materialinės gerovės (<span className="text-amber-400">ᚠ Fehu</span>) iki dvasinės transformacijos (<span className="text-amber-400">ᛞ Dagaz</span>).
+                </p>
+              </div>
+
+              <div
+                className="rounded-2xl p-6 md:p-8"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(120, 53, 15, 0.2) 0%, rgba(146, 64, 14, 0.15) 100%)',
+                  border: '1px solid rgba(217, 119, 6, 0.3)',
+                }}
+              >
+                <h3 className="text-xl font-cinzel font-semibold text-amber-300 mb-4">Ką rasite šioje svetainėje?</h3>
+                <ul className="space-y-3 text-gray-300 text-base">
+                  <li className="flex items-start gap-3">
+                    <span className="text-amber-400 text-lg mt-0.5">ᚠ</span>
+                    <span><span className="text-white font-medium">Kasdienė runa</span> — kasdieninis įkvėpimas ir patarimas</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-amber-400 text-lg mt-0.5">ᚦ</span>
+                    <span><span className="text-white font-medium">Būrimai</span> — nuo paprasto Taip/Ne iki gilaus 10 runų Keltų Kryžiaus</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-amber-400 text-lg mt-0.5">ᚱ</span>
+                    <span><span className="text-white font-medium">Runų horoskopas</span> — sužinokite savo gimimo rūną</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-amber-400 text-lg mt-0.5">ᛗ</span>
+                    <span><span className="text-white font-medium">Dienoraštis</span> — sekite savo dvasinę kelionę</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-amber-400 text-lg mt-0.5">ᛟ</span>
+                    <span><span className="text-white font-medium">Biblioteka</span> — išmokite visas 24 Elder Futhark runas</span>
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="relative py-12 sm:py-20 md:py-32 lg:py-40 px-3 sm:px-4 w-full flex justify-center">
         <div style={{ width: '100%', maxWidth: '1152px' }}>
