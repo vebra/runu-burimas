@@ -1,4 +1,22 @@
 {
+  "redirects": [
+    { "source": "/daily", "destination": "/dienos-runa", "permanent": true },
+    { "source": "/yes-no", "destination": "/taip-ne", "permanent": true },
+    { "source": "/three-rune", "destination": "/trys-runos", "permanent": true },
+    { "source": "/horoscope", "destination": "/horoskopas", "permanent": true },
+    { "source": "/journal", "destination": "/dienorastis", "permanent": true },
+    { "source": "/library", "destination": "/biblioteka", "permanent": true },
+    { "source": "/converter", "destination": "/konverteris", "permanent": true },
+    { "source": "/five-rune-cross", "destination": "/penkiu-runu-kryzius", "permanent": true },
+    { "source": "/seven-rune-map", "destination": "/septiniu-runu-zemelapis", "permanent": true },
+    { "source": "/love-reading", "destination": "/meiles-skaitymas", "permanent": true },
+    { "source": "/celtic-cross", "destination": "/celtic-kryzius", "permanent": true },
+    { "source": "/terms", "destination": "/naudojimosi-salygos", "permanent": true },
+    { "source": "/privacy", "destination": "/privatumo-politika", "permanent": true },
+    { "source": "/history", "destination": "/istorija", "permanent": true },
+    { "source": "/profile", "destination": "/profilis", "permanent": true },
+    { "source": "/auth", "destination": "/prisijungti", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/((?!assets|icons|screenshots|manifest.json|robots.txt|sitemap.xml|og-image.png|sw.js|logo.png).*)", "destination": "/index.html" }
   ]

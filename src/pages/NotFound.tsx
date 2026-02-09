@@ -109,21 +109,21 @@ export function NotFound() {
               </Button>
             </Link>
 
-            <Link to="/daily">
+            <Link to="/dienos-runa">
               <Button variant="secondary" size="lg" className="w-full">
                 <Sparkles className="w-5 h-5 mr-2" />
                 Kasdienė Runa
               </Button>
             </Link>
 
-            <Link to="/library">
+            <Link to="/biblioteka">
               <Button variant="secondary" size="lg" className="w-full">
                 <BookOpen className="w-5 h-5 mr-2" />
                 Runų Biblioteka
               </Button>
             </Link>
 
-            <Link to="/three-rune">
+            <Link to="/trys-runos">
               <Button variant="secondary" size="lg" className="w-full">
                 <Search className="w-5 h-5 mr-2" />
                 Trijų Runų Būrimas

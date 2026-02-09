@@ -233,7 +233,7 @@ const features = [
     icon: Calendar,
     title: 'Kasdienė Runa',
     description: 'Traukite vieną runą kiekvieną dieną ir gaukite įkvėpimą',
-    path: '/daily',
+    path: '/dienos-runa',
     color: 'from-purple-700 to-violet-600',
     glowColor: 'rgba(147, 51, 234, 0.4)',
     premium: false,
@@ -242,7 +242,7 @@ const features = [
     icon: HelpCircle,
     title: 'Taip ar Ne?',
     description: 'Greitas atsakymas į taip/ne klausimą su viena runa',
-    path: '/yes-no',
+    path: '/taip-ne',
     color: 'from-emerald-600 to-green-500',
     glowColor: 'rgba(16, 185, 129, 0.4)',
     premium: false,
@@ -251,7 +251,7 @@ const features = [
     icon: Sparkles,
     title: 'Trijų Runų Būrimas',
     description: 'Praeitis, Dabartis, Ateitis - klasikinis runų išdėstymas',
-    path: '/three-rune',
+    path: '/trys-runos',
     color: 'from-amber-500 to-yellow-600',
     glowColor: 'rgba(245, 158, 11, 0.4)',
     premium: false,
@@ -260,7 +260,7 @@ const features = [
     icon: Moon,
     title: 'Rūnų Horoskopas',
     description: 'Sužinokite savo gimimo rūną ir gaukite asmenines prognozes',
-    path: '/horoscope',
+    path: '/horoskopas',
     color: 'from-indigo-600 to-blue-500',
     glowColor: 'rgba(99, 102, 241, 0.4)',
     premium: false,
@@ -269,7 +269,7 @@ const features = [
     icon: BookOpen,
     title: 'Rūnų Dienoraštis',
     description: 'Asmeninis mistinis dienoraštis su dienos rūna ir nuotaikų sekimu',
-    path: '/journal',
+    path: '/dienorastis',
     color: 'from-violet-600 to-purple-500',
     glowColor: 'rgba(139, 92, 246, 0.4)',
     premium: false,
@@ -278,7 +278,7 @@ const features = [
     icon: Crown,
     title: '5 Runų Kryžius',
     description: 'Situacijos analizė su praktiniais veiksmais',
-    path: '/five-rune-cross',
+    path: '/penkiu-runu-kryzius',
     color: 'from-amber-600 to-amber-500',
     glowColor: 'rgba(217, 119, 6, 0.5)',
     premium: true,
@@ -287,7 +287,7 @@ const features = [
     icon: Compass,
     title: '7 Runų Gyvenimo Žemėlapis',
     description: 'Gilus dvasinis kelias su 7 aspektais',
-    path: '/seven-rune-map',
+    path: '/septiniu-runu-zemelapis',
     color: 'from-purple-600 to-pink-600',
     glowColor: 'rgba(219, 39, 119, 0.4)',
     premium: true,
@@ -296,7 +296,7 @@ const features = [
     icon: Heart,
     title: 'Meilės Būrimas',
     description: '5 runų santykių būrimas apie meilę ir partnerystę',
-    path: '/love-reading',
+    path: '/meiles-skaitymas',
     color: 'from-pink-500 to-rose-500',
     glowColor: 'rgba(236, 72, 153, 0.5)',
     premium: true,
@@ -305,7 +305,7 @@ const features = [
     icon: Star,
     title: 'Keltų Kryžius',
     description: '10 runų pilnas būrimas - gilus situacijos tyrimas',
-    path: '/celtic-cross',
+    path: '/celtic-kryzius',
     color: 'from-amber-700 to-amber-600',
     glowColor: 'rgba(180, 83, 9, 0.5)',
     premium: true,
@@ -314,7 +314,7 @@ const features = [
     icon: BookOpen,
     title: 'Runų Biblioteka',
     description: 'Išmokite visas 24 Elder Futhark runas',
-    path: '/library',
+    path: '/biblioteka',
     color: 'from-purple-800 to-purple-600',
     glowColor: 'rgba(126, 34, 206, 0.4)',
     premium: false,
@@ -323,7 +323,7 @@ const features = [
     icon: Type,
     title: 'Runų Konverteris',
     description: 'Paverskite savo vardą ar žodžius runomis',
-    path: '/converter',
+    path: '/konverteris',
     color: 'from-emerald-600 to-teal-600',
     glowColor: 'rgba(16, 185, 129, 0.4)',
     premium: false,
@@ -424,7 +424,7 @@ function MobileHero() {
           style={{ marginTop: '32px' }}
         >
           <Link
-            to="/daily"
+            to="/dienos-runa"
             className="group relative w-full overflow-hidden bg-linear-to-r from-purple-600 via-purple-500 to-pink-600 text-white font-bold text-xl py-5 px-12 rounded-xl flex items-center justify-center gap-3 shadow-xl shadow-purple-900/50 border border-purple-400/30"
           >
             <Sparkles className="w-6 h-6" />
@@ -433,7 +433,7 @@ function MobileHero() {
           </Link>
 
           <Link
-            to="/library"
+            to="/biblioteka"
             className="group w-full bg-amber-500/10 border border-amber-500/30 text-amber-200 font-bold text-xl py-5 px-12 rounded-xl flex items-center justify-center gap-3"
           >
             <BookOpen className="w-6 h-6" />
@@ -893,7 +893,7 @@ function DesktopHero() {
             className="flex-1 sm:flex-initial"
           >
             <Link
-              to="/daily"
+              to="/dienos-runa"
               className="group relative w-full sm:w-auto overflow-hidden bg-linear-to-r from-purple-600 via-purple-500 to-pink-600 text-white font-bold text-xl md:text-2xl py-5 md:py-6 px-12 md:px-16 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-purple-900/50 border border-purple-400/30"
             >
               <span className="relative z-10 flex items-center gap-3">
@@ -911,7 +911,7 @@ function DesktopHero() {
             className="flex-1 sm:flex-initial"
           >
             <Link
-              to="/library"
+              to="/biblioteka"
               className="group w-full sm:w-auto glass-gold text-amber-200 font-bold text-xl md:text-2xl py-5 md:py-6 px-12 md:px-16 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 hover:bg-amber-500/20"
             >
               <BookOpen className="w-6 h-6 md:w-7 md:h-7" />
@@ -1237,7 +1237,7 @@ export function Home() {
                   style={{ marginTop: '0.5rem' }}
                 >
                   <Link
-                    to="/library"
+                    to="/biblioteka"
                     className="inline-flex items-center gap-2 text-amber-300 hover:text-amber-200 transition-colors group"
                   >
                     <span>Sužinoti daugiau</span>
@@ -1424,7 +1424,7 @@ export function Home() {
                   style={{ marginTop: '1rem' }}
                 >
                   <Link
-                    to="/daily"
+                    to="/dienos-runa"
                     className="group inline-flex items-center gap-3 bg-linear-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:via-yellow-400 hover:to-amber-400 text-gray-900 font-bold py-6 md:py-7 px-14 md:px-20 rounded-xl transition-all duration-300 shadow-2xl text-xl md:text-2xl"
                     style={{
                       boxShadow: '0 10px 40px -10px rgba(245, 158, 11, 0.5)',

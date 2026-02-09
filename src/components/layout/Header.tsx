@@ -11,20 +11,20 @@ interface HeaderProps {
 
 const navLinks = [
   { path: '/', label: 'Pradžia', icon: '🏠' },
-  { path: '/daily', label: 'Kasdienė Runa', icon: '📅' },
-  { path: '/yes-no', label: 'Taip/Ne', icon: '🎱' },
-  { path: '/three-rune', label: '3 Runos', icon: '✨' },
-  { path: '/horoscope', label: 'Horoskopas', icon: '🔮' },
-  { path: '/journal', label: 'Dienoraštis', icon: '📖' },
-  { path: '/library', label: 'Biblioteka', icon: '📚' },
-  { path: '/converter', label: 'Konverteris', icon: '🔄' },
+  { path: '/dienos-runa', label: 'Kasdienė Runa', icon: '📅' },
+  { path: '/taip-ne', label: 'Taip/Ne', icon: '🎱' },
+  { path: '/trys-runos', label: '3 Runos', icon: '✨' },
+  { path: '/horoskopas', label: 'Horoskopas', icon: '🔮' },
+  { path: '/dienorastis', label: 'Dienoraštis', icon: '📖' },
+  { path: '/biblioteka', label: 'Biblioteka', icon: '📚' },
+  { path: '/konverteris', label: 'Konverteris', icon: '🔄' },
 ]
 
 const premiumLinks = [
-  { path: '/five-rune-cross', label: '5 Runų Kryžius', icon: '✨' },
-  { path: '/seven-rune-map', label: '7 Runų Žemėlapis', icon: '🗺️' },
-  { path: '/love-reading', label: 'Meilės Būrimas', icon: '💕' },
-  { path: '/celtic-cross', label: 'Keltų Kryžius', icon: '🔮' },
+  { path: '/penkiu-runu-kryzius', label: '5 Runų Kryžius', icon: '✨' },
+  { path: '/septiniu-runu-zemelapis', label: '7 Runų Žemėlapis', icon: '🗺️' },
+  { path: '/meiles-skaitymas', label: 'Meilės Būrimas', icon: '💕' },
+  { path: '/celtic-kryzius', label: 'Keltų Kryžius', icon: '🔮' },
 ]
 
 export function Header({ user, onSignOut }: HeaderProps) {
@@ -199,7 +199,7 @@ export function Header({ user, onSignOut }: HeaderProps) {
             {user ? (
               <div className="hidden md:flex items-center gap-2">
                 <Link
-                  to="/profile"
+                  to="/profilis"
                   aria-label="Profilis"
                   className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800/50 transition-all duration-300 group"
                 >
@@ -222,7 +222,7 @@ export function Header({ user, onSignOut }: HeaderProps) {
                 whileTap={{ scale: 0.98 }}
               >
                 <Link
-                  to="/auth"
+                  to="/prisijungti"
                   className="hidden md:flex items-center gap-2 bg-linear-to-r from-purple-700 to-violet-600 hover:from-purple-600 hover:to-violet-500 text-white font-medium py-2.5 px-5 rounded-xl transition-all duration-300 shadow-lg shadow-purple-900/30 border border-purple-400/20"
                 >
                   <Sparkles className="w-4 h-4" aria-hidden="true" />
@@ -390,7 +390,7 @@ export function Header({ user, onSignOut }: HeaderProps) {
                   {user ? (
                     <div className="space-y-1">
                       <Link
-                        to="/profile"
+                        to="/profilis"
                         onClick={() => setMobileMenuOpen(false)}
                         className="flex items-center gap-4 px-4 py-4 rounded-xl text-lg text-gray-300 active:bg-gray-800/50 transition-all"
                       >
@@ -417,7 +417,7 @@ export function Header({ user, onSignOut }: HeaderProps) {
                     </div>
                   ) : (
                     <Link
-                      to="/auth"
+                      to="/prisijungti"
                       onClick={() => setMobileMenuOpen(false)}
                       className="flex items-center justify-center gap-2 w-full py-4 rounded-xl text-lg font-semibold text-white transition-all border border-purple-400/20"
                       style={{

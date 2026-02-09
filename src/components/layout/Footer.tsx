@@ -3,9 +3,9 @@ import { motion } from 'framer-motion'
 import { Heart, Github, Mail } from 'lucide-react'
 
 const footerLinks = [
-  { to: '/library', label: 'Runų Biblioteka' },
-  { to: '/converter', label: 'Konverteris' },
-  { to: '/daily', label: 'Kasdienė Runa' },
+  { to: '/biblioteka', label: 'Runų Biblioteka' },
+  { to: '/konverteris', label: 'Konverteris' },
+  { to: '/dienos-runa', label: 'Kasdienė Runa' },
 ]
 
 const RUNE_SYMBOLS = ['ᚠ', 'ᚢ', 'ᚦ', 'ᚨ', 'ᚱ', 'ᚲ']
@@ -105,11 +105,11 @@ export function Footer() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm md:text-xs text-gray-500">
               <p>© {new Date().getFullYear()} Runų Būrimas. Visos teisės saugomos.</p>
               <div className="flex items-center gap-4">
-                <Link to="/privacy" className="hover:text-gray-400 transition-colors hover:underline underline-offset-4">
+                <Link to="/privatumo-politika" className="hover:text-gray-400 transition-colors hover:underline underline-offset-4">
                   Privatumo politika
                 </Link>
                 <span className="text-gray-700">|</span>
-                <Link to="/terms" className="hover:text-gray-400 transition-colors hover:underline underline-offset-4">
+                <Link to="/naudojimosi-salygos" className="hover:text-gray-400 transition-colors hover:underline underline-offset-4">
                   Naudojimo sąlygos
                 </Link>
               </div>

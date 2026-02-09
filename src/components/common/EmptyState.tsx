@@ -65,7 +65,7 @@ export function EmptyDivinations() {
       description="Atlikite savo pirmąjį būrimą ir jis atsiras čia."
       action={{
         label: 'Pradėti būrimą',
-        to: '/three-rune'
+        to: '/trys-runos'
       }}
     />
   )
@@ -79,7 +79,7 @@ export function EmptyFavorites() {
       description="Pridėkite runas prie mėgstamų bibliotekoje."
       action={{
         label: 'Atidaryti biblioteką',
-        to: '/library'
+        to: '/biblioteka'
       }}
     />
   )

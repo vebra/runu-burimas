@@ -99,7 +99,7 @@ export function Premium() {
   const handleSubscribe = async (priceId: string) => {
     if (!user) {
       toast.info('Prisijunkite, kad galėtumėte prenumeruoti')
-      navigate('/auth')
+      navigate('/prisijungti')
       return
     }
 
@@ -236,28 +236,28 @@ export function Premium() {
             className="mt-6 sm:mt-8 grid grid-cols-2 gap-3 sm:gap-4"
           >
             <Link
-              to="/five-rune-cross"
+              to="/penkiu-runu-kryzius"
               className="p-3.5 sm:p-4 bg-purple-900/30 border border-purple-500/30 rounded-xl hover:border-purple-500/50 transition-all text-center"
             >
               <span className="text-xl sm:text-2xl mb-1.5 sm:mb-2 block">✨</span>
               <span className="text-white text-xs sm:text-sm font-medium">5 Runų Kryžius</span>
             </Link>
             <Link
-              to="/seven-rune-map"
+              to="/septiniu-runu-zemelapis"
               className="p-3.5 sm:p-4 bg-purple-900/30 border border-purple-500/30 rounded-xl hover:border-purple-500/50 transition-all text-center"
             >
               <span className="text-xl sm:text-2xl mb-1.5 sm:mb-2 block">🗺️</span>
               <span className="text-white text-xs sm:text-sm font-medium">7 Runų Žemėlapis</span>
             </Link>
             <Link
-              to="/love-reading"
+              to="/meiles-skaitymas"
               className="p-3.5 sm:p-4 bg-pink-900/30 border border-pink-500/30 rounded-xl hover:border-pink-500/50 transition-all text-center"
             >
               <span className="text-xl sm:text-2xl mb-1.5 sm:mb-2 block">💕</span>
               <span className="text-white text-xs sm:text-sm font-medium">Meilės Būrimas</span>
             </Link>
             <Link
-              to="/celtic-cross"
+              to="/celtic-kryzius"
               className="p-3.5 sm:p-4 bg-amber-900/30 border border-amber-500/30 rounded-xl hover:border-amber-500/50 transition-all text-center"
             >
               <span className="text-xl sm:text-2xl mb-1.5 sm:mb-2 block">🔮</span>
@@ -497,13 +497,13 @@ export function Premium() {
           >
             <p className="text-gray-300 text-base sm:text-lg mb-4">
               Jau turite paskyrą?{' '}
-              <Link to="/auth" className="text-amber-400 hover:text-amber-300 font-semibold">
+              <Link to="/prisijungti" className="text-amber-400 hover:text-amber-300 font-semibold">
                 Prisijunkite
               </Link>{' '}
               ir prenumeruokite Premium
             </p>
             <Link
-              to="/auth"
+              to="/prisijungti"
               className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors text-base sm:text-lg"
             >
               Sukurti paskyrą <ArrowRight className="w-5 h-5" />

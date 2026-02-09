@@ -78,7 +78,7 @@ export function CookieConsent() {
                 Sutinku
               </button>
               <Link
-                to="/privacy"
+                to="/privatumo-politika"
                 onClick={handleAccept}
                 className="flex items-center justify-center gap-2 flex-1 py-2.5 rounded-xl text-base font-semibold text-gray-300 transition-all active:scale-95"
                 style={{

@@ -84,23 +84,23 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageTransition><ErrorBoundary><Home /></ErrorBoundary></PageTransition>} />
-        <Route path="/daily" element={<PageTransition><ErrorBoundary><DailyRune /></ErrorBoundary></PageTransition>} />
-        <Route path="/three-rune" element={<PageTransition><ErrorBoundary><ThreeRune /></ErrorBoundary></PageTransition>} />
-        <Route path="/five-rune-cross" element={<PageTransition><ErrorBoundary><FiveRuneCross /></ErrorBoundary></PageTransition>} />
-        <Route path="/seven-rune-map" element={<PageTransition><ErrorBoundary><SevenRuneMap /></ErrorBoundary></PageTransition>} />
-        <Route path="/library" element={<PageTransition><ErrorBoundary><RuneLibrary /></ErrorBoundary></PageTransition>} />
-        <Route path="/converter" element={<PageTransition><ErrorBoundary><RuneConverter /></ErrorBoundary></PageTransition>} />
-        <Route path="/profile" element={<PageTransition><ErrorBoundary><Profile /></ErrorBoundary></PageTransition>} />
-        <Route path="/auth" element={<PageTransition><ErrorBoundary><Auth /></ErrorBoundary></PageTransition>} />
-        <Route path="/yes-no" element={<PageTransition><ErrorBoundary><YesNoRune /></ErrorBoundary></PageTransition>} />
-        <Route path="/privacy" element={<PageTransition><ErrorBoundary><PrivacyPolicy /></ErrorBoundary></PageTransition>} />
-        <Route path="/terms" element={<PageTransition><ErrorBoundary><TermsOfService /></ErrorBoundary></PageTransition>} />
+        <Route path="/dienos-runa" element={<PageTransition><ErrorBoundary><DailyRune /></ErrorBoundary></PageTransition>} />
+        <Route path="/trys-runos" element={<PageTransition><ErrorBoundary><ThreeRune /></ErrorBoundary></PageTransition>} />
+        <Route path="/penkiu-runu-kryzius" element={<PageTransition><ErrorBoundary><FiveRuneCross /></ErrorBoundary></PageTransition>} />
+        <Route path="/septiniu-runu-zemelapis" element={<PageTransition><ErrorBoundary><SevenRuneMap /></ErrorBoundary></PageTransition>} />
+        <Route path="/biblioteka" element={<PageTransition><ErrorBoundary><RuneLibrary /></ErrorBoundary></PageTransition>} />
+        <Route path="/konverteris" element={<PageTransition><ErrorBoundary><RuneConverter /></ErrorBoundary></PageTransition>} />
+        <Route path="/profilis" element={<PageTransition><ErrorBoundary><Profile /></ErrorBoundary></PageTransition>} />
+        <Route path="/prisijungti" element={<PageTransition><ErrorBoundary><Auth /></ErrorBoundary></PageTransition>} />
+        <Route path="/taip-ne" element={<PageTransition><ErrorBoundary><YesNoRune /></ErrorBoundary></PageTransition>} />
+        <Route path="/privatumo-politika" element={<PageTransition><ErrorBoundary><PrivacyPolicy /></ErrorBoundary></PageTransition>} />
+        <Route path="/naudojimosi-salygos" element={<PageTransition><ErrorBoundary><TermsOfService /></ErrorBoundary></PageTransition>} />
         <Route path="/premium" element={<PageTransition><ErrorBoundary><Premium /></ErrorBoundary></PageTransition>} />
-        <Route path="/celtic-cross" element={<PageTransition><ErrorBoundary><CelticCross /></ErrorBoundary></PageTransition>} />
-        <Route path="/love-reading" element={<PageTransition><ErrorBoundary><LoveReading /></ErrorBoundary></PageTransition>} />
-        <Route path="/history" element={<PageTransition><ErrorBoundary><ReadingHistory /></ErrorBoundary></PageTransition>} />
-        <Route path="/horoscope" element={<PageTransition><ErrorBoundary><RuneHoroscope /></ErrorBoundary></PageTransition>} />
-        <Route path="/journal" element={<PageTransition><ErrorBoundary><RuneJournal /></ErrorBoundary></PageTransition>} />
+        <Route path="/celtic-kryzius" element={<PageTransition><ErrorBoundary><CelticCross /></ErrorBoundary></PageTransition>} />
+        <Route path="/meiles-skaitymas" element={<PageTransition><ErrorBoundary><LoveReading /></ErrorBoundary></PageTransition>} />
+        <Route path="/istorija" element={<PageTransition><ErrorBoundary><ReadingHistory /></ErrorBoundary></PageTransition>} />
+        <Route path="/horoskopas" element={<PageTransition><ErrorBoundary><RuneHoroscope /></ErrorBoundary></PageTransition>} />
+        <Route path="/dienorastis" element={<PageTransition><ErrorBoundary><RuneJournal /></ErrorBoundary></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>

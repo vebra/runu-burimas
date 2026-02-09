@@ -129,21 +129,21 @@ export function useSEO(config: SEOConfig = {}) {
 }
 
 const PATH_LABELS: Record<string, string> = {
-  '/daily': 'Kasdienė Runa',
-  '/three-rune': '3 Runų Būrimas',
-  '/five-rune-cross': '5 Runų Kryžius',
-  '/seven-rune-map': '7 Runų Žemėlapis',
-  '/celtic-cross': 'Keltų Kryžius',
-  '/love-reading': 'Meilės Būrimas',
-  '/yes-no': 'Taip/Ne Būrimas',
-  '/library': 'Runų Biblioteka',
-  '/converter': 'Runų Konverteris',
+  '/dienos-runa': 'Kasdienė Runa',
+  '/trys-runos': '3 Runų Būrimas',
+  '/penkiu-runu-kryzius': '5 Runų Kryžius',
+  '/septiniu-runu-zemelapis': '7 Runų Žemėlapis',
+  '/celtic-kryzius': 'Keltų Kryžius',
+  '/meiles-skaitymas': 'Meilės Būrimas',
+  '/taip-ne': 'Taip/Ne Būrimas',
+  '/biblioteka': 'Runų Biblioteka',
+  '/konverteris': 'Runų Konverteris',
   '/premium': 'Premium',
-  '/profile': 'Profilis',
-  '/history': 'Būrimų Istorija',
-  '/auth': 'Prisijungimas',
-  '/privacy': 'Privatumo Politika',
-  '/terms': 'Naudojimo Sąlygos',
+  '/profilis': 'Profilis',
+  '/istorija': 'Būrimų Istorija',
+  '/prisijungti': 'Prisijungimas',
+  '/privatumo-politika': 'Privatumo Politika',
+  '/naudojimosi-salygos': 'Naudojimo Sąlygos',
 }
 
 function buildBreadcrumbs(pathname: string, title?: string) {

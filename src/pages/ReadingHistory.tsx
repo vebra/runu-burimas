@@ -151,7 +151,7 @@ export function ReadingHistory() {
           <h2 className="text-2xl font-cinzel font-bold text-white">Prisijunkite</h2>
           <p className="text-gray-400">Norėdami matyti istoriją, turite prisijungti.</p>
           <Link
-            to="/auth"
+            to="/prisijungti"
             className="bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 hover:from-purple-700 hover:via-purple-600 hover:to-violet-500 text-amber-100 font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg shadow-purple-900/30 border border-amber-600/20"
           >
             Prisijungti
@@ -241,7 +241,7 @@ export function ReadingHistory() {
               Atlikite pirmą būrimą ir jis atsiras čia!
             </p>
             <Link
-              to="/three-rune"
+              to="/trys-runos"
               className="inline-flex items-center gap-2 bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 text-amber-100 font-semibold py-3 px-6 rounded-lg transition-all shadow-lg"
             >
               <Sparkles className="w-5 h-5" />

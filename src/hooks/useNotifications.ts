@@ -117,7 +117,7 @@ function showLocalNotification(title?: string, body?: string) {
         icon: '/icons/icon-192x192.png',
         badge: '/icons/icon-72x72.png',
         tag: 'daily-rune-reminder',
-        data: { url: '/daily' },
+        data: { url: '/dienos-runa' },
       })
     }).catch(() => {
       // Fallback to regular notification

@@ -188,7 +188,7 @@ export function RuneJournal() {
         <h1 className="text-3xl font-cinzel font-bold text-white">Rūnų Dienoraštis</h1>
         <p className="text-gray-400 max-w-md">Prisijunkite, kad galėtumėte rašyti savo asmeninį rūnų dienoraštį.</p>
         <Link
-          to="/auth"
+          to="/prisijungti"
           className="inline-flex items-center gap-2 bg-linear-to-r from-purple-700 to-violet-600 text-white font-semibold py-3 px-8 rounded-xl"
         >
           Prisijungti

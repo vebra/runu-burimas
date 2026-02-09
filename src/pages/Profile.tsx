@@ -164,7 +164,7 @@ export function Profile() {
             Norėdami matyti profilį, turite prisijungti.
           </p>
           <Link
-            to="/auth"
+            to="/prisijungti"
             className="bg-linear-to-r from-purple-800 via-purple-700 to-violet-600 hover:from-purple-700 hover:via-purple-600 hover:to-violet-500 text-amber-100 font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg shadow-purple-900/30 border border-amber-600/20"
           >
             Prisijungti
@@ -498,7 +498,7 @@ export function Profile() {
                 Paskutiniai Būrimai
               </h3>
               <Link
-                to="/history"
+                to="/istorija"
                 className="text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors"
               >
                 Visa istorija →

@@ -7,86 +7,86 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.runes.lt/daily</loc>
-    <lastmod>2026-02-07</lastmod>
+    <loc>https://www.runes.lt/dienos-runa</loc>
+    <lastmod>2026-02-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.runes.lt/three-rune</loc>
-    <lastmod>2026-02-07</lastmod>
+    <loc>https://www.runes.lt/trys-runos</loc>
+    <lastmod>2026-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.runes.lt/yes-no</loc>
-    <lastmod>2026-02-07</lastmod>
+    <loc>https://www.runes.lt/taip-ne</loc>
+    <lastmod>2026-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.runes.lt/five-rune-cross</loc>
-    <lastmod>2026-02-07</lastmod>
+    <loc>https://www.runes.lt/penkiu-runu-kryzius</loc>
+    <lastmod>2026-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.runes.lt/seven-rune-map</loc>
-    <lastmod>2026-02-07</lastmod>
+    <loc>https://www.runes.lt/septiniu-runu-zemelapis</loc>
+    <lastmod>2026-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.runes.lt/celtic-cross</loc>
-    <lastmod>2026-02-07</lastmod>
+    <loc>https://www.runes.lt/celtic-kryzius</loc>
+    <lastmod>2026-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.runes.lt/love-reading</loc>
-    <lastmod>2026-02-07</lastmod>
+    <loc>https://www.runes.lt/meiles-skaitymas</loc>
+    <lastmod>2026-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.runes.lt/library</loc>
-    <lastmod>2026-02-07</lastmod>
+    <loc>https://www.runes.lt/biblioteka</loc>
+    <lastmod>2026-02-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.runes.lt/converter</loc>
-    <lastmod>2026-02-07</lastmod>
+    <loc>https://www.runes.lt/konverteris</loc>
+    <lastmod>2026-02-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.runes.lt/premium</loc>
-    <lastmod>2026-02-07</lastmod>
+    <lastmod>2026-02-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.runes.lt/privacy</loc>
-    <lastmod>2026-02-07</lastmod>
+    <loc>https://www.runes.lt/privatumo-politika</loc>
+    <lastmod>2026-02-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://www.runes.lt/terms</loc>
-    <lastmod>2026-02-07</lastmod>
+    <loc>https://www.runes.lt/naudojimosi-salygos</loc>
+    <lastmod>2026-02-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://www.runes.lt/horoscope</loc>
-    <lastmod>2026-02-08</lastmod>
+    <loc>https://www.runes.lt/horoskopas</loc>
+    <lastmod>2026-02-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.runes.lt/journal</loc>
-    <lastmod>2026-02-08</lastmod>
+    <loc>https://www.runes.lt/dienorastis</loc>
+    <lastmod>2026-02-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
