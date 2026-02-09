@@ -451,6 +451,502 @@ function MobileHero() {
   )
 }
 
+function DesktopHero() {
+  const heroRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  })
+
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+  const heroY = useTransform(scrollYProgress, [0, 0.5], [0, 100])
+  const bgLayer1Y = useTransform(scrollYProgress, [0, 1], [0, 150])
+  const bgLayer2Y = useTransform(scrollYProgress, [0, 1], [0, 100])
+  const bgLayer3Y = useTransform(scrollYProgress, [0, 1], [0, 50])
+  const runeCircleRotate = useTransform(scrollYProgress, [0, 1], [0, 180])
+  const runeCircleScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
+  const runeCircleOpacity = useTransform(scrollYProgress, [0, 0.4], [0.3, 0])
+  const innerRingRotate = useTransform(scrollYProgress, [0, 1], [0, -120])
+
+  return (
+    <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Aurora Background Effect */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Aurora Layer 1 - Primary wave */}
+        <motion.div
+          className="absolute w-[200%] h-[200%] -top-1/2 -left-1/2"
+          style={{
+            background: `
+              radial-gradient(ellipse 80% 50% at 50% 20%, rgba(120, 0, 255, 0.3) 0%, transparent 50%),
+              radial-gradient(ellipse 60% 40% at 70% 50%, rgba(0, 255, 200, 0.15) 0%, transparent 50%),
+              radial-gradient(ellipse 70% 50% at 30% 70%, rgba(255, 0, 150, 0.2) 0%, transparent 50%)
+            `,
+          }}
+          animate={{
+            rotate: [0, 360],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            rotate: { duration: 120, repeat: Infinity, ease: 'linear' },
+            scale: { duration: 20, repeat: Infinity, ease: 'easeInOut' },
+          }}
+        />
+
+        {/* Aurora Layer 2 - Secondary flowing wave */}
+        <motion.div
+          className="absolute w-[150%] h-[150%] top-0 left-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 100% 60% at 20% 30%, rgba(147, 51, 234, 0.25) 0%, transparent 60%),
+              radial-gradient(ellipse 80% 50% at 80% 60%, rgba(59, 130, 246, 0.2) 0%, transparent 50%)
+            `,
+            filter: 'blur(40px)',
+          }}
+          animate={{
+            x: [0, 100, 0, -100, 0],
+            y: [0, -50, 0, 50, 0],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+
+        {/* Aurora Layer 3 - Vertical ribbons */}
+        <motion.div
+          className="absolute inset-0"
+          style={{
+            background: `
+              linear-gradient(180deg,
+                transparent 0%,
+                rgba(147, 51, 234, 0.1) 20%,
+                rgba(59, 130, 246, 0.15) 35%,
+                rgba(16, 185, 129, 0.1) 50%,
+                rgba(147, 51, 234, 0.12) 65%,
+                rgba(236, 72, 153, 0.08) 80%,
+                transparent 100%
+              )
+            `,
+            filter: 'blur(60px)',
+          }}
+          animate={{
+            opacity: [0.5, 0.8, 0.5],
+            scaleY: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+
+        {/* Aurora Layer 4 - Dancing curtain effect */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={`aurora-ribbon-${i}`}
+              className="absolute h-full"
+              style={{
+                left: `${i * 20}%`,
+                width: '30%',
+                background: `linear-gradient(180deg,
+                  transparent 0%,
+                  ${i % 2 === 0 ? 'rgba(147, 51, 234, 0.15)' : 'rgba(16, 185, 129, 0.12)'} 30%,
+                  ${i % 2 === 0 ? 'rgba(59, 130, 246, 0.1)' : 'rgba(236, 72, 153, 0.1)'} 60%,
+                  transparent 100%
+                )`,
+                filter: 'blur(30px)',
+              }}
+              animate={{
+                x: [0, 30, -20, 10, 0],
+                scaleX: [1, 1.3, 0.8, 1.1, 1],
+                opacity: [0.3, 0.6, 0.4, 0.7, 0.3],
+              }}
+              transition={{
+                duration: 10 + i * 2,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: i * 0.5,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Aurora Layer 5 - Top glow horizon */}
+        <motion.div
+          className="absolute top-0 left-0 right-0 h-1/2"
+          style={{
+            background: `
+              radial-gradient(ellipse 100% 80% at 50% 0%, rgba(147, 51, 234, 0.3) 0%, transparent 70%),
+              radial-gradient(ellipse 80% 60% at 30% 10%, rgba(59, 130, 246, 0.2) 0%, transparent 60%),
+              radial-gradient(ellipse 80% 60% at 70% 10%, rgba(16, 185, 129, 0.15) 0%, transparent 60%)
+            `,
+          }}
+          animate={{
+            opacity: [0.6, 1, 0.6],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+      </div>
+
+      {/* Parallax Background Layer 1 - Slowest */}
+      <motion.div
+        style={{ y: bgLayer1Y }}
+        className="absolute inset-0 bg-linear-to-b from-purple-900/40 via-purple-800/20 to-transparent"
+      />
+
+      {/* Parallax Background Layer 2 - Medium */}
+      <motion.div
+        style={{ y: bgLayer2Y }}
+        className="absolute inset-0"
+      >
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl" />
+      </motion.div>
+
+      {/* 1. Particle System - floating magical particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {PARTICLES.map((p, i) => (
+          <motion.div
+            key={`particle-${i}`}
+            className="absolute w-1 h-1 rounded-full"
+            style={{
+              left: p.left,
+              top: p.top,
+              background: i % 2 === 0 ? 'rgba(251, 191, 36, 0.6)' : 'rgba(167, 139, 250, 0.6)',
+              boxShadow: i % 2 === 0
+                ? '0 0 6px rgba(251, 191, 36, 0.8)'
+                : '0 0 6px rgba(167, 139, 250, 0.8)',
+            }}
+            animate={{
+              y: [0, -100, 0],
+              x: [0, p.xOffset, 0],
+              opacity: [0, 1, 0],
+              scale: [0, 1.5, 0],
+            }}
+            transition={{
+              duration: p.duration,
+              repeat: Infinity,
+              delay: p.delay,
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
+      </div>
+
+      {/* 2. Glow Pulses - ambient pulsing orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(147, 51, 234, 0.15) 0%, transparent 70%)',
+          }}
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute bottom-1/3 right-1/4 w-48 h-48 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(251, 191, 36, 0.12) 0%, transparent 70%)',
+          }}
+          animate={{
+            scale: [1, 1.4, 1],
+            opacity: [0.2, 0.5, 0.2],
+          }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+        />
+        <motion.div
+          className="absolute top-1/2 right-1/3 w-32 h-32 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%)',
+          }}
+          animate={{
+            scale: [1, 1.5, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+        />
+      </div>
+
+      {/* 3. Shimmer Effect - diagonal light sweep */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+      >
+        <motion.div
+          className="absolute w-[200%] h-full"
+          style={{
+            background: 'linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.03) 55%, transparent 60%)',
+            left: '-100%',
+          }}
+          animate={{
+            left: ['−100%', '100%'],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            repeatDelay: 4,
+            ease: 'easeInOut',
+          }}
+        />
+      </motion.div>
+
+      {/* Mystical Rotating Rune Circle - Scroll-based rotation */}
+      <motion.div
+        style={{
+          rotate: runeCircleRotate,
+          scale: runeCircleScale,
+          opacity: runeCircleOpacity,
+        }}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+      >
+        <div className="relative w-150 h-150 md:w-200 md:h-200">
+          {/* Outer rune ring */}
+          {['ᚠ', 'ᚢ', 'ᚦ', 'ᚨ', 'ᚱ', 'ᚲ', 'ᚷ', 'ᚹ', 'ᚺ', 'ᚾ', 'ᛁ', 'ᛃ'].map((rune, i) => (
+            <span
+              key={`outer-${i}`}
+              className="absolute text-3xl md:text-4xl text-amber-500/20"
+              style={{
+                left: '50%',
+                top: '50%',
+                transform: `rotate(${i * 30}deg) translateY(-280px) translateX(-50%)`,
+              }}
+            >
+              {rune}
+            </span>
+          ))}
+          {/* Inner rune ring - counter rotation */}
+          <motion.div
+            style={{ rotate: innerRingRotate }}
+            className="absolute inset-0"
+          >
+            {['ᛇ', 'ᛈ', 'ᛉ', 'ᛊ', 'ᛏ', 'ᛒ', 'ᛖ', 'ᛗ'].map((rune, i) => (
+              <span
+                key={`inner-${i}`}
+                className="absolute text-2xl md:text-3xl text-purple-400/15"
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  transform: `rotate(${i * 45}deg) translateY(-180px) translateX(-50%)`,
+                }}
+              >
+                {rune}
+              </span>
+            ))}
+          </motion.div>
+          {/* Center glow */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-32 h-32 bg-purple-500/10 rounded-full blur-2xl" />
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Parallax Floating decorative elements - Layer 3 */}
+      <motion.div style={{ y: bgLayer3Y }} className="absolute inset-0">
+        <motion.div
+          className="absolute top-20 left-10 text-6xl text-amber-500/25"
+          animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          ᚠ
+        </motion.div>
+        <motion.div
+          className="absolute top-40 right-20 text-5xl text-purple-400/25"
+          animate={{ y: [0, 20, 0], rotate: [0, -5, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+        >
+          ᛟ
+        </motion.div>
+        <motion.div
+          className="absolute bottom-40 left-20 text-4xl text-amber-400/20"
+          animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+        >
+          ᚱ
+        </motion.div>
+        <motion.div
+          className="absolute bottom-20 right-10 text-5xl text-purple-300/20"
+          animate={{ y: [0, 15, 0], rotate: [0, -8, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+        >
+          ᛗ
+        </motion.div>
+
+        {/* Moon decoration with parallax */}
+        <motion.div
+          className="absolute top-32 right-1/4 hidden lg:block"
+          animate={{ scale: [1, 1.05, 1], opacity: [0.6, 0.8, 0.6] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <Moon className="w-16 h-16 text-amber-200/40" />
+        </motion.div>
+
+        {/* Stars decoration with parallax */}
+        <motion.div
+          className="absolute top-1/4 left-1/4 hidden lg:block"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <Star className="w-8 h-8 text-amber-300/50 fill-amber-300/30" />
+        </motion.div>
+        <motion.div
+          className="absolute top-1/3 right-1/3 hidden lg:block"
+          animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+        >
+          <Star className="w-6 h-6 text-purple-300/40 fill-purple-300/20" />
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        style={{ opacity: heroOpacity, y: heroY }}
+        className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 py-20"
+      >
+        {/* Crystal ball with glow effect */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+          className="relative"
+        >
+          <motion.div
+            className="absolute inset-0 rounded-full bg-purple-500/20 blur-3xl"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            style={{ width: '150%', height: '150%', left: '-25%', top: '-25%' }}
+          />
+          <motion.span
+            className="text-7xl md:text-9xl block relative z-10"
+            animate={{ y: [0, -15, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            🔮
+          </motion.span>
+        </motion.div>
+
+        {/* Main title with enhanced glow */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="display-xl text-white tracking-tight"
+          style={{ marginTop: '32px' }}
+        >
+          <motion.span
+            className="inline-block text-gradient-mystic"
+            animate={{
+              textShadow: [
+                '0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.3)',
+                '0 0 40px rgba(168, 85, 247, 0.8), 0 0 80px rgba(168, 85, 247, 0.4)',
+                '0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.3)',
+              ],
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            Runų Būrimas
+          </motion.span>
+        </motion.h1>
+
+        {/* Subtitle with Cormorant font */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="subheading-lg max-w-2xl text-center"
+          style={{ marginTop: '24px' }}
+        >
+          Atraskite senovės išmintį per <span className="text-amber-400 font-semibold not-italic">Elder Futhark</span> runas
+        </motion.p>
+
+        {/* Secondary tagline */}
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="overline"
+          style={{ marginTop: '16px' }}
+        >
+          Kasdienės runos • Būrimai • Išmintis
+        </motion.p>
+
+        {/* CTA Buttons with enhanced styling */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 sm:gap-6 w-full max-w-xl px-4"
+          style={{ marginTop: '32px' }}
+        >
+          <motion.div
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex-1 sm:flex-initial"
+          >
+            <Link
+              to="/daily"
+              className="group relative w-full sm:w-auto overflow-hidden bg-linear-to-r from-purple-600 via-purple-500 to-pink-600 text-white font-bold text-xl md:text-2xl py-5 md:py-6 px-12 md:px-16 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-purple-900/50 border border-purple-400/30"
+            >
+              <span className="relative z-10 flex items-center gap-3">
+                <Sparkles className="w-6 h-6 md:w-7 md:h-7" />
+                Pradėti Būrimą
+                <ArrowRight className="w-6 h-6 md:w-7 md:h-7 group-hover:translate-x-1 transition-transform" />
+              </span>
+              <div className="absolute inset-0 bg-linear-to-r from-purple-500 via-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </Link>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex-1 sm:flex-initial"
+          >
+            <Link
+              to="/library"
+              className="group w-full sm:w-auto glass-gold text-amber-200 font-bold text-xl md:text-2xl py-5 md:py-6 px-12 md:px-16 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 hover:bg-amber-500/20"
+            >
+              <BookOpen className="w-6 h-6 md:w-7 md:h-7" />
+              Runų Biblioteka
+            </Link>
+          </motion.div>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          style={{ marginTop: '40px' }}
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            className="flex flex-col items-center gap-2 text-gray-500"
+          >
+            <span className="text-sm">Žemyn</span>
+            <div className="w-6 h-10 rounded-full border-2 border-gray-600 flex items-start justify-center p-2">
+              <motion.div
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                className="w-1.5 h-1.5 bg-amber-400 rounded-full"
+              />
+            </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+    </section>
+  )
+}
+
 export function Home() {
   useSEO({
     jsonLd: [
@@ -499,507 +995,11 @@ export function Home() {
     ],
   })
   const isMobile = useIsMobile()
-  const heroRef = useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  })
-
-  // Multiple parallax layers with different speeds
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const heroY = useTransform(scrollYProgress, [0, 0.5], [0, 100])
-
-  // Slow parallax for background elements
-  const bgLayer1Y = useTransform(scrollYProgress, [0, 1], [0, 150])
-  const bgLayer2Y = useTransform(scrollYProgress, [0, 1], [0, 100])
-  const bgLayer3Y = useTransform(scrollYProgress, [0, 1], [0, 50])
-
-  // Rune circle rotation based on scroll
-  const runeCircleRotate = useTransform(scrollYProgress, [0, 1], [0, 180])
-  const runeCircleScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
-  const runeCircleOpacity = useTransform(scrollYProgress, [0, 0.4], [0.3, 0])
-  const innerRingRotate = useTransform(scrollYProgress, [0, 1], [0, -120])
 
   return (
     <div className="min-h-screen w-full" style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '0' : '4rem', overflowX: 'hidden', maxWidth: '100vw' }}>
-      {/* Mobile: static hero. Desktop: full animated hero */}
-      {isMobile ? <MobileHero /> : (
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Aurora Background Effect */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Aurora Layer 1 - Primary wave */}
-          <motion.div
-            className="absolute w-[200%] h-[200%] -top-1/2 -left-1/2"
-            style={{
-              background: `
-                radial-gradient(ellipse 80% 50% at 50% 20%, rgba(120, 0, 255, 0.3) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 40% at 70% 50%, rgba(0, 255, 200, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse 70% 50% at 30% 70%, rgba(255, 0, 150, 0.2) 0%, transparent 50%)
-              `,
-            }}
-            animate={{
-              rotate: [0, 360],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              rotate: { duration: 120, repeat: Infinity, ease: 'linear' },
-              scale: { duration: 20, repeat: Infinity, ease: 'easeInOut' },
-            }}
-          />
-
-          {/* Aurora Layer 2 - Secondary flowing wave */}
-          <motion.div
-            className="absolute w-[150%] h-[150%] top-0 left-0"
-            style={{
-              background: `
-                radial-gradient(ellipse 100% 60% at 20% 30%, rgba(147, 51, 234, 0.25) 0%, transparent 60%),
-                radial-gradient(ellipse 80% 50% at 80% 60%, rgba(59, 130, 246, 0.2) 0%, transparent 50%)
-              `,
-              filter: 'blur(40px)',
-            }}
-            animate={{
-              x: [0, 100, 0, -100, 0],
-              y: [0, -50, 0, 50, 0],
-            }}
-            transition={{
-              duration: 30,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-
-          {/* Aurora Layer 3 - Vertical ribbons */}
-          <motion.div
-            className="absolute inset-0"
-            style={{
-              background: `
-                linear-gradient(180deg,
-                  transparent 0%,
-                  rgba(147, 51, 234, 0.1) 20%,
-                  rgba(59, 130, 246, 0.15) 35%,
-                  rgba(16, 185, 129, 0.1) 50%,
-                  rgba(147, 51, 234, 0.12) 65%,
-                  rgba(236, 72, 153, 0.08) 80%,
-                  transparent 100%
-                )
-              `,
-              filter: 'blur(60px)',
-            }}
-            animate={{
-              opacity: [0.5, 0.8, 0.5],
-              scaleY: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-
-          {/* Aurora Layer 4 - Dancing curtain effect */}
-          <div className="absolute inset-0 overflow-hidden">
-            {[...Array(5)].map((_, i) => (
-              <motion.div
-                key={`aurora-ribbon-${i}`}
-                className="absolute h-full"
-                style={{
-                  left: `${i * 20}%`,
-                  width: '30%',
-                  background: `linear-gradient(180deg,
-                    transparent 0%,
-                    ${i % 2 === 0 ? 'rgba(147, 51, 234, 0.15)' : 'rgba(16, 185, 129, 0.12)'} 30%,
-                    ${i % 2 === 0 ? 'rgba(59, 130, 246, 0.1)' : 'rgba(236, 72, 153, 0.1)'} 60%,
-                    transparent 100%
-                  )`,
-                  filter: 'blur(30px)',
-                }}
-                animate={{
-                  x: [0, 30, -20, 10, 0],
-                  scaleX: [1, 1.3, 0.8, 1.1, 1],
-                  opacity: [0.3, 0.6, 0.4, 0.7, 0.3],
-                }}
-                transition={{
-                  duration: 10 + i * 2,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                  delay: i * 0.5,
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Aurora Layer 5 - Top glow horizon */}
-          <motion.div
-            className="absolute top-0 left-0 right-0 h-1/2"
-            style={{
-              background: `
-                radial-gradient(ellipse 100% 80% at 50% 0%, rgba(147, 51, 234, 0.3) 0%, transparent 70%),
-                radial-gradient(ellipse 80% 60% at 30% 10%, rgba(59, 130, 246, 0.2) 0%, transparent 60%),
-                radial-gradient(ellipse 80% 60% at 70% 10%, rgba(16, 185, 129, 0.15) 0%, transparent 60%)
-              `,
-            }}
-            animate={{
-              opacity: [0.6, 1, 0.6],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-        </div>
-
-        {/* Parallax Background Layer 1 - Slowest */}
-        <motion.div
-          style={{ y: bgLayer1Y }}
-          className="absolute inset-0 bg-linear-to-b from-purple-900/40 via-purple-800/20 to-transparent"
-        />
-
-        {/* Parallax Background Layer 2 - Medium */}
-        <motion.div
-          style={{ y: bgLayer2Y }}
-          className="absolute inset-0"
-        >
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl" />
-          <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl" />
-        </motion.div>
-
-        {/* 1. Particle System - floating magical particles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {PARTICLES.map((p, i) => (
-            <motion.div
-              key={`particle-${i}`}
-              className="absolute w-1 h-1 rounded-full"
-              style={{
-                left: p.left,
-                top: p.top,
-                background: i % 2 === 0 ? 'rgba(251, 191, 36, 0.6)' : 'rgba(167, 139, 250, 0.6)',
-                boxShadow: i % 2 === 0
-                  ? '0 0 6px rgba(251, 191, 36, 0.8)'
-                  : '0 0 6px rgba(167, 139, 250, 0.8)',
-              }}
-              animate={{
-                y: [0, -100, 0],
-                x: [0, p.xOffset, 0],
-                opacity: [0, 1, 0],
-                scale: [0, 1.5, 0],
-              }}
-              transition={{
-                duration: p.duration,
-                repeat: Infinity,
-                delay: p.delay,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
-        </div>
-
-        {/* 2. Glow Pulses - ambient pulsing orbs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(147, 51, 234, 0.15) 0%, transparent 70%)',
-            }}
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.3, 0.6, 0.3],
-            }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.div
-            className="absolute bottom-1/3 right-1/4 w-48 h-48 rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(251, 191, 36, 0.12) 0%, transparent 70%)',
-            }}
-            animate={{
-              scale: [1, 1.4, 1],
-              opacity: [0.2, 0.5, 0.2],
-            }}
-            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          />
-          <motion.div
-            className="absolute top-1/2 right-1/3 w-32 h-32 rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%)',
-            }}
-            animate={{
-              scale: [1, 1.5, 1],
-              opacity: [0.2, 0.4, 0.2],
-            }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-          />
-        </div>
-
-        {/* 3. Shimmer Effect - diagonal light sweep */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none overflow-hidden"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-        >
-          <motion.div
-            className="absolute w-[200%] h-full"
-            style={{
-              background: 'linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.03) 55%, transparent 60%)',
-              left: '-100%',
-            }}
-            animate={{
-              left: ['−100%', '100%'],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              repeatDelay: 4,
-              ease: 'easeInOut',
-            }}
-          />
-        </motion.div>
-
-        {/* Mystical Rotating Rune Circle - Scroll-based rotation */}
-        <motion.div
-          style={{
-            rotate: runeCircleRotate,
-            scale: runeCircleScale,
-            opacity: runeCircleOpacity,
-          }}
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        >
-          <div className="relative w-150 h-150 md:w-200 md:h-200">
-            {/* Outer rune ring */}
-            {['ᚠ', 'ᚢ', 'ᚦ', 'ᚨ', 'ᚱ', 'ᚲ', 'ᚷ', 'ᚹ', 'ᚺ', 'ᚾ', 'ᛁ', 'ᛃ'].map((rune, i) => (
-              <span
-                key={`outer-${i}`}
-                className="absolute text-3xl md:text-4xl text-amber-500/20"
-                style={{
-                  left: '50%',
-                  top: '50%',
-                  transform: `rotate(${i * 30}deg) translateY(-280px) translateX(-50%)`,
-                }}
-              >
-                {rune}
-              </span>
-            ))}
-            {/* Inner rune ring - counter rotation */}
-            <motion.div
-              style={{ rotate: innerRingRotate }}
-              className="absolute inset-0"
-            >
-              {['ᛇ', 'ᛈ', 'ᛉ', 'ᛊ', 'ᛏ', 'ᛒ', 'ᛖ', 'ᛗ'].map((rune, i) => (
-                <span
-                  key={`inner-${i}`}
-                  className="absolute text-2xl md:text-3xl text-purple-400/15"
-                  style={{
-                    left: '50%',
-                    top: '50%',
-                    transform: `rotate(${i * 45}deg) translateY(-180px) translateX(-50%)`,
-                  }}
-                >
-                  {rune}
-                </span>
-              ))}
-            </motion.div>
-            {/* Center glow */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-32 h-32 bg-purple-500/10 rounded-full blur-2xl" />
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Parallax Floating decorative elements - Layer 3 */}
-        <motion.div style={{ y: bgLayer3Y }} className="absolute inset-0">
-          <motion.div
-            className="absolute top-20 left-10 text-6xl text-amber-500/25"
-            animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            ᚠ
-          </motion.div>
-          <motion.div
-            className="absolute top-40 right-20 text-5xl text-purple-400/25"
-            animate={{ y: [0, 20, 0], rotate: [0, -5, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          >
-            ᛟ
-          </motion.div>
-          <motion.div
-            className="absolute bottom-40 left-20 text-4xl text-amber-400/20"
-            animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
-            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-          >
-            ᚱ
-          </motion.div>
-          <motion.div
-            className="absolute bottom-20 right-10 text-5xl text-purple-300/20"
-            animate={{ y: [0, 15, 0], rotate: [0, -8, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-          >
-            ᛗ
-          </motion.div>
-
-          {/* Moon decoration with parallax */}
-          <motion.div
-            className="absolute top-32 right-1/4 hidden lg:block"
-            animate={{ scale: [1, 1.05, 1], opacity: [0.6, 0.8, 0.6] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <Moon className="w-16 h-16 text-amber-200/40" />
-          </motion.div>
-
-          {/* Stars decoration with parallax */}
-          <motion.div
-            className="absolute top-1/4 left-1/4 hidden lg:block"
-            animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <Star className="w-8 h-8 text-amber-300/50 fill-amber-300/30" />
-          </motion.div>
-          <motion.div
-            className="absolute top-1/3 right-1/3 hidden lg:block"
-            animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          >
-            <Star className="w-6 h-6 text-purple-300/40 fill-purple-300/20" />
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          style={{ opacity: heroOpacity, y: heroY }}
-          className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 py-20"
-        >
-          {/* Crystal ball with glow effect */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-            className="relative"
-          >
-            <motion.div
-              className="absolute inset-0 rounded-full bg-purple-500/20 blur-3xl"
-              animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              style={{ width: '150%', height: '150%', left: '-25%', top: '-25%' }}
-            />
-            <motion.span
-              className="text-7xl md:text-9xl block relative z-10"
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              🔮
-            </motion.span>
-          </motion.div>
-
-          {/* Main title with enhanced glow */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="display-xl text-white tracking-tight"
-            style={{ marginTop: '32px' }}
-          >
-            <motion.span
-              className="inline-block text-gradient-mystic"
-              animate={{
-                textShadow: [
-                  '0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.3)',
-                  '0 0 40px rgba(168, 85, 247, 0.8), 0 0 80px rgba(168, 85, 247, 0.4)',
-                  '0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.3)',
-                ],
-              }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              Runų Būrimas
-            </motion.span>
-          </motion.h1>
-
-          {/* Subtitle with Cormorant font */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="subheading-lg max-w-2xl text-center"
-            style={{ marginTop: '24px' }}
-          >
-            Atraskite senovės išmintį per <span className="text-amber-400 font-semibold not-italic">Elder Futhark</span> runas
-          </motion.p>
-
-          {/* Secondary tagline */}
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="overline"
-            style={{ marginTop: '16px' }}
-          >
-            Kasdienės runos • Būrimai • Išmintis
-          </motion.p>
-
-          {/* CTA Buttons with enhanced styling */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 sm:gap-6 w-full max-w-xl px-4"
-            style={{ marginTop: '32px' }}
-          >
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="flex-1 sm:flex-initial"
-            >
-              <Link
-                to="/daily"
-                className="group relative w-full sm:w-auto overflow-hidden bg-linear-to-r from-purple-600 via-purple-500 to-pink-600 text-white font-bold text-xl md:text-2xl py-5 md:py-6 px-12 md:px-16 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-purple-900/50 border border-purple-400/30"
-              >
-                <span className="relative z-10 flex items-center gap-3">
-                  <Sparkles className="w-6 h-6 md:w-7 md:h-7" />
-                  Pradėti Būrimą
-                  <ArrowRight className="w-6 h-6 md:w-7 md:h-7 group-hover:translate-x-1 transition-transform" />
-                </span>
-                <div className="absolute inset-0 bg-linear-to-r from-purple-500 via-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </Link>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="flex-1 sm:flex-initial"
-            >
-              <Link
-                to="/library"
-                className="group w-full sm:w-auto glass-gold text-amber-200 font-bold text-xl md:text-2xl py-5 md:py-6 px-12 md:px-16 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 hover:bg-amber-500/20"
-              >
-                <BookOpen className="w-6 h-6 md:w-7 md:h-7" />
-                Runų Biblioteka
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 1 }}
-            style={{ marginTop: '40px' }}
-          >
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              className="flex flex-col items-center gap-2 text-gray-500"
-            >
-              <span className="text-sm">Žemyn</span>
-              <div className="w-6 h-10 rounded-full border-2 border-gray-600 flex items-start justify-center p-2">
-                <motion.div
-                  animate={{ y: [0, 12, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                  className="w-1.5 h-1.5 bg-amber-400 rounded-full"
-                />
-              </div>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-      </section>
-      )}
+      {/* Mobile: static hero. Desktop: full animated hero (separate component to avoid hooks on mobile) */}
+      {isMobile ? <MobileHero /> : <DesktopHero />}
 
       {/* Mobile Logo between Hero and About */}
       {isMobile && (
