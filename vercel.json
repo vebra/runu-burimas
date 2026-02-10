@@ -17,6 +17,14 @@
     { "source": "/profile", "destination": "/profilis", "permanent": true },
     { "source": "/auth", "destination": "/prisijungti", "permanent": true }
   ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Content-Language", "value": "lt" }
+      ]
+    }
+  ],
   "rewrites": [
     { "source": "/((?!assets|icons|screenshots|manifest.json|robots.txt|sitemap.xml|og-image.png|sw.js|logo.png).*)", "destination": "/index.html" }
   ]

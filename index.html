@@ -68,6 +68,17 @@
     <meta name="robots" content="index, follow" />
     <meta name="language" content="Lithuanian" />
     <meta name="revisit-after" content="7 days" />
+    <meta http-equiv="content-language" content="lt" />
+
+    <!-- Geo SEO -->
+    <meta name="geo.region" content="LT" />
+    <meta name="geo.placename" content="Lietuva" />
+    <meta name="geo.position" content="54.6872;25.2797" />
+    <meta name="ICBM" content="54.6872, 25.2797" />
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="lt" href="https://www.runes.lt/" />
+    <link rel="alternate" hreflang="x-default" href="https://www.runes.lt/" />
     
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -80,14 +91,26 @@
       "applicationCategory": "LifestyleApplication",
       "operatingSystem": "Web",
       "inLanguage": "lt",
+      "availableLanguage": {
+        "@type": "Language",
+        "name": "Lithuanian",
+        "alternateName": "lt"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Lietuva",
+        "sameAs": "https://en.wikipedia.org/wiki/Lithuania"
+      },
       "offers": {
         "@type": "Offer",
         "price": "0",
-        "priceCurrency": "EUR"
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock"
       },
       "author": {
         "@type": "Organization",
-        "name": "Runų Būrimas"
+        "name": "Runų Būrimas",
+        "url": "https://www.runes.lt"
       }
     }
     </script>
