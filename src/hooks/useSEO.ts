@@ -139,6 +139,8 @@ const PATH_LABELS: Record<string, string> = {
   '/biblioteka': 'Runų Biblioteka',
   '/konverteris': 'Runų Konverteris',
   '/premium': 'Premium',
+  '/horoskopas': 'Rūnų Horoskopas',
+  '/dienorastis': 'Rūnų Dienoraštis',
   '/profilis': 'Profilis',
   '/istorija': 'Būrimų Istorija',
   '/prisijungti': 'Prisijungimas',

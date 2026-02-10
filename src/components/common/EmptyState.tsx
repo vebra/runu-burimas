@@ -19,7 +19,7 @@ export function EmptyState({ icon, title, description, action }: EmptyStateProps
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="text-center py-12 px-4"
+      className="text-center py-12 px-4 flex flex-col items-center"
     >
       {icon && (
         <motion.div

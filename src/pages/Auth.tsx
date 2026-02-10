@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Mail } from 'lucide-react'
 import { LoginForm } from '../components/auth/LoginForm'
@@ -17,9 +17,24 @@ export function Auth() {
     noindex: true,
   })
   const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>('login')
-  const { signIn, signUp, resetPassword } = useAuth()
+  const { signIn, signUp, resetPassword, resendConfirmation, user } = useAuth()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const toast = useToast()
+
+  // Redirect authenticated users (e.g. after email confirmation callback)
+  useEffect(() => {
+    if (user) {
+      const type = searchParams.get('type')
+      if (type === 'signup') {
+        toast.success('El. paštas patvirtintas! Sveiki atvykę!')
+      } else if (type === 'recovery') {
+        navigate('/profilis')
+        return
+      }
+      navigate('/')
+    }
+  }, [user, searchParams, navigate, toast])
 
   const handleLogin = async (email: string, password: string) => {
     await signIn(email, password)
@@ -63,6 +78,7 @@ export function Auth() {
           <SignupForm
             onSubmit={handleSignup}
             onSwitchToLogin={() => setMode('login')}
+            onResendConfirmation={resendConfirmation}
           />
         )}
 

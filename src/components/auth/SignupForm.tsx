@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Lock, Eye, EyeOff, Check, X } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, Check, X, RefreshCw } from 'lucide-react'
 import { Button } from '../common/Button'
 import { Input } from '../common/Input'
 
 interface SignupFormProps {
   onSubmit: (email: string, password: string) => Promise<void>
   onSwitchToLogin: () => void
+  onResendConfirmation: (email: string) => Promise<void>
 }
 
-export function SignupForm({ onSubmit, onSwitchToLogin }: SignupFormProps) {
+export function SignupForm({ onSubmit, onSwitchToLogin, onResendConfirmation }: SignupFormProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -55,6 +56,22 @@ export function SignupForm({ onSubmit, onSwitchToLogin }: SignupFormProps) {
     }
   }
 
+  const [resending, setResending] = useState(false)
+  const [resendSuccess, setResendSuccess] = useState(false)
+
+  const handleResend = async () => {
+    setResending(true)
+    setResendSuccess(false)
+    try {
+      await onResendConfirmation(email)
+      setResendSuccess(true)
+    } catch {
+      // Silently handle — Supabase rate-limits resends
+    } finally {
+      setResending(false)
+    }
+  }
+
   if (success) {
     return (
       <motion.div
@@ -64,20 +81,36 @@ export function SignupForm({ onSubmit, onSwitchToLogin }: SignupFormProps) {
       >
         <div className="bg-gray-900/80 backdrop-blur-sm border border-green-500/20 rounded-2xl p-8 shadow-2xl text-center">
           <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Check className="w-8 h-8 text-green-400" />
+            <Check className="w-8 h-8 text-green-400" aria-hidden="true" />
           </div>
           <h2 className="text-2xl font-cinzel font-bold text-white mb-4">
             Registracija sėkminga!
           </h2>
-          <p className="text-gray-400 mb-6">
-            Patikrinkite savo el. paštą ir patvirtinkite paskyrą.
+          <p className="text-gray-400 mb-2">
+            Išsiuntėme patvirtinimo nuorodą adresu:
           </p>
-          <button
-            onClick={onSwitchToLogin}
-            className="text-amber-400 hover:text-amber-300 font-medium transition-colors"
-          >
-            Grįžti į prisijungimą
-          </button>
+          <p className="text-white font-medium mb-4">
+            {email}
+          </p>
+          <p className="text-gray-500 text-sm mb-6">
+            Paspauskite nuorodą el. laiške, kad aktyvuotumėte paskyrą. Patikrinkite ir „Šlamšto" aplanką.
+          </p>
+          <div className="space-y-3">
+            <button
+              onClick={handleResend}
+              disabled={resending || resendSuccess}
+              className="flex items-center justify-center gap-2 w-full text-sm text-amber-400 hover:text-amber-300 disabled:text-gray-500 font-medium transition-colors"
+            >
+              <RefreshCw className={`w-4 h-4 ${resending ? 'animate-spin' : ''}`} aria-hidden="true" />
+              {resendSuccess ? 'Laiškas išsiųstas iš naujo!' : resending ? 'Siunčiama...' : 'Siųsti laišką iš naujo'}
+            </button>
+            <button
+              onClick={onSwitchToLogin}
+              className="text-gray-400 hover:text-gray-300 font-medium transition-colors text-sm"
+            >
+              Grįžti į prisijungimą
+            </button>
+          </div>
         </div>
       </motion.div>
     )
@@ -133,8 +166,9 @@ export function SignupForm({ onSubmit, onSwitchToLogin }: SignupFormProps) {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="hover:text-gray-300 transition-colors"
+                  aria-label={showPassword ? 'Slėpti slaptažodį' : 'Rodyti slaptažodį'}
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? <EyeOff className="w-5 h-5" aria-hidden="true" /> : <Eye className="w-5 h-5" aria-hidden="true" />}
                 </button>
               }
               required
@@ -145,16 +179,19 @@ export function SignupForm({ onSubmit, onSwitchToLogin }: SignupFormProps) {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 className="space-y-1 mt-2"
+                role="list"
+                aria-label="Slaptažodžio reikalavimai"
+                aria-live="polite"
               >
                 {passwordRequirements.map((req, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs">
+                  <div key={i} className="flex items-center gap-2 text-xs" role="listitem">
                     {req.met ? (
-                      <Check className="w-3 h-3 text-green-400" />
+                      <Check className="w-3 h-3 text-green-400" aria-hidden="true" />
                     ) : (
-                      <X className="w-3 h-3 text-gray-500" />
+                      <X className="w-3 h-3 text-gray-500" aria-hidden="true" />
                     )}
                     <span className={req.met ? 'text-green-400' : 'text-gray-500'}>
-                      {req.label}
+                      {req.met ? '✓' : '✗'} {req.label}
                     </span>
                   </div>
                 ))}
@@ -185,9 +222,9 @@ export function SignupForm({ onSubmit, onSwitchToLogin }: SignupFormProps) {
               {confirmPassword.length > 0 && (
                 <div className="absolute right-3 top-1/2 -translate-y-1/2">
                   {passwordsMatch ? (
-                    <Check className="w-5 h-5 text-green-400" />
+                    <Check className="w-5 h-5 text-green-400" aria-hidden="true" />
                   ) : (
-                    <X className="w-5 h-5 text-red-400" />
+                    <X className="w-5 h-5 text-red-400" aria-hidden="true" />
                   )}
                 </div>
               )}

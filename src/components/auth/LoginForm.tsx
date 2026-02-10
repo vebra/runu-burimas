@@ -80,8 +80,9 @@ export function LoginForm({ onSubmit, onSwitchToSignup, onForgotPassword }: Logi
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="hover:text-gray-300 transition-colors"
+                aria-label={showPassword ? 'Slėpti slaptažodį' : 'Rodyti slaptažodį'}
               >
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                {showPassword ? <EyeOff className="w-5 h-5" aria-hidden="true" /> : <Eye className="w-5 h-5" aria-hidden="true" />}
               </button>
             }
             required

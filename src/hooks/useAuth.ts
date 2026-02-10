@@ -13,6 +13,7 @@ interface AuthContextValue extends AuthState {
   signUp: (email: string, password: string) => Promise<{ user: User | null; session: Session | null }>
   signOut: () => Promise<void>
   resetPassword: (email: string) => Promise<void>
+  resendConfirmation: (email: string) => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -74,12 +75,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (error) throw error
   }, [])
 
+  const resendConfirmation = useCallback(async (email: string) => {
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email,
+    })
+    if (error) throw error
+  }, [])
+
   const value: AuthContextValue = {
     ...authState,
     signIn,
     signUp,
     signOut,
     resetPassword,
+    resendConfirmation,
   }
 
   return createElement(AuthContext.Provider, { value }, children)
