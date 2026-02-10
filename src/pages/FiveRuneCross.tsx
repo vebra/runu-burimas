@@ -33,6 +33,7 @@ export function FiveRuneCross() {
   useSEO({
     title: 'Penkių Runų Kryžius',
     description: 'Penkių runų kryžiaus būrimas — gilesnė situacijos analizė per Elder Futhark runas. Premium būrimas su centrine runa ir keturiomis kryptimis.',
+    keywords: '5 runų kryžius, penkių runų būrimas, runų kryžius, situacijos analizė, premium būrimas, Elder Futhark kryžius',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',

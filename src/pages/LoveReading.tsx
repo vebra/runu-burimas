@@ -32,6 +32,7 @@ export function LoveReading() {
   useSEO({
     title: 'Meilės Būrimas',
     description: 'Meilės runų būrimas — sužinokite apie savo santykius, partnerio energiją ir meilės potencialą per Elder Futhark runas.',
+    keywords: 'meilės būrimas, santykių būrimas, meilės runos, partnerio energija, meilės prognozė, romantinis būrimas, runų meilės testas',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',

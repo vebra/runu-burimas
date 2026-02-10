@@ -49,6 +49,7 @@ export function RuneJournal() {
   useSEO({
     title: 'Rūnų Dienoraštis',
     description: 'Asmeninis mistinis dienoraštis — užrašykite mintis, priskirkite dienos rūną ir stebėkite savo dvasinę kelionę.',
+    keywords: 'runų dienoraštis, dvasinis dienoraštis, nuotaikų sekimas, dienos runa, asmeninis dienoraštis, mistinis žurnalas',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',

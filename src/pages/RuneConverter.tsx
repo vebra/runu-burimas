@@ -8,6 +8,7 @@ export function RuneConverter() {
   useSEO({
     title: 'Runų Konverteris',
     description: 'Konvertuokite tekstą į Elder Futhark runas. Įveskite savo vardą ar žinutę ir pamatykite ją runų simboliais.',
+    keywords: 'runų konverteris, vardas runomis, tekstas runomis, Elder Futhark konverteris, runų vertėjas, runų raštas, vikingų raštas',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebApplication',

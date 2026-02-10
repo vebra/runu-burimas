@@ -95,6 +95,7 @@ export function RuneHoroscope() {
   useSEO({
     title: 'Rūnų Horoskopas',
     description: 'Sužinokite savo gimimo rūną pagal gimimo datą. Gaukite savaitines ir mėnesines rūnų prognozes su Elder Futhark runomis.',
+    keywords: 'runų horoskopas, gimimo runa, asmeninė prognozė, savaitinis horoskopas, mėnesinis horoskopas, runų zodiakas, Elder Futhark horoskopas',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',

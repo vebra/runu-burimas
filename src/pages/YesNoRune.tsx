@@ -75,6 +75,7 @@ export function YesNoRune() {
   useSEO({
     title: 'Taip arba Ne Būrimas',
     description: 'Užduokite klausimą ir gaukite atsakymą Taip arba Ne per Elder Futhark runą. Paprastas ir greitas runų būrimas.',
+    keywords: 'taip ar ne būrimas, greitas būrimas, atsakymas į klausimą, runų orakulas, taip ne runa, būrimas online',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',

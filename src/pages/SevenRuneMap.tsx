@@ -34,6 +34,7 @@ export function SevenRuneMap() {
   useSEO({
     title: 'Septynių Runų Žemėlapis',
     description: 'Septynių runų žemėlapio būrimas — išsamus gyvenimo situacijos žemėlapis per Elder Futhark runas. Premium būrimas su 7 pozicijomis.',
+    keywords: '7 runų žemėlapis, septynių runų būrimas, gyvenimo žemėlapis, dvasinis kelias, premium runų būrimas, Elder Futhark žemėlapis',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',

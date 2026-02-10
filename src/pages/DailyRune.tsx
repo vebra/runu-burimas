@@ -30,6 +30,7 @@ export function DailyRune() {
   useSEO({
     title: 'Kasdienė Runa',
     description: 'Traukite savo kasdienę Elder Futhark runą ir gaukite asmeninę dvasinę žinutę dienai. Atraskite runų išmintį kiekvieną dieną.',
+    keywords: 'kasdienė runa, dienos runa, vienos runos būrimas, runa šiandien, dienos pranašavimas, Elder Futhark runa, dvasinė žinutė dienai',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',

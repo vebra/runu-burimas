@@ -11,6 +11,7 @@ export function RuneLibrary() {
   useSEO({
     title: 'Runų Biblioteka',
     description: 'Pilna Elder Futhark runų biblioteka — 24 runos su reikšmėmis, interpretacijomis, raktiniais žodžiais ir elementais. Išmokite runų simbolius.',
+    keywords: 'runų reikšmės, Elder Futhark runos, 24 runos, runų simboliai, runų interpretacija, vikingų runos, runų abėcėlė, futhark',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',

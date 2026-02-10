@@ -31,6 +31,7 @@ export function ThreeRune() {
   useSEO({
     title: 'Trijų Runų Būrimas',
     description: 'Trijų runų būrimas — praeitis, dabartis ir ateitis. Gaukite įžvalgas apie savo gyvenimą per Elder Futhark runų išmintį.',
+    keywords: 'trijų runų būrimas, 3 runos, praeitis dabartis ateitis, runų būrimas internetu, nemokamas būrimas, Elder Futhark būrimas',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',

@@ -6,10 +6,12 @@ const BASE_URL = 'https://www.runes.lt'
 const DEFAULT_TITLE = `${SITE_NAME} 🔮 | Elder Futhark Runų Aplikacija`
 const DEFAULT_DESCRIPTION = 'Atraskite senovės išmintį per Elder Futhark runas. Kasdienės runos, būrimai, runų biblioteka ir dienoraštis. Pradėkite savo dvasinį kelią šiandien!'
 const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`
+const DEFAULT_KEYWORDS = 'runos, runų būrimas, Elder Futhark, būrimas internetu, runų reikšmės, kasdienė runa, runų horoskopas, ateities spėjimas, nemokamas būrimas, skandinavų runos, vikingų runos'
 
 export interface SEOConfig {
   title?: string
   description?: string
+  keywords?: string
   image?: string
   type?: string
   noindex?: boolean
@@ -60,6 +62,7 @@ export function useSEO(config: SEOConfig = {}) {
     const {
       title,
       description = DEFAULT_DESCRIPTION,
+      keywords,
       image = DEFAULT_IMAGE,
       type = 'website',
       noindex = false,
@@ -73,6 +76,7 @@ export function useSEO(config: SEOConfig = {}) {
     // Primary meta
     setMetaTag('title', fullTitle)
     setMetaTag('description', description)
+    if (keywords) setMetaTag('keywords', keywords)
     setMetaTag('robots', noindex ? 'noindex, nofollow' : 'index, follow')
 
     // Canonical
@@ -124,8 +128,9 @@ export function useSEO(config: SEOConfig = {}) {
       setMetaTag('twitter:url', BASE_URL + '/')
       removeJsonLd('seo-jsonld-page')
       removeJsonLd('seo-jsonld-breadcrumb')
+      setMetaTag('keywords', DEFAULT_KEYWORDS)
     }
-  }, [config.title, config.description, location.pathname])
+  }, [config.title, config.description, config.keywords, location.pathname])
 }
 
 const PATH_LABELS: Record<string, string> = {

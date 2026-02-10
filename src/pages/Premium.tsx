@@ -45,6 +45,7 @@ export function Premium() {
   useSEO({
     title: 'Premium Narystė',
     description: 'Atrakinkite visas Runų Būrimo funkcijas — Keltų Kryžius, Meilės Būrimas, AI interpretacijos ir daugiau. Premium narystė nuo 2.99€/mėn.',
+    keywords: 'premium būrimas, runų premium, keltų kryžius, meilės būrimas, 5 runų kryžius, 7 runų žemėlapis, AI interpretacija, runų prenumerata',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Product',

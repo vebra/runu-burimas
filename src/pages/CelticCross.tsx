@@ -37,6 +37,7 @@ export function CelticCross() {
   useSEO({
     title: 'Keltų Kryžius',
     description: 'Keltų kryžiaus runų būrimas — vienas išsamiausių būrimo metodų su 10 pozicijų. Premium Elder Futhark runų būrimas.',
+    keywords: 'keltų kryžius, 10 runų būrimas, celtic cross, išsamus būrimas, premium runų būrimas, keltų runos, pilnas būrimas',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
