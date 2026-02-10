@@ -63,7 +63,7 @@ const FeatureCard = memo(function FeatureCard({ feature }: { feature: Feature })
     <motion.div
       variants={itemVariants}
       className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.5rem)]"
-      style={{ perspective: 1000 }}
+      style={{ perspective: 1000, touchAction: 'pan-y' }}
     >
       <Link to={feature.path} className="block h-full">
         <motion.div
@@ -75,6 +75,7 @@ const FeatureCard = memo(function FeatureCard({ feature }: { feature: Feature })
             rotateX: rotateX,
             rotateY: rotateY,
             transformStyle: 'preserve-3d',
+            touchAction: 'pan-y',
           }}
           className="relative h-full"
         >
