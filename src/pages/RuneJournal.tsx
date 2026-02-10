@@ -183,7 +183,7 @@ export function RuneJournal() {
 
   if (!user) {
     return (
-      <div className="px-4 pb-16 text-center" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', paddingTop: 'clamp(5rem, 12vw, 100px)' }}>
+      <div className="px-4 text-center" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', paddingTop: 'clamp(5rem, 12vw, 100px)', paddingBottom: 'clamp(6rem, 20vw, 12rem)' }}>
         <BookOpen className="w-16 h-16 text-purple-400 mx-auto" />
         <h1 className="text-3xl font-cinzel font-bold text-white">Rūnų Dienoraštis</h1>
         <p className="text-gray-400 max-w-md">Prisijunkite, kad galėtumėte rašyti savo asmeninį rūnų dienoraštį.</p>
