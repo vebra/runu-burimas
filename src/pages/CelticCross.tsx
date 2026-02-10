@@ -179,16 +179,18 @@ export function CelticCross() {
         {spread.drawnRunes.length > 0 && !spread.isDrawing && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             {/* Celtic Cross Layout */}
-            <div className="flex flex-col lg:flex-row justify-center items-start gap-12 lg:gap-20 px-4" style={{ marginBottom: '5rem' }}>
+            <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-8 lg:gap-16" style={{ marginBottom: '5rem' }}>
 
-              {/* Cross section (left side) - using CSS Grid */}
-              <div className="grid gap-3" style={{
+              {/* Cross section */}
+              <div style={{
+                display: 'grid',
                 gridTemplateColumns: 'auto auto auto',
-                gridTemplateRows: 'auto auto auto',
+                gridTemplateRows: 'auto auto auto auto auto',
                 justifyItems: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                gap: '8px',
               }}>
-                {/* Row 1: Above (center top) */}
+                {/* Row 1: Above */}
                 <div style={{ gridColumn: '2', gridRow: '1' }}>
                   {spread.drawnRunes.find(r => r.position === 'above') && (
                     <RuneCard
@@ -202,7 +204,7 @@ export function CelticCross() {
                   )}
                 </div>
 
-                {/* Row 2: Past - Present/Challenge - Future */}
+                {/* Row 2: Past */}
                 <div style={{ gridColumn: '1', gridRow: '2' }}>
                   {spread.drawnRunes.find(r => r.position === 'past') && (
                     <RuneCard
@@ -216,39 +218,21 @@ export function CelticCross() {
                   )}
                 </div>
 
-                {/* Center: Present + Challenge stacked */}
-                <div style={{ gridColumn: '2', gridRow: '2' }} className="relative">
-                  {/* Challenge card (behind, rotated) */}
-                  {spread.drawnRunes.find(r => r.position === 'challenge') && (
-                    <div className="absolute inset-0 flex items-center justify-center" style={{ transform: 'rotate(90deg)', zIndex: 1 }}>
-                      <RuneCard
-                        rune={spread.drawnRunes.find(r => r.position === 'challenge')!.rune}
-                        orientation={spread.drawnRunes.find(r => r.position === 'challenge')!.orientation}
-                        revealed={spread.revealedPositions.has('challenge')}
-                        onReveal={() => spread.revealRune('challenge')}
-                        size="sm"
-                      />
-                    </div>
-                  )}
-                  {/* Present card (front) */}
+                {/* Row 2: Present (center) */}
+                <div style={{ gridColumn: '2', gridRow: '2' }}>
                   {spread.drawnRunes.find(r => r.position === 'present') && (
-                    <div style={{ position: 'relative', zIndex: 2 }}>
-                      <RuneCard
-                        rune={spread.drawnRunes.find(r => r.position === 'present')!.rune}
-                        orientation={spread.drawnRunes.find(r => r.position === 'present')!.orientation}
-                        revealed={spread.revealedPositions.has('present')}
-                        onReveal={() => spread.revealRune('present')}
-                        label={`${positionLabels.present.emoji} ${positionLabels.present.label}`}
-                        size="sm"
-                      />
-                    </div>
+                    <RuneCard
+                      rune={spread.drawnRunes.find(r => r.position === 'present')!.rune}
+                      orientation={spread.drawnRunes.find(r => r.position === 'present')!.orientation}
+                      revealed={spread.revealedPositions.has('present')}
+                      onReveal={() => spread.revealRune('present')}
+                      label={`${positionLabels.present.emoji} ${positionLabels.present.label}`}
+                      size="sm"
+                    />
                   )}
-                  {/* Challenge label below */}
-                  <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-                    <span className="text-xs text-amber-300">{positionLabels.challenge.emoji} {positionLabels.challenge.label}</span>
-                  </div>
                 </div>
 
+                {/* Row 2: Future */}
                 <div style={{ gridColumn: '3', gridRow: '2' }}>
                   {spread.drawnRunes.find(r => r.position === 'future') && (
                     <RuneCard
@@ -262,7 +246,7 @@ export function CelticCross() {
                   )}
                 </div>
 
-                {/* Row 3: Below (center bottom) */}
+                {/* Row 3: Below */}
                 <div style={{ gridColumn: '2', gridRow: '3' }}>
                   {spread.drawnRunes.find(r => r.position === 'below') && (
                     <RuneCard
@@ -275,10 +259,24 @@ export function CelticCross() {
                     />
                   )}
                 </div>
+
+                {/* Row 4: Challenge (below the cross, centered) */}
+                <div style={{ gridColumn: '2', gridRow: '4', paddingTop: '4px' }}>
+                  {spread.drawnRunes.find(r => r.position === 'challenge') && (
+                    <RuneCard
+                      rune={spread.drawnRunes.find(r => r.position === 'challenge')!.rune}
+                      orientation={spread.drawnRunes.find(r => r.position === 'challenge')!.orientation}
+                      revealed={spread.revealedPositions.has('challenge')}
+                      onReveal={() => spread.revealRune('challenge')}
+                      label={`${positionLabels.challenge.emoji} ${positionLabels.challenge.label}`}
+                      size="sm"
+                    />
+                  )}
+                </div>
               </div>
 
-              {/* Staff section (right side - vertical column) */}
-              <div className="flex flex-col gap-4">
+              {/* Staff section — vertical on desktop, 2x2 grid on mobile */}
+              <div className="grid grid-cols-2 lg:grid-cols-1 gap-3 lg:gap-4">
                 {(['outcome', 'hopes', 'external', 'advice'] as Position[]).map((pos) => {
                   const drawn = spread.drawnRunes.find(r => r.position === pos)
                   if (!drawn) return null
