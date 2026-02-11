@@ -11,8 +11,8 @@ import { trackPremiumPageView, trackCheckoutStarted } from '../lib/analytics'
 
 // Stripe Price IDs - these should match your Stripe dashboard
 const STRIPE_PRICES = {
-  monthly: import.meta.env.VITE_STRIPE_MONTHLY_PRICE_ID || 'price_monthly',
-  yearly: import.meta.env.VITE_STRIPE_YEARLY_PRICE_ID || 'price_yearly',
+  monthly: import.meta.env.VITE_STRIPE_MONTHLY_PRICE_ID || 'price_1SxB5uCrkUOUgzqjCcVu0scW',
+  yearly: import.meta.env.VITE_STRIPE_YEARLY_PRICE_ID || 'price_1SxB8UCrkUOUgzqjLVUKgcEs',
 }
 
 const freeFeatures = [
