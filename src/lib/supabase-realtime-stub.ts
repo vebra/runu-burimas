@@ -4,6 +4,7 @@ export class RealtimeClient {
   constructor() {}
   connect() { return this }
   disconnect() { return this }
+  setAuth() { return this }
   channel() { return this }
   removeChannel() { return this }
   removeAllChannels() { return this }
