@@ -158,7 +158,7 @@ export function Premium() {
   // If user already has premium, show management UI
   if (isPremium && subscription) {
     return (
-      <div className="px-4 sm:px-6 pt-6 sm:pt-8 md:pt-32 pb-32 w-full flex flex-col items-center">
+      <div className="px-4 sm:px-6 pb-32 w-full flex flex-col items-center" style={{ paddingTop: 'clamp(5rem, 12vw, 100px)' }}>
         <div className="w-full" style={{ maxWidth: '600px' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -272,7 +272,7 @@ export function Premium() {
 
   // Non-premium view - pricing page
   return (
-    <div className="px-4 sm:px-6 pt-6 sm:pt-8 md:pt-32 pb-32 w-full flex flex-col items-center">
+    <div className="px-4 sm:px-6 pb-32 w-full flex flex-col items-center" style={{ paddingTop: 'clamp(5rem, 12vw, 100px)' }}>
       <div className="w-full" style={{ maxWidth: '1100px' }}>
         {/* Header */}
         <motion.div
