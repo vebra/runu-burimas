@@ -7,6 +7,7 @@ import { AnimatedBackground } from './components/common/AnimatedBackground'
 import { ToastProvider } from './components/common/Toast'
 import { ErrorBoundary } from './components/common/ErrorBoundary'
 import { CookieConsent } from './components/common/CookieConsent'
+import { ChatWidget } from './components/common/ChatWidget'
 import { PageTransition } from './components/common/PageTransition'
 import { useAuth, AuthProvider } from './hooks/useAuth'
 import { usePageTracking } from './hooks/useAnalytics'
@@ -130,6 +131,7 @@ function AppContent() {
         <Footer />
         <CookieConsent />
       </div>
+      <ChatWidget />
     </div>
   )
 }
