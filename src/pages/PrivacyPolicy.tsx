@@ -174,11 +174,11 @@ Jei esate tėvas/motina ir manote, kad jūsų vaikas pateikė mums asmens duomen
                 Jei turite klausimų apie šią privatumo politiką arba norite pasinaudoti savo teisėmis, susisiekite:
               </p>
               <a
-                href="mailto:privatumas@runuburimas.lt"
+                href="mailto:info@runes.lt"
                 className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors font-medium"
               >
                 <Mail className="w-4 h-4" />
-                privatumas@runuburimas.lt
+                info@runes.lt
               </a>
             </div>
           </div>

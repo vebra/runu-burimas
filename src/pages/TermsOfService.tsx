@@ -150,7 +150,7 @@ Jūs **negalite**:
 **Grąžinimo politika:**
 • Prenumeratos mokesčiai **negrąžinami** po aktyvavimo
 • Išimtis: techninės klaidos ar neteisėti nuskaitymai
-• Dėl grąžinimų kreipkitės: **info@runuburimas.lt**
+• Dėl grąžinimų kreipkitės: **info@runes.lt**
 
 **Kainų pakeitimai:**
 • Apie kainų pakeitimus informuosime **30 dienų** iš anksto
@@ -294,11 +294,11 @@ Dėkojame, kad naudojatės „Runų Būrimas" ir tikimės, kad runos suteiks jum
                 Jei turite klausimų apie šias naudojimo sąlygas ar paslaugą, susisiekite su mumis:
               </p>
               <a
-                href="mailto:info@runuburimas.lt"
+                href="mailto:info@runes.lt"
                 className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors font-medium"
               >
                 <Mail className="w-4 h-4" />
-                info@runuburimas.lt
+                info@runes.lt
               </a>
             </div>
           </div>

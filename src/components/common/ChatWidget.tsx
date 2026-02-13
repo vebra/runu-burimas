@@ -1,15 +1,9 @@
-import { useState, useRef, useEffect, Component, type ReactNode } from 'react'
+import { useState, Component, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageCircle, X, Send, Sparkles, RotateCcw } from 'lucide-react'
-import { useChatSupport } from '../../hooks/useChatSupport'
-
-const QUICK_ACTIONS = [
-  { label: '💰 Kainos', message: 'Kokios yra prenumeratos kainos?' },
-  { label: '✨ Premium', message: 'Ką gaunu su Premium prenumerata?' },
-  { label: '🔮 Kaip naudoti?', message: 'Kaip naudotis runų būrimu?' },
-  { label: '❌ Atšaukti', message: 'Kaip atšaukti prenumeratą?' },
-]
+import { Mail, X, Send, Sparkles, CheckCircle } from 'lucide-react'
+import { supabase } from '../../lib/supabase'
+import { useAuth } from '../../hooks/useAuth'
 
 class ChatErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
   state = { hasError: false }
@@ -28,36 +22,58 @@ export function ChatWidget() {
 }
 
 function ChatWidgetInner() {
-  const { messages, sendMessage, isLoading, isOpen, setIsOpen, clearMessages } = useChatSupport()
-  const [input, setInput] = useState('')
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
+  const { user } = useAuth()
+  const [isOpen, setIsOpen] = useState(false)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+  const [sending, setSending] = useState(false)
+  const [sent, setSent] = useState(false)
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!message.trim() || sending) return
 
-  useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 300)
+    const senderEmail = email.trim() || user?.email || 'Nenurodyta'
+    const senderName = name.trim() || 'Anonimas'
+
+    setSending(true)
+    try {
+      // Save to Supabase for record keeping
+      await supabase.from('contact_messages').insert({
+        name: senderName,
+        email: senderEmail,
+        message: message.trim(),
+        user_id: user?.id || null,
+      })
+
+      // Open mailto as fallback to ensure delivery
+      const subject = encodeURIComponent(`Žinutė iš runes.lt - ${senderName}`)
+      const body = encodeURIComponent(
+        `Vardas: ${senderName}\nEl. paštas: ${senderEmail}\n\nŽinutė:\n${message.trim()}`
+      )
+      window.open(`mailto:info@runes.lt?subject=${subject}&body=${body}`, '_blank')
+
+      setSent(true)
+      setMessage('')
+      setName('')
+      setEmail('')
+
+      setTimeout(() => {
+        setSent(false)
+        setIsOpen(false)
+      }, 3000)
+    } catch {
+      // If Supabase fails, still open mailto
+      const subject = encodeURIComponent(`Žinutė iš runes.lt`)
+      const body = encodeURIComponent(
+        `Vardas: ${name.trim() || 'Anonimas'}\nEl. paštas: ${email.trim() || 'Nenurodyta'}\n\nŽinutė:\n${message.trim()}`
+      )
+      window.location.href = `mailto:info@runes.lt?subject=${subject}&body=${body}`
+    } finally {
+      setSending(false)
     }
-  }, [isOpen])
-
-  const handleSend = async () => {
-    if (!input.trim() || isLoading) return
-    const msg = input
-    setInput('')
-    await sendMessage(msg)
   }
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      handleSend()
-    }
-  }
-
-  const showQuickActions = messages.length <= 1
 
   return (
     <>
@@ -75,9 +91,9 @@ function ChatWidgetInner() {
               bg-gradient-to-br from-purple-700 to-purple-900
               border-2 border-amber-500/40 shadow-lg shadow-purple-900/50
               cursor-pointer group"
-            aria-label="Atidaryti pagalbos pokalbį"
+            aria-label="Susisiekti"
           >
-            <MessageCircle className="w-6 h-6 text-amber-300 group-hover:text-amber-200 transition-colors" />
+            <Mail className="w-6 h-6 text-amber-300 group-hover:text-amber-200 transition-colors" />
             <motion.span
               className="absolute inset-0 rounded-full border-2 border-amber-400/30"
               animate={{ scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] }}
@@ -87,7 +103,7 @@ function ChatWidgetInner() {
         )}
       </AnimatePresence>
 
-      {/* Chat Window */}
+      {/* Contact Form Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -98,8 +114,8 @@ function ChatWidgetInner() {
             className="fixed z-50 flex flex-col rounded-2xl overflow-hidden
               bg-gray-950/95 backdrop-blur-xl border border-amber-600/20
               shadow-2xl shadow-purple-900/30
-              bottom-0 right-0 w-full h-[75vh] rounded-b-none
-              sm:bottom-6 sm:right-6 sm:w-[380px] sm:h-[500px] sm:rounded-2xl"
+              bottom-0 right-0 w-full rounded-b-none
+              sm:bottom-6 sm:right-6 sm:w-[380px] sm:rounded-2xl"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-2.5
@@ -108,130 +124,91 @@ function ChatWidgetInner() {
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-amber-400" />
                 <h3 className="text-sm font-cinzel font-semibold text-amber-100">
-                  Runų Pagalba
+                  Susisiekite su mumis
                 </h3>
               </div>
-              <div className="flex items-center gap-0.5">
-                <button
-                  onClick={clearMessages}
-                  className="p-1.5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
-                  aria-label="Išvalyti pokalbį"
-                  title="Išvalyti pokalbį"
-                >
-                  <RotateCcw className="w-3.5 h-3.5 text-purple-300" />
-                </button>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="p-1.5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
-                  aria-label="Uždaryti pokalbį"
-                >
-                  <X className="w-3.5 h-3.5 text-purple-300" />
-                </button>
-              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-1.5 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+                aria-label="Uždaryti"
+              >
+                <X className="w-3.5 h-3.5 text-purple-300" />
+              </button>
             </div>
 
-            {/* Messages area */}
-            <div className="flex-1 overflow-y-auto px-3 py-3 space-y-3 min-h-0">
-              {messages.map((msg) => (
-                <motion.div
-                  key={msg.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-[85%] px-3 py-2 rounded-2xl text-[13px] leading-relaxed whitespace-pre-wrap ${
-                      msg.role === 'user'
-                        ? 'bg-purple-700/60 text-purple-50 rounded-br-sm'
-                        : 'bg-gray-800/80 text-gray-200 rounded-bl-sm border border-amber-600/10'
-                    }`}
-                  >
-                    {msg.content}
-                  </div>
-                </motion.div>
-              ))}
+            {/* Form */}
+            {sent ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex flex-col items-center justify-center gap-3 py-12 px-4"
+              >
+                <CheckCircle className="w-12 h-12 text-green-400" />
+                <p className="text-white font-cinzel font-semibold">Žinutė išsiųsta!</p>
+                <p className="text-gray-400 text-sm text-center">
+                  Atsakysime kuo greičiau į jūsų el. paštą.
+                </p>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3 p-4">
+                <p className="text-gray-400 text-xs mb-1">
+                  Parašykite mums ir atsakysime el. paštu.
+                </p>
 
-              {/* Quick Actions */}
-              {showQuickActions && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="flex flex-wrap gap-1.5 pt-2"
-                >
-                  {QUICK_ACTIONS.map((action) => (
-                    <button
-                      key={action.label}
-                      onClick={() => sendMessage(action.message)}
-                      disabled={isLoading}
-                      className="px-2.5 py-1 text-xs rounded-full
-                        bg-purple-800/40 border border-purple-500/30
-                        text-purple-200 hover:bg-purple-700/50 hover:border-amber-500/30
-                        transition-colors disabled:opacity-50 cursor-pointer"
-                    >
-                      {action.label}
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-
-              {/* Loading indicator */}
-              {isLoading && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="flex justify-start"
-                >
-                  <div className="bg-gray-800/80 border border-amber-600/10 px-4 py-2 rounded-2xl rounded-bl-sm">
-                    <div className="flex gap-1.5">
-                      {[0, 1, 2].map((i) => (
-                        <motion.span
-                          key={i}
-                          className="w-1.5 h-1.5 rounded-full bg-purple-400"
-                          animate={{ opacity: [0.3, 1, 0.3] }}
-                          transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Input */}
-            <div className="px-3 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] border-t border-amber-600/15 bg-gray-900/80 shrink-0
-              sm:py-2.5 sm:pb-2.5">
-              <div className="flex items-center gap-2">
                 <input
-                  ref={inputRef}
                   type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Rašykite žinutę..."
-                  disabled={isLoading}
-                  className="flex-1 bg-gray-800/60 border border-purple-500/20 rounded-xl
-                    px-4 py-3.5 text-base text-white placeholder-gray-500
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Jūsų vardas"
+                  className="bg-gray-800/60 border border-purple-500/20 rounded-xl
+                    px-4 py-2.5 text-sm text-white placeholder-gray-500
                     focus:outline-none focus:border-amber-500/40 focus:ring-1 focus:ring-amber-500/20
-                    disabled:opacity-50 transition-colors
-                    sm:py-2"
+                    transition-colors"
                 />
+
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={user?.email || 'Jūsų el. paštas'}
+                  className="bg-gray-800/60 border border-purple-500/20 rounded-xl
+                    px-4 py-2.5 text-sm text-white placeholder-gray-500
+                    focus:outline-none focus:border-amber-500/40 focus:ring-1 focus:ring-amber-500/20
+                    transition-colors"
+                />
+
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Jūsų žinutė..."
+                  required
+                  rows={4}
+                  className="bg-gray-800/60 border border-purple-500/20 rounded-xl
+                    px-4 py-2.5 text-sm text-white placeholder-gray-500
+                    focus:outline-none focus:border-amber-500/40 focus:ring-1 focus:ring-amber-500/20
+                    transition-colors resize-none"
+                />
+
                 <button
-                  onClick={handleSend}
-                  disabled={!input.trim() || isLoading}
-                  className="p-3.5 rounded-xl bg-purple-700/70 hover:bg-purple-600/70
+                  type="submit"
+                  disabled={!message.trim() || sending}
+                  className="flex items-center justify-center gap-2 py-2.5 rounded-xl
+                    bg-purple-700/70 hover:bg-purple-600/70 text-amber-200
                     disabled:opacity-30 disabled:cursor-not-allowed
-                    transition-colors cursor-pointer
-                    sm:p-2"
-                  aria-label="Siųsti žinutę"
+                    transition-colors cursor-pointer font-medium text-sm"
                 >
-                  <Send className="w-6 h-6 text-amber-300 sm:w-4 sm:h-4" />
+                  <Send className="w-4 h-4" />
+                  {sending ? 'Siunčiama...' : 'Siųsti žinutę'}
                 </button>
-              </div>
-            </div>
+
+                <a
+                  href="mailto:info@runes.lt"
+                  className="text-center text-xs text-gray-500 hover:text-amber-400 transition-colors"
+                >
+                  arba rašykite tiesiogiai: info@runes.lt
+                </a>
+              </form>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
