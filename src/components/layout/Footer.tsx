@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Heart, Github, Mail } from 'lucide-react'
+import { Heart, Mail } from 'lucide-react'
 
 const footerLinks = [
   { to: '/biblioteka', label: 'Runų Biblioteka' },
@@ -70,14 +70,7 @@ export function Footer() {
             {/* Made with love */}
             <div className="flex flex-col items-center text-center md:text-right md:items-end">
               <h3 className="font-cinzel font-semibold text-white mb-4 text-lg md:text-base">Kontaktai</h3>
-              <div className="flex items-center gap-4 mb-4">
-                <motion.a
-                  href="#"
-                  whileHover={{ scale: 1.1 }}
-                  className="w-10 h-10 rounded-lg bg-gray-800/50 border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:border-purple-500/50 transition-all"
-                >
-                  <Github className="w-5 h-5" />
-                </motion.a>
+              <div className="flex items-center justify-center mb-4">
                 <motion.a
                   href="mailto:info@runes.lt"
                   whileHover={{ scale: 1.1 }}
