@@ -1,6 +1,7 @@
 import { Component, type ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react'
+import { supabase } from '../../lib/supabase'
 
 interface Props {
   children: ReactNode
@@ -18,11 +19,29 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error): State {
+    // Auto-reload on chunk load errors (after new deployment)
+    if (
+      error.message.includes('Failed to fetch dynamically imported module') ||
+      error.message.includes('Loading chunk') ||
+      error.message.includes('ChunkLoadError')
+    ) {
+      window.location.reload()
+      return { hasError: false, error: null }
+    }
     return { hasError: true, error }
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error('Error caught by boundary:', error, errorInfo)
+
+    // Log error to Supabase
+    void supabase.from('error_logs').insert({
+      error_message: error.message,
+      error_stack: error.stack?.slice(0, 2000) || null,
+      component_stack: errorInfo.componentStack?.slice(0, 2000) || null,
+      url: window.location.href,
+      user_agent: navigator.userAgent,
+    })
   }
 
   handleReload = () => {
@@ -89,16 +108,16 @@ export class ErrorBoundary extends Component<Props, State> {
               Runos susidūrė su nenumatyta kliūtimi. Atsiprašome už nepatogumus.
             </p>
 
-            {/* Error details (collapsible) */}
+            {/* Error details - always visible for debugging */}
             {this.state.error && (
-              <details className="mb-6 text-left">
-                <summary className="text-gray-500 text-sm cursor-pointer hover:text-gray-400 transition-colors">
-                  Techninė informacija
-                </summary>
-                <pre className="mt-2 p-3 bg-gray-900/50 border border-gray-800 rounded-lg text-xs text-red-400 overflow-auto max-h-32">
+              <div className="mb-6 p-3 bg-gray-900/50 border border-red-800/50 rounded-lg text-left">
+                <p className="text-red-400 text-xs font-mono break-all">
                   {this.state.error.message}
-                </pre>
-              </details>
+                </p>
+                <p className="text-gray-600 text-[10px] mt-1 break-all">
+                  {navigator.userAgent.slice(0, 120)}
+                </p>
+              </div>
             )}
 
             {/* Action buttons */}

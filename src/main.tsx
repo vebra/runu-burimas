@@ -47,6 +47,42 @@ onLCP(sendToGA)
 onFCP(sendToGA)
 onTTFB(sendToGA)
 
+// Global error handler - catch unhandled errors and log to Supabase
+window.addEventListener('error', (event) => {
+  const msg = event.error?.message || event.message || 'Unknown error'
+  // Auto-reload on chunk load failures
+  if (msg.includes('Failed to fetch dynamically imported module') || msg.includes('Loading chunk')) {
+    window.location.reload()
+    return
+  }
+  import('./lib/supabase').then(({ supabase }) => {
+    supabase.from('error_logs').insert({
+      error_message: msg,
+      error_stack: event.error?.stack?.slice(0, 2000) || null,
+      url: window.location.href,
+      user_agent: navigator.userAgent,
+    })// eslint-disable-next-line @typescript-eslint/no-empty-function
+.then(() => {})
+  }).catch(() => {})
+})
+
+window.addEventListener('unhandledrejection', (event) => {
+  const msg = event.reason?.message || String(event.reason) || 'Unhandled rejection'
+  if (msg.includes('Failed to fetch dynamically imported module') || msg.includes('Loading chunk')) {
+    window.location.reload()
+    return
+  }
+  import('./lib/supabase').then(({ supabase }) => {
+    supabase.from('error_logs').insert({
+      error_message: `[Promise] ${msg}`,
+      error_stack: event.reason?.stack?.slice(0, 2000) || null,
+      url: window.location.href,
+      user_agent: navigator.userAgent,
+    })// eslint-disable-next-line @typescript-eslint/no-empty-function
+.then(() => {})
+  }).catch(() => {})
+})
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
