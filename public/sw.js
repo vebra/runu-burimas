@@ -1,4 +1,4 @@
-const CACHE_NAME = 'runu-burimas-v3'
+const CACHE_NAME = 'runu-burimas-v4'
 const BASE_PATH = '/'
 const urlsToCache = [
   BASE_PATH,
@@ -65,7 +65,7 @@ self.addEventListener('notificationclick', (event) => {
   )
 })
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event - network-first for navigation, cache-first for assets
 self.addEventListener('fetch', (event) => {
   // Skip cross-origin requests
   if (!event.request.url.startsWith(self.location.origin)) {
@@ -77,36 +77,49 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
+  // Navigation requests (HTML pages) - NETWORK FIRST
+  // This prevents stale index.html from causing blank screens
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          // Cache the fresh response
+          const responseToCache = response.clone()
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache)
+          })
+          return response
+        })
+        .catch(() => {
+          // Offline fallback - serve cached index.html
+          return caches.match(BASE_PATH + 'index.html')
+        })
+    )
+    return
+  }
+
+  // Static assets - cache first, fallback to network
   event.respondWith(
     caches.match(event.request).then((response) => {
-      // Cache hit - return response
       if (response) {
         return response
       }
 
-      // Clone the request
       const fetchRequest = event.request.clone()
 
       return fetch(fetchRequest).then((response) => {
-        // Check if valid response
         if (!response || response.status !== 200 || response.type !== 'basic') {
           return response
         }
 
-        // Clone the response
         const responseToCache = response.clone()
-
-        // Cache the fetched response
         caches.open(CACHE_NAME).then((cache) => {
           cache.put(event.request, responseToCache)
         })
 
         return response
       }).catch(() => {
-        // Offline fallback - return cached index.html for navigation requests
-        if (event.request.mode === 'navigate') {
-          return caches.match(BASE_PATH + 'index.html')
-        }
+        // Return nothing for failed asset requests
       })
     })
   )
