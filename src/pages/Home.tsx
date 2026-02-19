@@ -1013,7 +1013,7 @@ export function Home() {
               width={300}
               height={300}
               loading="lazy"
-              style={{ width: '300px', height: '300px', borderRadius: '50%' }}
+              style={{ width: 'min(300px, 80vw)', height: 'min(300px, 80vw)', borderRadius: '50%' }}
             />
           </picture>
         </div>
@@ -1258,7 +1258,7 @@ export function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="relative py-24 md:py-36 lg:py-48 px-6" style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: isMobile ? '57px' : '0' }}>
+      <section className="relative py-24 md:py-36 lg:py-48 px-4" style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: isMobile ? '57px' : '0' }}>
         <div style={{ width: '100%', maxWidth: '1024px' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1360,7 +1360,7 @@ export function Home() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="relative py-24 md:py-36 lg:py-48 px-6 w-full" style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '4rem', marginTop: isMobile ? '57px' : '0' }}>
+      <section className="relative py-24 md:py-36 lg:py-48 px-4 w-full" style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '4rem', marginTop: isMobile ? '57px' : '0' }}>
         <div style={{ width: '100%', maxWidth: '1024px' }}>
           <motion.div
             initial={{ opacity: 0, y: 30 }}

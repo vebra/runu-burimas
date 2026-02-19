@@ -123,7 +123,7 @@ function AppContent() {
           Pereiti prie turinio
         </a>
         <Header user={user} onSignOut={signOut} />
-        <main id="main-content" className="flex-1 pt-16 w-full">
+        <main id="main-content" className="flex-1 pt-16 w-full" style={{ overflowX: 'hidden' }}>
           <Suspense fallback={<PageLoader />}>
             <AnimatedRoutes />
           </Suspense>
