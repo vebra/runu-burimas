@@ -366,7 +366,7 @@ const PARTICLES = Array.from({ length: 20 }, (_, i) => ({
 // Animated Hero for mobile — CSS-only animations, no Framer Motion (avoids blank screen)
 function MobileHero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center">
       {/* Static gradient background — no transform animations to avoid flickering */}
       <div
         className="absolute inset-0"
@@ -395,7 +395,7 @@ function MobileHero() {
       <span className="absolute text-2xl pointer-events-none" style={{ top: '80%', left: '7%', color: 'rgba(252,211,77,0.12)' }}>ᛊ</span>
       <span className="absolute text-3xl pointer-events-none" style={{ top: '86%', right: '18%', color: 'rgba(167,139,250,0.10)' }}>ᛏ</span>
 
-      <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4 py-20">
+      <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-6 py-20">
         {/* Crystal ball with static glow */}
         <div className="mobile-hero-fade relative">
           <div
@@ -421,12 +421,12 @@ function MobileHero() {
         </p>
 
         <div
-          className="flex flex-col items-stretch justify-center gap-4 w-full max-w-xl px-4 mobile-hero-fade-d4"
+          className="flex flex-col items-stretch justify-center gap-4 w-full mobile-hero-fade-d4"
           style={{ marginTop: '32px' }}
         >
           <Link
             to="/dienos-runa"
-            className="group relative w-full overflow-hidden bg-linear-to-r from-purple-600 via-purple-500 to-pink-600 text-white font-bold text-xl py-5 px-12 rounded-xl flex items-center justify-center gap-3 shadow-xl shadow-purple-900/50 border border-purple-400/30"
+            className="group relative w-full overflow-hidden bg-linear-to-r from-purple-600 via-purple-500 to-pink-600 text-white font-bold text-xl py-5 px-6 rounded-xl flex items-center justify-center gap-3 shadow-xl shadow-purple-900/50 border border-purple-400/30"
           >
             <Sparkles className="w-6 h-6" />
             Pradėti Būrimą
@@ -435,7 +435,7 @@ function MobileHero() {
 
           <Link
             to="/biblioteka"
-            className="group w-full bg-amber-500/10 border border-amber-500/30 text-amber-200 font-bold text-xl py-5 px-12 rounded-xl flex items-center justify-center gap-3"
+            className="group w-full bg-amber-500/10 border border-amber-500/30 text-amber-200 font-bold text-xl py-5 px-6 rounded-xl flex items-center justify-center gap-3"
           >
             <BookOpen className="w-6 h-6" />
             Runų Biblioteka
