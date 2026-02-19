@@ -199,7 +199,6 @@ body {
   background-attachment: fixed;
   color: white;
   min-height: 100vh;
-  overflow-x: hidden;
   width: 100%;
 }
 
@@ -239,10 +238,14 @@ body {
     -webkit-backdrop-filter: none !important;
   }
 
-  /* Ensure everything fits within the screen width */
-  html, body, #root {
-    max-width: 100vw;
-    overflow-x: hidden;
+  /* Ensure everything fits within the screen width — use clip not hidden to avoid blocking scroll */
+  html {
+    overflow-x: clip;
+  }
+  body {
+    overflow-x: clip;
+    /* background-attachment: fixed causes scroll jank on mobile */
+    background-attachment: scroll;
   }
 
   /* 16px side padding on all page containers */

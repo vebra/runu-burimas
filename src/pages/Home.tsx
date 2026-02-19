@@ -998,7 +998,7 @@ export function Home() {
   const isMobile = useIsMobile()
 
   return (
-    <div className="min-h-screen w-full" style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '0' : '4rem', overflowX: 'hidden', maxWidth: '100vw' }}>
+    <div className="min-h-screen w-full" style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '0' : '4rem' }}>
       {/* Mobile: static hero. Desktop: full animated hero (separate component to avoid hooks on mobile) */}
       {isMobile ? <MobileHero /> : <DesktopHero />}
 
