@@ -386,7 +386,7 @@ export function RuneHoroscope() {
                 <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="inline-block">
                   <Link
                     to="/premium"
-                    className="inline-flex items-center gap-3 bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold py-4 px-8 text-lg rounded-xl transition-all duration-300 shadow-lg"
+                    className="inline-flex items-center gap-4 bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold py-4 px-10 text-lg rounded-xl transition-all duration-300 shadow-lg"
                     style={{ boxShadow: '0 0 25px rgba(217, 119, 6, 0.4)' }}
                   >
                     <Crown className="w-6 h-6" />
@@ -485,7 +485,7 @@ function ForecastCard({ icon: Icon, label, sublabel, rune, forecast, isPremium, 
             <p className="text-gray-400 text-sm mb-4">Atrakinkite su Premium planu</p>
             <Link
               to="/premium"
-              className="inline-flex items-center gap-2 bg-linear-to-r from-amber-600 to-amber-500 text-white font-semibold py-2.5 px-6 text-sm rounded-lg transition-all hover:from-amber-500 hover:to-amber-400"
+              className="inline-flex items-center gap-3 bg-linear-to-r from-amber-600 to-amber-500 text-white font-semibold py-2.5 px-8 text-sm rounded-lg transition-all hover:from-amber-500 hover:to-amber-400"
             >
               <Crown className="w-4 h-4" />
               Gauti Premium

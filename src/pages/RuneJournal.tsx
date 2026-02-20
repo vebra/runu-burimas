@@ -515,7 +515,7 @@ export function RuneJournal() {
                     </p>
                     <Link
                       to="/premium"
-                      className="inline-flex items-center gap-2 bg-linear-to-r from-amber-600 to-amber-500 text-white font-semibold py-2.5 px-6 rounded-lg text-sm"
+                      className="inline-flex items-center gap-3 bg-linear-to-r from-amber-600 to-amber-500 text-white font-semibold py-2.5 px-8 rounded-lg text-sm"
                     >
                       <Crown className="w-4 h-4" />
                       Gauti Premium

@@ -25,7 +25,7 @@ export function AIPremiumBanner() {
       </p>
       <Link
         to="/premium"
-        className="inline-flex items-center gap-2 sm:gap-3 bg-linear-to-r from-amber-500 to-yellow-500 text-gray-900 font-bold py-3 sm:py-3.5 px-6 sm:px-8 rounded-xl hover:from-amber-400 hover:to-yellow-400 transition-all shadow-lg shadow-amber-500/20"
+        className="inline-flex items-center gap-3 bg-linear-to-r from-amber-500 to-yellow-500 text-gray-900 font-bold py-3 sm:py-3.5 px-8 sm:px-10 rounded-xl hover:from-amber-400 hover:to-yellow-400 transition-all shadow-lg shadow-amber-500/20"
         style={{ fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)' }}
       >
         <Crown className="w-5 h-5 sm:w-6 sm:h-6" />
