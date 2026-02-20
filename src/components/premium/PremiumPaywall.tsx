@@ -115,13 +115,10 @@ export function PremiumPaywall({
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Link
               to="/premium"
-              className="w-full bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold py-3.5 sm:py-4 px-10 rounded-xl transition-all duration-300 shadow-lg inline-flex items-center justify-center gap-3"
-              style={{
-                boxShadow: '0 0 25px rgba(217, 119, 6, 0.4)',
-                fontSize: 'clamp(0.95rem, 2.5vw, 1.2rem)',
-              }}
+              className="w-full bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold text-lg py-4 px-10 rounded-xl transition-all duration-300 shadow-lg inline-flex items-center justify-center gap-3"
+              style={{ boxShadow: '0 0 25px rgba(217, 119, 6, 0.4)' }}
             >
-              <Crown className="w-5 h-5 sm:w-6 sm:h-6" />
+              <Crown className="w-6 h-6" />
               Gauti Premium
             </Link>
           </motion.div>
