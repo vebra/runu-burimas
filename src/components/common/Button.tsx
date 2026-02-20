@@ -59,10 +59,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     }
 
     const sizeStyles = {
-      sm: { padding: '5px 18px 5px 18px', paddingRight: '28px' },
-      md: { padding: '9px 28px 9px 28px', paddingRight: '38px' },
-      lg: { padding: '12px 34px 12px 34px', paddingRight: '44px' },
-      xl: { padding: '16px 44px 16px 44px', paddingRight: '54px' },
+      sm: { padding: '5px 18px' },
+      md: { padding: '9px 28px' },
+      lg: { padding: '12px 32px' },
+      xl: { padding: '16px 40px' },
     }
 
     return (

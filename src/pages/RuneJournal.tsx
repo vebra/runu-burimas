@@ -190,7 +190,7 @@ export function RuneJournal() {
         <p className="text-gray-400 max-w-md">Prisijunkite, kad galėtumėte rašyti savo asmeninį rūnų dienoraštį.</p>
         <Link
           to="/prisijungti"
-          className="inline-flex items-center gap-2 bg-linear-to-r from-purple-700 to-violet-600 text-white font-bold py-4 px-10 rounded-xl text-lg transition-all shadow-lg shadow-purple-500/20 hover:from-purple-600 hover:to-violet-500"
+          className="inline-flex items-center gap-2 bg-linear-to-r from-purple-700 to-violet-600 text-white font-bold py-4 px-8 rounded-xl text-lg transition-all shadow-lg shadow-purple-500/20 hover:from-purple-600 hover:to-violet-500"
         >
           Prisijungti
         </Link>

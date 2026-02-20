@@ -895,7 +895,7 @@ function DesktopHero() {
           >
             <Link
               to="/dienos-runa"
-              className="group relative w-full sm:w-auto overflow-hidden bg-linear-to-r from-purple-600 via-purple-500 to-pink-600 text-white font-bold text-xl md:text-2xl py-5 md:py-6 px-12 md:px-16 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-purple-900/50 border border-purple-400/30"
+              className="group relative w-full sm:w-auto overflow-hidden bg-linear-to-r from-purple-600 via-purple-500 to-pink-600 text-white font-bold text-xl md:text-2xl py-5 md:py-6 px-8 md:px-12 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-purple-900/50 border border-purple-400/30"
             >
               <span className="relative z-10 flex items-center gap-3">
                 <Sparkles className="w-6 h-6 md:w-7 md:h-7" />
@@ -913,7 +913,7 @@ function DesktopHero() {
           >
             <Link
               to="/biblioteka"
-              className="group w-full sm:w-auto glass-gold text-amber-200 font-bold text-xl md:text-2xl py-5 md:py-6 px-12 md:px-16 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 hover:bg-amber-500/20"
+              className="group w-full sm:w-auto glass-gold text-amber-200 font-bold text-xl md:text-2xl py-5 md:py-6 px-8 md:px-12 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 hover:bg-amber-500/20"
             >
               <BookOpen className="w-6 h-6 md:w-7 md:h-7" />
               Runų Biblioteka

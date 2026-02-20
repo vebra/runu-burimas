@@ -366,7 +366,7 @@ export function Profile() {
               </p>
               <Link
                 to="/premium"
-                className="inline-flex items-center gap-3 bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-bold py-4 px-10 rounded-xl text-lg transition-all shadow-lg shadow-amber-500/20"
+                className="inline-flex items-center gap-3 bg-linear-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-bold py-4 px-8 rounded-xl text-lg transition-all shadow-lg shadow-amber-500/20"
               >
                 <Crown className="w-6 h-6" />
                 Gauti Premium
