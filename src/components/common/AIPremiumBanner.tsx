@@ -25,9 +25,9 @@ export function AIPremiumBanner() {
       </p>
       <Link
         to="/premium"
-        className="inline-flex items-center gap-3 bg-linear-to-r from-amber-500 to-yellow-500 text-gray-900 font-bold text-base py-3.5 px-10 rounded-xl hover:from-amber-400 hover:to-yellow-400 transition-all shadow-lg shadow-amber-500/20"
+        className="w-full flex items-center justify-center gap-3 bg-linear-to-r from-amber-500 to-yellow-500 text-gray-900 font-bold text-lg py-4 rounded-xl hover:from-amber-400 hover:to-yellow-400 transition-all shadow-lg shadow-amber-500/20"
       >
-        <Crown className="w-5 h-5" />
+        <Crown className="w-6 h-6" />
         Gauti Premium
       </Link>
     </div>
